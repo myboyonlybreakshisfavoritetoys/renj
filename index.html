@@ -1,486 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>poems by renj</title>
-    <link rel="icon" href="bew.png" type="image/png">
+    <title>Poems by renj</title>
+    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background-color: #0A0B0B;
-            color: #2688B7;
-            font-family: 'Courier New', Courier, monospace;
-            text-align: center;
+            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Fallback to sans-serif */
             margin: 0;
-            overflow: hidden; /* Prevent scrolling */
+            padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh; /* Full viewport height */
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center; /* Center content horizontally */
+            min-height: 100vh; /* Ensure body takes full height */
+            width: 100%; /* Ensure body takes full width */
+            background-color: #1A325C; /* Solid dark blue background */
+            color: #D1DBD7; /* Default text color for elements directly on body */
         }
 
-        #header {
-            position: absolute;
-            top: 0;
+        .font-bold-custom {
+            font-family: 'NeueHaasGroteskDisp Pro Blk', sans-serif; /* Fallback to sans-serif */
+            font-weight: 900; /* Ensure it's bold */
+        }
+
+        .main-container {
             width: 100%;
-            padding: 20px 0;
-            background-color: ##0A0B0B;
-            color: #2688B7;
-            text-transform: lowercase;
+            max-width: 1280px; /* Max width for content, similar to previous versions */
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1.5rem; /* Padding around the main content area */
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; /* Center items within the main container */
         }
 
-        #header img {
-            height: 40px; /* Adjust as needed */
+        .logo-img {
+            height: 4rem; /* Adjusted height for logo to be more prominent */
+            width: auto; /* Maintain aspect ratio */
+            margin-bottom: 1rem; /* Space below logo */
         }
 
-        #header-text {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-
-        #navigation {
-            position: absolute;
-            top: 100px; /* Adjust top position as needed */
-            width: 100%;
-            padding: 10px 0;
-            background-color: #0A0B0B;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        #navigation a {
-            color: #2688B7;
-            text-decoration: underline #2688B7; /* Underline color */
-            font-size: 1em;
-            text-transform: lowercase;
-            transition: color 0.3s;
-            font-weight: normal; /* Not bold */
-        }
-
-        #navigation a:hover {
-            color: #742D14; /* Hover color */
-        }
-
-        #container {
-            width: 80%;
-            max-width: 800px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            position: relative;
-        }
-
-        #left, #right {
-            flex: 1;
-        }
-
-        #left {
-            text-align: left;
-            padding-left: 20px;
-            color: #2688B7;
-        }
-
-        #right {
-            text-align: right;
-            padding-right: 20px;
-        }
-
-        #renj-message {
-            font-size: 1.2em;
-        }
-
-        #user-input {
-            width: 80%;
-            padding: 10px;
-            font-size: 1em;
-            border: 2px solid #2688B7;
-            border-radius: 10px;
-            background-color: transparent;
-            color: #2688B7;
-            outline: none; /* Remove outline */
-            margin-bottom: 20px; /* Spacing below input */
-            position: relative;
-        }
-
-        #user-input::placeholder {
-            color: #2688B7;
-        }
-
-        a {
-            color: #2688B7;
-            text-decoration: underline #2688B7; /* Underline color */
-            text-transform: lowercase; /* Lowercase text */
-            font-weight: bold; /* Bold links */
-        }
-
-        .popup {
-            position: absolute;
-            top: calc(100% + 20px); /* Position below input */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            max-width: 600px;
-            background-color: transparent;
-            border: 2px solid #2688B7;
-            border-radius: 10px;
-            padding: 10px;
+        .main-page-title {
+            color: #D1DBD7; /* Light grey for main title */
+            font-size: 2.5rem;
             text-align: center;
-            z-index: 100;
-            display: none;
+            margin-bottom: 2rem; /* Space below title */
         }
 
-        .popup-content {
+        .nav-bar {
+            background-color: #D1DBD7; /* Light grey background for the nav bar */
+            border-radius: 1.5rem; /* Rounded corners */
+            padding: 1rem 2rem;
+            margin-bottom: 1.5rem; /* Space below nav bar */
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Center nav links */
             align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: fit-content; /* Shrink to fit content */
+            max-width: 100%; /* Ensure it doesn't overflow on small screens */
         }
 
-        .popup-close {
+        .nav-bar a {
+            color: #1A325C; /* Dark blue for nav links */
+            text-decoration: none;
+            padding: 0 1rem; /* Padding between links */
+            font-size: 1.1rem;
+            white-space: nowrap; /* Prevent links from wrapping */
+        }
+
+        .nav-bar a:not(:last-child) {
+            border-right: 1px solid #1A325C; /* Separator between links */
+        }
+
+        .nav-bar a:hover {
+            text-decoration: underline;
+        }
+
+        .content-box {
+            background-color: transparent; /* News box background is transparent */
+            border-radius: 1.5rem; /* Rounded corners */
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: none; /* No shadow for transparent box */
+            width: 100%; /* Take full width of main-container */
+            max-width: 600px; /* Max width for readability */
+            text-align: left; /* Aligned text flush left */
+        }
+
+        .content-box h3 {
+            color: #D1DBD7; /* News heading color is light grey */
+        }
+
+        .content-box p {
+            color: #D1DBD7; /* News text color is light grey */
+            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Explicitly set to non-bold font */
+            font-weight: normal; /* Ensure normal font weight */
+        }
+
+        /* Styling for the new button */
+        .generate-quote-button {
+            background-color: #D1DBD7; /* Light grey background */
+            color: #1A325C; /* Dark blue text */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 1.2em;
-            color: #2688B7;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: none; /* Remove default button border */
         }
 
-        .stars {
-            position: absolute;
-            top: -50px; /* Adjust position as needed */
-            left: 0;
+        .generate-quote-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .generate-quote-button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1); /* Light border for spinner */
+            border-top: 4px solid #1A325C; /* Dark blue top border for spinner */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none; /* Hidden by default */
+        }
+
+        .loading-spinner.active {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Styling for the generated quote */
+        #generated-quote {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            font-style: italic;
+            text-align: center; /* Centered quote */
+            color: #D1DBD7; /* Light grey text for quote */
+            max-width: 600px; /* Match news box width */
             width: 100%;
-            height: 100px; /* Adjust height as needed */
-            overflow: hidden;
         }
 
-        .star {
-            position: absolute;
-            top: -50px; /* Adjust position as needed */
-            width: 2px; /* Star width */
-            height: 2px; /* Star height */
-            background-color: #2688B7;
-            animation: twinkle 3s infinite;
+        /* Responsive adjustments for widening the layout */
+        @media (min-width: 640px) { /* sm breakpoint */
+            .main-container {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
         }
-
-        @keyframes twinkle {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { transform: translateY(50px) scale(0.5); opacity: 0; }
+        @media (min-width: 768px) { /* md breakpoint */
+            .main-container {
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
         }
-        .poems-link {
-            text-decoration: none; /* Remove underline */
-            color: #2688B7; /* Ensure it has the same color */
-            font-size: 2em; /* Adjust this value to change the text size */
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .main-container {
+                padding-left: 8rem; /* Adjusted for narrower content */
+                padding-right: 8rem;
+            }
         }
-        
-        
+        @media (min-width: 1280px) { /* xl breakpoint */
+            .main-container {
+                padding-left: 10rem; /* Adjusted for narrower content */
+                padding-right: 10rem;
+            }
+        }
+        @media (min-width: 1536px) { /* 2xl breakpoint */
+            .main-container {
+                padding-left: 12rem; /* Adjusted for narrower content */
+                padding-right: 12rem;
+            }
+        }
     </style>
 </head>
-<body>
-<div id="header">
-        <a href="index.html">
-            <img src="logoo.png" alt="Site Logo">
-        </a>
-        <a href="index.html" class="poems-link">poems by renj</a>
-    </div>
-    
-    <div id="navigation">
-        <a href="index.html">home</a>
-        <a href="cyclei.html">cycle i</a>
-        <a href="cycleii.html">cycle ii</a>
-        <a href="cycleiii.html">cycle iii</a>
-        <a href="news.html">news</a>
-        <a href="about.html">about</a>
-        <a href="https://renj.atabook.org/">guestbook!</a>
-        <a href="2024recap.html">2024 recap</a>
-    </div>
+<body class="p-4 sm:p-8 h-full">
+    <div class="main-container w-full mx-auto">
+        <img src="renjwhite.png" alt="Renj Logo" class="logo-img">
 
-    <div id="container">
-        <div id="left">
-            <div id="renj">
-                <p id="renj-message">greetings! welcome to poems by renj!</p>
-            </div>
-        </div>
-        <div id="right">
-            <input type="text" id="user-input" placeholder="please type in small letter ;>" onkeydown="handleUserInput(event)">
-        </div>
-    </div>
+        <h1 class="main-page-title font-bold-custom">poems by renj</h1>
 
-    <div class="popup" id="popup">
-        <div class="popup-content">
-            <div>
-                <p>Astralgia Out Now</p>
-            </div>
-            <div class="popup-close" onclick="closePopup()">X</div>
-        </div>
-    </div>
+        <nav class="nav-bar">
+            <a href="index.html" class="font-bold-custom">home</a>
+            <a href="cyclei.html" class="font-bold-custom">cycle i</a>
+            <a href="cycleii.html" class="font-bold-custom">cycle ii</a>
+            <a href="cycleiii.html" class="font-bold-custom">cycle iii</a>
+            <a href="manifesto.html" class="font-bold-custom">manifesto</a>
+        </nav>
 
+        <div class="content-box">
+            <h3 class="text-2xl font-bold-custom mb-4">News</h3>
+            <p class="leading-relaxed">
+                Placeholder for news updates.
+            </p>
+        </div>
+
+        <button id="generate-quote-button" class="generate-quote-button">
+            Try
+            <span id="loading-spinner" class="loading-spinner"></span>
+        </button>
+
+        <p id="generated-quote" class="leading-relaxed"></p>
+
+    </div>
     <script>
-        // Popup behavior
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('popup').style.display = 'block'; // Show popup from the start
+            const generateQuoteButton = document.getElementById('generate-quote-button');
+            const generatedQuote = document.getElementById('generated-quote');
+            const loadingSpinner = document.getElementById('loading-spinner');
 
-            // Function to close popup permanently
-            function closePopup() {
-                document.getElementById('popup').style.display = 'none';
-            }
-        });
+            generateQuoteButton.addEventListener('click', async function() {
+                generatedQuote.textContent = ""; // Clear previous quote
+                generatedQuote.classList.remove('text-red-500'); // Remove error styling if present
+                generateQuoteButton.disabled = true; // Disable button
+                loadingSpinner.classList.add('active'); // Show spinner
 
-        // Function to handle user input
-        function handleUserInput(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                let userInput = document.getElementById('user-input').value.toLowerCase().trim();
-                let renjResponse = "";
+                // Updated prompt to include the poet's name
+                const prompt = "Provide a single, concise, and inspiring one-liner quote about poetry or writing from a famous poet, including their name. Format it as '\"Quote text\" - Poet Name'.";
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Leave as empty string, Canvas will provide
 
-                switch(userInput) {
-                    case 'cycle i':
-                    case 'cycle 1':
-                    case 'cyclei':
-                    case 'cycle1':
-                        renjResponse = 'sure! view the collections under <a href="cyclei.html">cycle i</a>';
-                        break;
-                    case 'cycle ii':
-                    case 'cycle 2':
-                    case 'cycleii':
-                    case 'cycleii':
-                        renjResponse = 'sure! view the collections under <a href="cycleii.html">cycle ii</a>';
-                        break;
-                    case 'more':
-                    case 'about':
-                        renjResponse = 'poems by renj is a churvaloooooo';
-                        break;
-                    case 'news':
-                    case 'updates':
-                        renjResponse = 'see info <a href="news.html">here</a>';
-                        break;
-                    case 'my boy only breaks his favorite toys':
-                        renjResponse = 'once i fix me, he\'s gonna miss me';
-                        setTimeout(function() {
-                            window.location.href = 'https://www.youtube.com/watch?v=wRKXAAV6jh4';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'afterthoughts':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/afterthoughts';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'backdoor':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/backdoor';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'waking up from a strange dream':
-                    case 'wufast':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/wufast';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'hidden chapters':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/hiddenchapters';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                     case 'lines unbent':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/linesunbent';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'whispers of stardust in the night':
-                    case 'divine premonition':
-                    case 'loving you':
-                    case 'to iya':
-                    case 'kaleidoscope shattered':
-                    case 'string too weak with commentary':
-                    case 'my mind and you':
-                    case 'pie':
-                    case 'these colors':
-                    case 'a feeling i heave':
-                    case 'days and so on':
-                    case 'like an active soul':
-                    case 'with a hush':
-                    case 'to feel empty again':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/wositn';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'seas, stars, thoughts, you':
-                    case 'how things start':
-                    case 'stars look at you':
-                    case 'one of those nights':
-                    case 'the bigger synopsis':
-                    case 'leading me back home':
-                    case 'the same sky':
-                    case 'a moment between':
-                    case 'never saw you coming':
-                    case 'a dream in a dream':
-                    case 'a town of 2000 people': 
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/sstyou';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'novalunosis':
-                    case 'i always knew a place':
-                    case 'scarlet complexion':
-                    case 'the capital':
-                    case 'our mistmatched voices':
-                    case 'i just remember':
-                    case 'shine like i never did':
-                    case 'a name for an emotion':
-                    case 'the root of me':
-                    case 'a sweet starcross':
-                    case 'once upon a time':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/novalunosis';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'jouska':
-                    case 'a lost soul':
-                    case 'having something i can\'t':
-                    case 'off the chain, off the wall':
-                    case 'this bakery':
-                    case 'just wasn\'t the one':
-                    case 'follow the detour':
-                    case 'i lost my city':
-                    case 'my entire sky is for you':
-                    case 'good, great, fantastic':
-                    case 'some new place':
-                    case 'people we have never been':
-                    case 'a found soul':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/jouska';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'cool warm colors':
-                    case 'lily wrapped in a pod':
-                    case 'a cycle of jigsaws':
-                    case 'the colors of your sound':
-                    case 'you\'re pulling a pin':
-                    case 'overshadow the moon':
-                    case 'waking up in a cheap hotel':
-                    case 'no memory':
-                    case 'emotion: unknown':
-                    case 'trove of the outliers':
-                    case 'feel life fail':
-                    case 'astral express ii':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/cwcolors';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'starrise':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/starrise';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'starcross':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/starcross';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'starfall':
-                    case 'fall off her cliff':
-                    case 'confine of my dreams':
-                    case 'what harm couples the thought of you?':
-                    case 'against the moon’s pride':
-                    case 'lost in the lines of that loop':
-                    case 'six days':
-                    case 'the owl to be aware of':
-                    case 'in the physical':
-                    case 'my dreamland, my planets':
-                    case 'soar your room high':
-                    case 'my own deceit':
-                    case 'my first blitz':
-                    case 'words inked on me':
-                    case 'down with the rustic seas':
-                    case 'ace, lin, yen, kit':
-                    case 'twenty-two dancers':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/starfall';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'conversations with the ghosts i exhumed':
-                    case 'just a shell':
-                    case 'stays, stands, and remembers':
-                    case 'tranquil when young':
-                    case 'shades of pink':
-                    case 'the way of our ways':
-                    case 'one of my screams':
-                    case 'this magic moment':
-                    case 'to thrust daggers':
-                    case 'hand with grace':
-                    case 'i watch airplanes':
-                    case 'is this the conclusion?':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/cwtgie';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'astralgia':
-                    case 'away after ten':
-                    case 'the skeleton will steal stares':
-                    case 'all that you need.':
-                    case 'once obsolete':
-                    case 'on my throat':
-                    case 'close an open door':
-                    case 'high and unreal':
-                    case 'i looked at the sky':
-                    case 'the shimmer that wraps each raindrop':
-                    case 'blossoming starlight':
-                    case 'arch bridges':
-                    case 'how i got here':
-                    case 'down town identity story':
-                    case 'the timeline crease':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/astralgia';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'lines unbent (complete edition)':
-                    case 'lines unbent dlx':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/linesunbentdlx';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    case 'astralgia (anniversary edition)':
-                    case 'afterthoughts dlx':
-                        renjResponse = 'wait...';
-                        setTimeout(function() {
-                            window.location.href = 'https://renj.neocities.org/afterthoughtsdlx';
-                        }, 2000); // Redirect after 2 seconds
-                        break;
-                    default:
-                        renjResponse = 'invalid keyword. keywords only include <a href="cyclei.html">cycle i</a> | <a href="cycleii.html">cycle ii</a> | <a href="about.html">more</a> | <a href="news.html">news</a>';
+                try {
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const quoteText = result.candidates[0].content.parts[0].text;
+                        generatedQuote.textContent = quoteText;
+                    } else {
+                        generatedQuote.textContent = "Failed to generate quote. Please try again.";
+                        generatedQuote.classList.add('text-red-500'); // Add error styling
+                        console.error("Gemini API response structure unexpected:", result);
+                    }
+                } catch (error) {
+                    generatedQuote.textContent = "Error: " + error.message;
+                    generatedQuote.classList.add('text-red-500'); // Add error styling
+                    console.error("Error calling Gemini API:", error);
+                } finally {
+                    generateQuoteButton.disabled = false; // Re-enable button
+                    loadingSpinner.classList.remove('active'); // Hide spinner
                 }
-
-                // Display "..." before showing Renj's response
-                document.getElementById('renj-message').innerHTML = '...';
-
-                // Simulate delay with setTimeout
-                setTimeout(function() {
-                    document.getElementById('renj-message').innerHTML = renjResponse;
-                    document.getElementById('user-input').value = '';
-                }, 2000); // Delay of 2 seconds
-            } else if (event.key === ' ') {
-                // Allow spacebar input
-            }
-        }
+            });
+        });
     </script>
 </body>
 </html>
