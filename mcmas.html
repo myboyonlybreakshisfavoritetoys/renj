@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas, Not That You Care</title>
+    <link rel="icon" href="bew.png" type="image/png">
+    <style>
+        /* CSS styles integrating PlantinMTProSmBd custom font */
+
+        @font-face {
+            font-family: 'NeueHaasDisplayRoman';
+            src: url('https://renj.neocities.org/fonts/AkzidGrtskNext-Med.woff') format('woff');
+            /* Add other formats (like WOFF2, EOT) for better compatibility */
+        }
+
+        body {
+            background-color: #902525;
+            color: #ffffff;
+            font-family: 'NeueHaasDisplayRoman', serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            font-style: normal;
+        }
+
+        a {
+            color: #ffffff;
+            text-decoration: none;
+            font-style: italic;
+        }
+
+        #header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px; /* Increased the gap between items */
+            margin-bottom: 20px;
+            color: #ffffff; /* Changed header text color */
+            font-family: 'NeueHaasDisplayRoman', serif;
+            font-style: normal; /* Ensured header text is not italicized */
+        }
+
+        #header img {
+            height: 40px;
+        }
+
+        #navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        #navigation a {
+            color: #ffffff;
+            text-decoration: none;
+            font-style: bold;
+            transition: color 0.3s;
+        }
+
+        #navigation a:hover {
+            color: #ffffff;
+        }
+
+        .outer-box {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #902525;
+            color: #ffffff;
+            border: 2px solid #902525;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .embedded-code {
+            width: 100%;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #902525;
+        }
+
+        .embedded-code iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        .collapsed-box {
+            background-color: #902525;
+            color: #ffffff;
+            padding: 10px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            position: relative;
+            border: 2px solid #902525;
+        }
+
+        .collapsed-box-content {
+            display: none;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .collapsed-box.active {
+            background-color: #902525;
+            border: 2px solid #902525;
+        }
+
+        .collapsed-box.active .collapsed-box-content {
+            display: block;
+        }
+
+        .collapsed-box-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #ffffff;
+        }
+
+        .collapsed-box-toggle::after {
+            content: "■";
+            font-size: 1.5em;
+        }
+
+        .collapsed-box.preview {
+            color: #ffffff;
+        }
+
+        .collapsed-box.preview .collapsed-box-content {
+            display: block;
+        }
+
+        .collapsed-box.preview .collapsed-box-toggle::after {
+            content: "■";
+        }
+        #title {
+            font-size: 1.75em;
+            color: #ffffff;
+            font-family: 'NeueHaasDisplayRoman', serif;
+            margin-bottom: 10px;
+        }
+
+        #nav-links {
+            font-size: 1em; /* Customizable size */
+            color: #ffffff;
+            font-style: normal;
+            margin-bottom: 20px;
+        }
+
+        #nav-links a {
+            margin: 0 10px;
+            color: #ffffff;
+            font-style: normal;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="header">
+    <a href="index.html">
+        <img src="https://renj.neocities.org/logo/14.png" alt="Site Logo">
+    </a>
+    <a href="index.html">home</a>
+    <a href="cycleii.html">cycle ii</a>
+</div>
+<div class="outer-box">
+    <div class="embedded-code">
+        <iframe src="https://online.pubhtml5.com/nbxmf/ajkz/" seamless="seamless" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true"></iframe>
+    </div>
+<br>
+<div id="title">Merry Christmas, Not That You Care</div>
+
+    <div class="collapsed-box">
+        <div class="collapsed box preview">
+            <b>Background and Release</b>
+        </div>
+        <div class="collapsed-box-content">
+            	<p>My first Christmas Collection. I took a look-back on my last five Christmases incuding this, and I'd say - A LOT HAPPENED. So Merry Christmas people, here is my Christmas present to y'all. </p><p>Released Decmber 25, 2024.</p>
+        </div>
+        <div class="collapsed-box-toggle"></div>
+    </div>
+
+<script>
+    const collapsedBoxes = document.querySelectorAll('.collapsed-box');
+
+    collapsedBoxes.forEach(box => {
+        const toggle = box.querySelector('.collapsed-box-toggle');
+        const content = box.querySelector('.collapsed-box-content');
+        const preview = box.querySelector('.preview');
+
+        toggle.addEventListener('click', () => {
+            box.classList.toggle('active');
+        });
+
+        preview.addEventListener('click', () => {
+            box.classList.toggle('active');
+        });
+    });
+</script>
+
+</body>
+</html>
