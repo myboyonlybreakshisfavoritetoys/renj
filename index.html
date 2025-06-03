@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>poems by renj</title>
+    <link rel="icon" href="bew.png" type="image/png">
+    <style>
+        body {
+            background-color: #0A0B0B;
+            color: #2688B7;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin: 0;
+            overflow: hidden; /* Prevent scrolling */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Full viewport height */
+        }
+
+        #header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background-color: ##0A0B0B;
+            color: #2688B7;
+            text-transform: lowercase;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #header img {
+            height: 40px; /* Adjust as needed */
+        }
+
+        #header-text {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        #navigation {
+            position: absolute;
+            top: 100px; /* Adjust top position as needed */
+            width: 100%;
+            padding: 10px 0;
+            background-color: #0A0B0B;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        #navigation a {
+            color: #2688B7;
+            text-decoration: underline #2688B7; /* Underline color */
+            font-size: 1em;
+            text-transform: lowercase;
+            transition: color 0.3s;
+            font-weight: normal; /* Not bold */
+        }
+
+        #navigation a:hover {
+            color: #742D14; /* Hover color */
+        }
+
+        #container {
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        #left, #right {
+            flex: 1;
+        }
+
+        #left {
+            text-align: left;
+            padding-left: 20px;
+            color: #2688B7;
+        }
+
+        #right {
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        #renj-message {
+            font-size: 1.2em;
+        }
+
+        #user-input {
+            width: 80%;
+            padding: 10px;
+            font-size: 1em;
+            border: 2px solid #2688B7;
+            border-radius: 10px;
+            background-color: transparent;
+            color: #2688B7;
+            outline: none; /* Remove outline */
+            margin-bottom: 20px; /* Spacing below input */
+            position: relative;
+        }
+
+        #user-input::placeholder {
+            color: #2688B7;
+        }
+
+        a {
+            color: #2688B7;
+            text-decoration: underline #2688B7; /* Underline color */
+            text-transform: lowercase; /* Lowercase text */
+            font-weight: bold; /* Bold links */
+        }
+
+        .popup {
+            position: absolute;
+            top: calc(100% + 20px); /* Position below input */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            background-color: transparent;
+            border: 2px solid #2688B7;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            z-index: 100;
+            display: none;
+        }
+
+        .popup-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .popup-close {
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #2688B7;
+        }
+
+        .stars {
+            position: absolute;
+            top: -50px; /* Adjust position as needed */
+            left: 0;
+            width: 100%;
+            height: 100px; /* Adjust height as needed */
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            top: -50px; /* Adjust position as needed */
+            width: 2px; /* Star width */
+            height: 2px; /* Star height */
+            background-color: #2688B7;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(50px) scale(0.5); opacity: 0; }
+        }
+        .poems-link {
+            text-decoration: none; /* Remove underline */
+            color: #2688B7; /* Ensure it has the same color */
+            font-size: 2em; /* Adjust this value to change the text size */
+        }
+        
+        
+    </style>
+</head>
+<body>
+<div id="header">
+        <a href="index.html">
+            <img src="logoo.png" alt="Site Logo">
+        </a>
+        <a href="index.html" class="poems-link">poems by renj</a>
+    </div>
+    
+    <div id="navigation">
+        <a href="index.html">home</a>
+        <a href="cyclei.html">cycle i</a>
+        <a href="cycleii.html">cycle ii</a>
+        <a href="cycleiii.html">cycle iii</a>
+        <a href="news.html">news</a>
+        <a href="about.html">about</a>
+        <a href="https://renj.atabook.org/">guestbook!</a>
+        <a href="2024recap.html">2024 recap</a>
+    </div>
+
+    <div id="container">
+        <div id="left">
+            <div id="renj">
+                <p id="renj-message">greetings! welcome to poems by renj!</p>
+            </div>
+        </div>
+        <div id="right">
+            <input type="text" id="user-input" placeholder="please type in small letter ;>" onkeydown="handleUserInput(event)">
+        </div>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <div>
+                <p>Astralgia Out Now</p>
+            </div>
+            <div class="popup-close" onclick="closePopup()">X</div>
+        </div>
+    </div>
+
+    <script>
+        // Popup behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('popup').style.display = 'block'; // Show popup from the start
+
+            // Function to close popup permanently
+            function closePopup() {
+                document.getElementById('popup').style.display = 'none';
+            }
+        });
+
+        // Function to handle user input
+        function handleUserInput(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                let userInput = document.getElementById('user-input').value.toLowerCase().trim();
+                let renjResponse = "";
+
+                switch(userInput) {
+                    case 'cycle i':
+                    case 'cycle 1':
+                    case 'cyclei':
+                    case 'cycle1':
+                        renjResponse = 'sure! view the collections under <a href="cyclei.html">cycle i</a>';
+                        break;
+                    case 'cycle ii':
+                    case 'cycle 2':
+                    case 'cycleii':
+                    case 'cycleii':
+                        renjResponse = 'sure! view the collections under <a href="cycleii.html">cycle ii</a>';
+                        break;
+                    case 'more':
+                    case 'about':
+                        renjResponse = 'poems by renj is a churvaloooooo';
+                        break;
+                    case 'news':
+                    case 'updates':
+                        renjResponse = 'see info <a href="news.html">here</a>';
+                        break;
+                    case 'my boy only breaks his favorite toys':
+                        renjResponse = 'once i fix me, he\'s gonna miss me';
+                        setTimeout(function() {
+                            window.location.href = 'https://www.youtube.com/watch?v=wRKXAAV6jh4';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'afterthoughts':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/afterthoughts';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'backdoor':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/backdoor';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'waking up from a strange dream':
+                    case 'wufast':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/wufast';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'hidden chapters':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/hiddenchapters';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                     case 'lines unbent':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/linesunbent';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'whispers of stardust in the night':
+                    case 'divine premonition':
+                    case 'loving you':
+                    case 'to iya':
+                    case 'kaleidoscope shattered':
+                    case 'string too weak with commentary':
+                    case 'my mind and you':
+                    case 'pie':
+                    case 'these colors':
+                    case 'a feeling i heave':
+                    case 'days and so on':
+                    case 'like an active soul':
+                    case 'with a hush':
+                    case 'to feel empty again':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/wositn';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'seas, stars, thoughts, you':
+                    case 'how things start':
+                    case 'stars look at you':
+                    case 'one of those nights':
+                    case 'the bigger synopsis':
+                    case 'leading me back home':
+                    case 'the same sky':
+                    case 'a moment between':
+                    case 'never saw you coming':
+                    case 'a dream in a dream':
+                    case 'a town of 2000 people': 
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/sstyou';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'novalunosis':
+                    case 'i always knew a place':
+                    case 'scarlet complexion':
+                    case 'the capital':
+                    case 'our mistmatched voices':
+                    case 'i just remember':
+                    case 'shine like i never did':
+                    case 'a name for an emotion':
+                    case 'the root of me':
+                    case 'a sweet starcross':
+                    case 'once upon a time':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/novalunosis';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'jouska':
+                    case 'a lost soul':
+                    case 'having something i can\'t':
+                    case 'off the chain, off the wall':
+                    case 'this bakery':
+                    case 'just wasn\'t the one':
+                    case 'follow the detour':
+                    case 'i lost my city':
+                    case 'my entire sky is for you':
+                    case 'good, great, fantastic':
+                    case 'some new place':
+                    case 'people we have never been':
+                    case 'a found soul':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/jouska';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'cool warm colors':
+                    case 'lily wrapped in a pod':
+                    case 'a cycle of jigsaws':
+                    case 'the colors of your sound':
+                    case 'you\'re pulling a pin':
+                    case 'overshadow the moon':
+                    case 'waking up in a cheap hotel':
+                    case 'no memory':
+                    case 'emotion: unknown':
+                    case 'trove of the outliers':
+                    case 'feel life fail':
+                    case 'astral express ii':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/cwcolors';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'starrise':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/starrise';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'starcross':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/starcross';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'starfall':
+                    case 'fall off her cliff':
+                    case 'confine of my dreams':
+                    case 'what harm couples the thought of you?':
+                    case 'against the moon’s pride':
+                    case 'lost in the lines of that loop':
+                    case 'six days':
+                    case 'the owl to be aware of':
+                    case 'in the physical':
+                    case 'my dreamland, my planets':
+                    case 'soar your room high':
+                    case 'my own deceit':
+                    case 'my first blitz':
+                    case 'words inked on me':
+                    case 'down with the rustic seas':
+                    case 'ace, lin, yen, kit':
+                    case 'twenty-two dancers':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/starfall';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'conversations with the ghosts i exhumed':
+                    case 'just a shell':
+                    case 'stays, stands, and remembers':
+                    case 'tranquil when young':
+                    case 'shades of pink':
+                    case 'the way of our ways':
+                    case 'one of my screams':
+                    case 'this magic moment':
+                    case 'to thrust daggers':
+                    case 'hand with grace':
+                    case 'i watch airplanes':
+                    case 'is this the conclusion?':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/cwtgie';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'astralgia':
+                    case 'away after ten':
+                    case 'the skeleton will steal stares':
+                    case 'all that you need.':
+                    case 'once obsolete':
+                    case 'on my throat':
+                    case 'close an open door':
+                    case 'high and unreal':
+                    case 'i looked at the sky':
+                    case 'the shimmer that wraps each raindrop':
+                    case 'blossoming starlight':
+                    case 'arch bridges':
+                    case 'how i got here':
+                    case 'down town identity story':
+                    case 'the timeline crease':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/astralgia';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'lines unbent (complete edition)':
+                    case 'lines unbent dlx':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/linesunbentdlx';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    case 'astralgia (anniversary edition)':
+                    case 'afterthoughts dlx':
+                        renjResponse = 'wait...';
+                        setTimeout(function() {
+                            window.location.href = 'https://renj.neocities.org/afterthoughtsdlx';
+                        }, 2000); // Redirect after 2 seconds
+                        break;
+                    default:
+                        renjResponse = 'invalid keyword. keywords only include <a href="cyclei.html">cycle i</a> | <a href="cycleii.html">cycle ii</a> | <a href="about.html">more</a> | <a href="news.html">news</a>';
+                }
+
+                // Display "..." before showing Renj's response
+                document.getElementById('renj-message').innerHTML = '...';
+
+                // Simulate delay with setTimeout
+                setTimeout(function() {
+                    document.getElementById('renj-message').innerHTML = renjResponse;
+                    document.getElementById('user-input').value = '';
+                }, 2000); // Delay of 2 seconds
+            } else if (event.key === ' ') {
+                // Allow spacebar input
+            }
+        }
+    </script>
+</body>
+</html>
