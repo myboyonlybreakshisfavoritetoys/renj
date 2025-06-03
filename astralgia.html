@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astralgia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define custom font families.
+            You will need to import 'NeueHaasGroteskDisp Pro' and 'NeueHaasGroteskDisp Pro Blk'
+            via @font-face rules or a font hosting service (e.g., Adobe Fonts, MyFonts)
+            for them to display correctly.
+            Example (replace with your actual font file paths/URLs):
+        */
+        /*
+        @font-face {
+            font-family: 'NeueHaasGroteskDisp Pro';
+            src: url('path/to/NeueHaasGroteskDispPro.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'NeueHaasGroteskDisp Pro Blk';
+            src: url('path/to/NeueHaasHaasGroteskDispProBlk.woff2') format('woff2');
+            font-weight: 900; /* Or appropriate bold weight */
+            font-style: normal;
+        }
+        */
+
+        body {
+            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Fallback to sans-serif */
+            /* background-color: #1A325C; Removed, now handled by Tailwind class on body tag */
+            margin: 0;
+            padding: 0;
+            /* min-height: 100vh; Removed, now handled by h-full Tailwind class on body tag */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            color: #D1DBD7; /* Text outside boxes, e.g., 'astralgia' title */
+        }
+
+        .font-bold-custom {
+            font-family: 'NeueHaasGroteskDisp Pro Blk', sans-serif; /* Fallback to sans-serif */
+            font-weight: 900; /* Ensure it's bold */
+        }
+
+        .content-box {
+            background-color: #D1DBD7; /* Light grey for boxes */
+            border-radius: 1.5rem; /* Uniform rounded corners (rounded-3xl in Tailwind) */
+            padding: 1.5rem;
+            margin-bottom: 1.5rem; /* Spacing between boxes */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0; /* Padding for click area */
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-top: 0; /* Start with no padding */
+        }
+
+        .collapsible-content.expanded {
+            max-height: 500px; /* Adjust as needed for content height */
+            padding-top: 1rem; /* Add padding when expanded */
+        }
+
+        .arrow {
+            transition: transform 0.3s ease-out;
+            color: #1A325C; /* Dark blue for contrast on light background */
+        }
+
+        .arrow.expanded {
+            transform: rotate(90deg);
+        }
+
+        /* Specific styling for the top navigation/header */
+        .header-nav {
+            background-color: #D1DBD7; /* Light grey for header */
+            border-radius: 1.5rem; /* Rounded corners */
+            padding: 1rem 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #1A325C; /* Dark blue for contrast on light background */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header-nav a {
+            color: #1A325C; /* Dark blue for contrast on light background */
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 1.1rem;
+        }
+        .header-nav a:hover {
+            text-decoration: underline;
+        }
+        /* Styling for the logo image */
+        .header-nav .logo-img {
+            height: 2.5rem; /* Adjust height as needed */
+            width: auto; /* Maintain aspect ratio */
+        }
+
+        /* Styling for the main astralgia title */
+        .astralgia-title {
+            color: #D1DBD7; /* Astralgia title color (light grey) */
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            cursor: pointer; /* Indicate it's clickable */
+            /* Removed text-shadow */
+            transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Smooth transition for hover effect */
+            /* Assuming astralgia is part of the NeueHaasGroteskDisp Pro Blk font */
+        }
+        .astralgia-title:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            opacity: 0.9; /* Subtle fade on hover */
+        }
+
+
+        /* Styling for the flipbook embed container */
+        .flipbook-container {
+            background-color: #D1DBD7; /* Light grey for flipbook container */
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            overflow: hidden; /* Ensure embed fits and no scrollbars */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Remove min-height here, aspect ratio will control height */
+        }
+
+        /* Aspect ratio container for the iframe */
+        .iframe-aspect-ratio {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100%) */
+            height: 0;
+            overflow: hidden; /* Hide any overflow from the iframe */
+            border-radius: 0.75rem; /* Apply rounded corners to the aspect ratio container */
+        }
+
+        .flipbook-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            /* border-radius already applied to parent .iframe-aspect-ratio */
+        }
+
+
+        /* Responsive adjustments for widening the layout */
+        @media (min-width: 640px) { /* sm breakpoint */
+            .main-container {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .main-container {
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .main-container {
+                padding-left: 8rem; /* Adjusted for narrower content */
+                padding-right: 8rem;
+            }
+        }
+        @media (min-width: 1280px) { /* xl breakpoint */
+            .main-container {
+                padding-left: 10rem; /* Adjusted for narrower content */
+                padding-right: 10rem;
+            }
+        }
+        @media (min-width: 1536px) { /* 2xl breakpoint */
+            .main-container {
+                padding-left: 12rem; /* Adjusted for narrower content */
+                padding-right: 12rem;
+            }
+        }
+
+        /* Instagram Story Modal Styles */
+        .story-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Darker overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        .story-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .story-container {
+            position: relative;
+            width: 90vw; /* Max width 90% of viewport width */
+            max-width: 400px; /* Max width for story (typical phone portrait) */
+            height: 0;
+            padding-bottom: calc(90vw * 16 / 9); /* 9:16 aspect ratio based on width */
+            max-height: 90vh; /* Max height 90% of viewport height */
+            background-color: #D1DBD7; /* Light grey for story container */
+            border-radius: 1.5rem;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* For content inside */
+        }
+
+        @media (min-width: 400px) { /* Adjust for larger screens to maintain aspect ratio */
+            .story-container {
+                width: 400px; /* Fixed width for better control */
+                padding-bottom: calc(400px * 16 / 9); /* Maintain 9:16 aspect ratio */
+            }
+        }
+        @media (min-height: 600px) { /* Adjust if height is limiting factor */
+            .story-container {
+                height: 90vh;
+                width: calc(90vh * 9 / 16); /* Adjust width based on height to maintain 9:16 */
+                padding-bottom: 0; /* No padding-bottom needed if height is fixed */
+            }
+        }
+
+
+        .story-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensure image fits without cropping */
+            background-color: #1A325C; /* Background for image area within story */
+        }
+
+        .story-nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1001;
+            user-select: none; /* Prevent text selection */
+        }
+
+        .story-nav-button.prev {
+            left: 1rem;
+        }
+
+        .story-nav-button.next {
+            right: 1rem;
+        }
+
+        .story-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50%; /* Circular button */
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 1002;
+            line-height: 1; /* Adjust line height for better centering of X */
+        }
+
+        /* Story Progress Bar Styles */
+        .story-progress-container {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.25rem; /* Space between bars */
+            z-index: 1003;
+        }
+
+        .story-progress-bar {
+            flex-grow: 1;
+            height: 0.25rem; /* Height of the bar */
+            background-color: rgba(255, 255, 255, 0.5); /* Inactive bar color */
+            border-radius: 0.125rem;
+            overflow: hidden; /* For the inner progress animation */
+        }
+
+        .story-progress-fill {
+            width: 0;
+            height: 100%;
+            background-color: #ffffff; /* Active bar color */
+            border-radius: 0.125rem;
+            /* Animation will be applied via JS */
+        }
+
+        @keyframes fillProgressBar {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8 bg-[#1A325C] h-full"> <div class="main-container w-full max-w-screen-xl mx-auto">
+        <div class="header-nav">
+            <img src="renjlogo.png" alt="RED Logo" class="logo-img">
+            <nav>
+                <a href="#" class="font-bold-custom">home</a>
+                <a href="#" class="font-bold-custom">cycle ii</a>
+            </nav>
+        </div>
+
+        <h2 id="astralgia-title" class="astralgia-title font-bold-custom">astralgia</h2>
+
+        <div class="flipbook-container">
+            <div class="iframe-aspect-ratio">
+                <iframe src="https://online.pubhtml5.com/nbxmf/mblk/" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <div class="collapsible-header" data-target="about-astralgia-content">
+                <h3 class="text-2xl font-bold-custom text-[#1A325C]">about astralgia</h3>
+                <span class="arrow text-2xl">+</span>
+            </div>
+            <div id="about-astralgia-content" class="collapsible-content">
+                <p class="text-[#1A325C] leading-relaxed">
+                    Astralgia. Released July 5, 2024. This was a lot to make. There were so many poems that it hurts to cut
+                    and discard the others. Although not my biggest release, it's above the average of around 11-12
+                    poems. Most of this was written during the summer vacation. I found myself writing about the past,
+                    present, and future. I even wrote about the people I met, the people I am with, the people I wish to be
+                    with, people I wished I never met, and the person I don't want to become. This was a lot to pack and
+                    unpack. My emotions wrapped in carbed wires but tied with a cute silver sparkly ribbon, Astralgia.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <div class="collapsible-header" data-target="more-astralgia-content">
+                <h3 class="text-2xl font-bold-custom text-[#1A325C]">more astralgia content</h3>
+                <span class="arrow text-2xl">+</span>
+            </div>
+            <div id="more-astralgia-content" class="collapsible-content">
+                <p class="text-[#1A325C]">photos etc ect</p>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3 class="text-2xl font-bold-custom text-[#1A325C] mb-4">catalog</h3>
+            <div class="flex flex-col sm:flex-row justify-between text-[#1A325C]">
+                <a href="#" class="text-[#1A325C] hover:underline mb-2 sm:mb-0">link to previous release</a>
+                <a href="#" class="text-[#1A325C] hover:underline">link to next release</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="story-modal-overlay" class="story-modal-overlay">
+        <div class="story-container">
+            <div id="story-progress-container" class="story-progress-container"></div>
+            <img id="story-image" src="" alt="Story Image" class="story-image">
+            <div id="prev-story-button" class="story-nav-button prev">&lt;</div>
+            <div id="next-story-button" class="story-nav-button next">&gt;</div>
+            <div id="story-close-button" class="story-close-button">X</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Collapsible sections logic
+            const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
+
+            collapsibleHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const targetId = this.dataset.target;
+                    const content = document.getElementById(targetId);
+                    const arrow = this.querySelector('.arrow');
+
+                    if (content.classList.contains('expanded')) {
+                        content.classList.remove('expanded');
+                        content.style.maxHeight = null; // Reset max-height
+                        arrow.classList.remove('expanded');
+                        arrow.textContent = '+';
+                    } else {
+                        // Collapse any other open sections first (optional, but good UX)
+                        document.querySelectorAll('.collapsible-content.expanded').forEach(openContent => {
+                            openContent.classList.remove('expanded');
+                            openContent.style.maxHeight = null;
+                            const openArrow = openContent.previousElementSibling.querySelector('.arrow');
+                            if (openArrow) {
+                                openArrow.classList.remove('expanded');
+                                openArrow.textContent = '+';
+                            }
+                        });
+
+                        content.classList.add('expanded');
+                        // Set max-height to scrollHeight to allow smooth transition
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        arrow.classList.add('expanded');
+                        arrow.textContent = '-';
+                    }
+                });
+            });
+
+            // Instagram Story Modal Logic
+            const astralgiaTitle = document.getElementById('astralgia-title');
+            const storyModalOverlay = document.getElementById('story-modal-overlay');
+            const storyImage = document.getElementById('story-image');
+            const prevStoryButton = document.getElementById('prev-story-button');
+            const nextStoryButton = document.getElementById('next-story-button');
+            const storyCloseButton = document.getElementById('story-close-button');
+            const storyProgressContainer = document.getElementById('story-progress-container');
+
+            // --- USER EDITABLE: Add your image URLs here ---
+            const storyPhotos = [
+                // Example placeholders:
+                "https://placehold.co/900x1600/1A325C/D1DBD7?text=Story+Photo+1",
+                "https://placehold.co/900x1600/1A325C/D1DBD7?text=Story+Photo+2",
+                "https://placehold.co/900x1600/1A325C/D1DBD7?text=Story+Photo+3",
+                "https://placehold.co/900x1600/1A325C/D1DBD7?text=Story+Photo+4",
+                // Add more image URLs as strings:
+                // "https://your-domain.com/path/to/your-photo-5.jpg",
+                // "https://your-domain.com/path/to/your-photo-6.png",
+            ];
+            // --- END USER EDITABLE ---
+
+            let currentStoryIndex = 0;
+            let storyInterval;
+            const STORY_DURATION = 5000; // 5 seconds per story
+
+            /**
+             * Creates and appends progress bars to the story progress container.
+             * Each bar represents a story slide.
+             */
+            function createProgressBars() {
+                storyProgressContainer.innerHTML = ''; // Clear existing bars
+                storyPhotos.forEach((_, index) => {
+                    const barWrapper = document.createElement('div');
+                    barWrapper.classList.add('story-progress-bar');
+                    const fill = document.createElement('div');
+                    fill.classList.add('story-progress-fill');
+                    barWrapper.appendChild(fill);
+                    storyProgressContainer.appendChild(barWrapper);
+                });
+            }
+
+            /**
+             * Starts or restarts the auto-scroll timer and updates the progress bar animation.
+             */
+            function startStoryTimer() {
+                clearInterval(storyInterval); // Clear any existing timer
+                if (storyPhotos.length > 1) { // Only auto-scroll if there's more than one story
+                    storyInterval = setInterval(() => {
+                        showNextStory(true); // Pass 'true' to indicate auto-scroll
+                    }, STORY_DURATION);
+                }
+                // Reset and start animation for current bar
+                updateProgressBarAnimation();
+            }
+
+            /**
+             * Updates the animation state of the progress bars based on the current story index.
+             */
+            function updateProgressBarAnimation() {
+                const fills = storyProgressContainer.querySelectorAll('.story-progress-fill');
+                fills.forEach((fill, index) => {
+                    fill.style.animation = 'none'; // Reset animation
+                    fill.style.width = '0'; // Reset width
+                    if (index < currentStoryIndex) {
+                        fill.style.width = '100%'; // Previous bars are full
+                    } else if (index === currentStoryIndex) {
+                        // Current bar animates
+                        fill.style.animation = `fillProgressBar ${STORY_DURATION / 1000}s linear forwards`;
+                    }
+                });
+            }
+
+            /**
+             * Opens the Instagram story modal.
+             */
+            function openStoryModal() {
+                if (storyPhotos.length === 0) {
+                    console.warn("No story photos defined. Add URLs to the 'storyPhotos' array.");
+                    return;
+                }
+                currentStoryIndex = 0; // Always start from the first story when opening
+                createProgressBars(); // Create bars when opening
+                updateStoryImage();
+                storyModalOverlay.classList.add('open');
+                startStoryTimer(); // Start timer when modal opens
+            }
+
+            /**
+             * Closes the Instagram story modal.
+             */
+            function closeStoryModal() {
+                storyModalOverlay.classList.remove('open');
+                clearInterval(storyInterval); // Stop timer when modal closes
+            }
+
+            /**
+             * Updates the displayed story image and progress bar.
+             */
+            function updateStoryImage() {
+                storyImage.src = storyPhotos[currentStoryIndex];
+                updateProgressBarAnimation(); // Update animation on image change
+            }
+
+            /**
+             * Shows the next story in the sequence.
+             * @param {boolean} [isAutoScroll=false] - True if called by auto-scroll, false if by manual click.
+             */
+            function showNextStory(isAutoScroll = false) {
+                if (currentStoryIndex === storyPhotos.length - 1) {
+                    // This is the last story
+                    if (isAutoScroll) {
+                        // If it's auto-scroll and the last story, close the modal
+                        closeStoryModal();
+                    } else {
+                        // If it's manual click on last story, loop back to the first
+                        currentStoryIndex = 0;
+                        updateStoryImage();
+                        startStoryTimer(); // Restart timer for new slide
+                    }
+                } else {
+                    // Go to the next story
+                    currentStoryIndex++;
+                    updateStoryImage();
+                    startStoryTimer(); // Restart timer for new slide
+                }
+            }
+
+            /**
+             * Shows the previous story in the sequence.
+             */
+            function showPrevStory() {
+                currentStoryIndex = (currentStoryIndex - 1 + storyPhotos.length) % storyPhotos.length;
+                updateStoryImage();
+                startStoryTimer(); // Restart timer for new slide
+            }
+
+            // Event Listeners for Story Modal
+            astralgiaTitle.addEventListener('click', openStoryModal);
+            storyCloseButton.addEventListener('click', closeStoryModal);
+            nextStoryButton.addEventListener('click', () => showNextStory(false)); // Manual click
+            prevStoryButton.addEventListener('click', showPrevStory);
+
+            // Close modal on overlay click (but not on content click)
+            storyModalOverlay.addEventListener('click', function(event) {
+                if (event.target === storyModalOverlay) {
+                    closeStoryModal();
+                }
+            });
+
+            // Keyboard navigation for stories (optional)
+            document.addEventListener('keydown', function(event) {
+                if (storyModalOverlay.classList.contains('open')) {
+                    if (event.key === 'ArrowRight') {
+                        showNextStory(false); // Manual keyboard navigation
+                    } else if (event.key === 'ArrowLeft') {
+                        showPrevStory();
+                    } else if (event.key === 'Escape') {
+                        closeStoryModal();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
