@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Fallback to sans-serif */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center; /* Center content horizontally */
+            min-height: 100vh; /* Ensure body takes full height */
+            width: 100%; /* Ensure body takes full width */
+            background-color: #1A325C; /* Solid dark blue background */
+            color: #D1DBD7; /* Default text color for elements directly on body */
+        }
+
+        .font-bold-custom {
+            font-family: 'NeueHaasGroteskDisp Pro Blk', sans-serif; /* Fallback to sans-serif */
+            font-weight: 900; /* Ensure it's bold */
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 960px; /* Reduced max-width for a more minimalist feel */
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem; /* Slightly reduced padding */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center items within the main container */
+        }
+
+        .logo-img {
+            height: 3.5rem; /* Slightly reduced height for logo */
+            width: auto; /* Maintain aspect ratio */
+            margin-bottom: 0.75rem; /* Reduced space below logo */
+        }
+
+        .main-page-title {
+            color: #D1DBD7; /* Light grey for main title */
+            font-size: 2rem; /* Reduced font size */
+            text-align: center;
+            margin-bottom: 1.5rem; /* Reduced space below title */
+        }
+
+        .nav-bar {
+            background-color: #D1DBD7; /* Light grey background for the nav bar */
+            border-radius: 1rem; /* Slightly smaller rounded corners */
+            padding: 0.75rem 1.5rem; /* Reduced padding */
+            margin-bottom: 1rem; /* Reduced space below nav bar */
+            display: flex;
+            justify-content: center; /* Center nav links */
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            width: fit-content; /* Shrink to fit content */
+            max-width: 100%; /* Ensure it doesn't overflow on small screens */
+        }
+
+        .nav-bar a {
+            color: #1A325C; /* Dark blue for nav links */
+            text-decoration: none;
+            padding: 0 0.8rem; /* Reduced padding between links */
+            font-size: 1rem; /* Slightly reduced font size */
+            white-space: nowrap; /* Prevent links from wrapping */
+        }
+
+        .nav-bar a:not(:last-child) {
+            border-right: 1px solid #1A325C; /* Separator between links */
+        }
+
+        .nav-bar a:hover {
+            text-decoration: underline;
+        }
+
+        .content-box {
+            background-color: transparent; /* Transparent background for content */
+            border-radius: 1.5rem; /* Rounded corners */
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: none; /* No shadow */
+            width: 100%; /* Take full width of main-container */
+            max-width: 500px; /* Reduced max width for readability */
+            text-align: center; /* Center text within the box */
+        }
+
+        .content-box h3 {
+            color: #D1DBD7; /* Heading color is light grey */
+            font-size: 1.5rem; /* Reduced font size for 404 message */
+            margin-bottom: 0.75rem; /* Reduced margin */
+        }
+
+        .content-box p {
+            color: #D1DBD7; /* Text color is light grey */
+            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Explicitly set to non-bold font */
+            font-weight: normal; /* Ensure normal font weight */
+            font-style: italic; /* Italicize the quote */
+            margin-bottom: 1rem; /* Reduced margin */
+            font-size: 0.95rem; /* Slightly smaller font for body text */
+            line-height: 1.5; /* Adjusted line height for readability */
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 640px) { /* sm breakpoint */
+            .main-container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .main-container {
+                padding-left: 3rem;
+                padding-right: 3rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .main-container {
+                padding-left: 6rem;
+                padding-right: 6rem;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8 h-full">
+    <div class="main-container w-full mx-auto">
+        <a href="index.html">
+            <img src="renjwhite.png" alt="Renj Logo" class="logo-img">
+        </a>
+
+        <h1 class="main-page-title font-bold-custom">404 - Page Not Found</h1>
+
+        <nav class="nav-bar">
+            <a href="index.html" class="font-bold-custom">home</a>
+            <a href="cyclei.html" class="font-bold-custom">cycle i</a>
+            <a href="cycleii.html" class="font-bold-custom">cycle ii</a>
+            <a href="cycleiii.html" class="font-bold-custom">cycle iii</a>
+            <a href="manifesto.html" class="font-bold-custom">manifesto</a>
+        </nav>
+
+        <div class="content-box">
+            <h3>Lost in the Labyrinth of Words?</h3>
+            <p>
+                "Two roads diverged in a yellow wood, and sorry I could not travel both and be one traveler, long I stood..."
+                <br>— Robert Frost, "The Road Not Taken"
+            </p>
+            <p class="leading-relaxed">
+                It seems the page you're looking for has wandered off into another verse.
+                Please use the navigation above to find your way back to the poems.
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>
