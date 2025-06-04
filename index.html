@@ -1,278 +1,411 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poems by renj</title>
-    <link rel="icon" type="image/png" href="renjfavicon.png">
-    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <title>Renj's Homepage</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Fallback to sans-serif */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Align content to the top */
-            align-items: center; /* Center content horizontally */
-            min-height: 100vh; /* Ensure body takes full height */
-            width: 100%; /* Ensure body takes full width */
-            background-color: #1A325C; /* Solid dark blue background */
-            color: #D1DBD7; /* Default text color for elements directly on body */
+        /* Custom font family for Neue Haas Grotesk Display alternative */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom font family for Cedarville Cursive */
+        .font-cedarville {
+            font-family: 'Cedarville Cursive', cursive;
         }
 
-        .font-bold-custom {
-            font-family: 'NeueHaasGroteskDisp Pro Blk', sans-serif; /* Fallback to sans-serif */
-            font-weight: 900; /* Ensure it's bold */
+        /* Styling for the image gradient overlay */
+        .image-gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30%; /* Adjust height of the gradient effect */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent); /* From semi-transparent black to transparent */
+            pointer-events: none; /* Allows clicks to pass through to the image/elements below */
         }
 
-        .main-container {
+        /* Slideshow specific styles */
+        .slideshow-container {
+            position: relative;
             width: 100%;
-            max-width: 1280px; /* Max width for content, similar to previous versions */
-            margin-left: auto;
-            margin-right: auto;
-            padding: 1.5rem; /* Padding around the main content area */
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center items within the main container */
+            max-width: 400px; /* Match the max-width of the main image */
+            aspect-ratio: 1 / 1; /* Keep it strictly square */
+            overflow: hidden;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 2rem; /* Space from "Latest Updates" */
         }
 
-        .logo-img {
-            height: 4rem; /* Adjusted height for logo to be more prominent */
-            width: auto; /* Maintain aspect ratio */
-            margin-bottom: 1rem; /* Space below logo */
-        }
-
-        .main-page-title {
-            color: #D1DBD7; /* Light grey for main title */
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 2rem; /* Space below title */
-        }
-
-        .nav-bar {
-            background-color: #D1DBD7; /* Light grey background for the nav bar */
-            border-radius: 1.5rem; /* Rounded corners */
-            padding: 1rem 2rem;
-            margin-bottom: 1.5rem; /* Space below nav bar */
-            display: flex;
-            justify-content: center; /* Center nav links */
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: fit-content; /* Shrink to fit content */
-            max-width: 100%; /* Ensure it doesn't overflow on small screens */
-        }
-
-        .nav-bar a {
-            color: #1A325C; /* Dark blue for nav links */
-            text-decoration: none;
-            padding: 0 1rem; /* Padding between links */
-            font-size: 1.1rem;
-            white-space: nowrap; /* Prevent links from wrapping */
-        }
-
-        .nav-bar a:not(:last-child) {
-            border-right: 1px solid #1A325C; /* Separator between links */
-        }
-
-        .nav-bar a:hover {
-            text-decoration: underline;
-        }
-
-        .content-box {
-            background-color: transparent; /* News box background is transparent */
-            border-radius: 1.5rem; /* Rounded corners */
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: none; /* No shadow for transparent box */
-            width: 100%; /* Take full width of main-container */
-            max-width: 600px; /* Max width for readability */
-            text-align: left; /* Aligned text flush left */
-        }
-
-        .content-box h3 {
-            color: #D1DBD7; /* News heading color is light grey */
-        }
-
-        .content-box p {
-            color: #D1DBD7; /* News text color is light grey */
-            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Explicitly set to non-bold font */
-            font-weight: normal; /* Ensure normal font weight */
-        }
-
-        /* Styling for the new button */
-        .generate-quote-button {
-            background-color: #D1DBD7; /* Light grey background */
-            color: #1A325C; /* Dark blue text */
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease;
-            margin-top: 1rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            border: none; /* Remove default button border */
-        }
-
-        .generate-quote-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .generate-quote-button:active {
-            transform: translateY(0);
-            box-shadow: none;
-        }
-
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1); /* Light border for spinner */
-            border-top: 4px solid #1A325C; /* Dark blue top border for spinner */
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
+        .slideshow-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: none; /* Hidden by default */
         }
 
-        .loading-spinner.active {
-            display: inline-block;
+        .slideshow-image.active {
+            display: block;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .progress-bars {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            gap: 4px;
+            z-index: 20;
         }
 
-        /* Styling for the generated quote */
-        #generated-quote {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            font-style: italic;
-            text-align: center; /* Centered quote */
-            color: #D1DBD7; /* Light grey text for quote */
-            max-width: 600px; /* Match news box width */
-            width: 100%;
+        .progress-bar {
+            flex-grow: 1;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
         }
 
-        /* Responsive adjustments for widening the layout */
-        @media (min-width: 640px) { /* sm breakpoint */
-            .main-container {
-                padding-left: 2rem;
-                padding-right: 2rem;
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background-color: white;
+            border-radius: 2px;
+            transition: width 0.1s linear; /* For smooth pause/resume */
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-between;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .star-icon {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .star-icon.liked {
+            fill: #FFD700; /* Gold color when liked */
+            transform: scale(1.1);
+        }
+
+        .replay-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            display: none; /* Hidden by default */
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-        @media (min-width: 768px) { /* md breakpoint */
-            .main-container {
-                padding-left: 4rem;
-                padding-right: 4rem;
-            }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
         }
-        @media (min-width: 1024px) { /* lg breakpoint */
-            .main-container {
-                padding-left: 8rem; /* Adjusted for narrower content */
-                padding-right: 8rem;
-            }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
         }
-        @media (min-width: 1280px) { /* xl breakpoint */
-            .main-container {
-                padding-left: 10rem; /* Adjusted for narrower content */
-                padding-right: 10rem;
-            }
-        }
-        @media (min-width: 1536px) { /* 2xl breakpoint */
-            .main-container {
-                padding-left: 12rem; /* Adjusted for narrower content */
-                padding-right: 12rem;
-            }
-        }
+
+        /* Staggered delays for text elements */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
     </style>
 </head>
-<body class="p-4 sm:p-8 h-full">
-    <div class="main-container w-full mx-auto">
-        <img src="renjwhite.png" alt="Renj Logo" class="logo-img">
+<body class="bg-black text-white font-inter min-h-screen flex flex-col items-center justify-center p-4">
 
-        <h1 class="main-page-title font-bold-custom">poems by renj</h1>
+    <div class="max-w-4xl w-full flex flex-col items-center space-y-8">
 
-        <nav class="nav-bar">
-            <a href="index.html" class="font-bold-custom">home</a>
-            <a href="cyclei.html" class="font-bold-custom">cycle i</a>
-            <a href="cycleii.html" class="font-bold-custom">cycle ii</a>
-            <a href="cycleiii.html" class="font-bold-custom">cycle iii</a>
-            <a href="manifesto.html" class="font-bold-custom">manifesto</a>
-        </nav>
+        <!-- Main Content Area -->
+        <main class="w-full flex flex-col items-center">
+            <!-- Container for image and descriptive text, with max-width and left alignment -->
+            <div class="w-full max-w-sm flex flex-col items-start space-y-6">
 
-        <div class="content-box">
-            <h3 class="text-2xl font-bold-custom mb-4">News</h3>
-            <p class="leading-relaxed">
-                Placeholder for news updates.
-            </p>
-        </div>
+                <!-- Image with Navigation bar and "renj's poems" overlaid -->
+                <div class="relative w-full pt-8 animate-fade-in">
+                    <img src="https://renj.neocities.org/cyclei/490963882_4516944741866516_7134079400566212448_n.jpg"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x400/000000/FFFFFF?text=Image+Not+Found';"
+                         alt="Renj's baby picture"
+                         class="w-full h-auto object-cover rounded-lg shadow-lg"
+                         style="aspect-ratio: 3 / 4;"> <!-- Added aspect-ratio for 3:4 -->
 
-        <button id="generate-quote-button" class="generate-quote-button">
-            Try
-            <span id="loading-spinner" class="loading-spinner"></span>
-        </button>
+                    <!-- Gradient overlay for the image -->
+                    <div class="image-gradient-overlay"></div>
 
-        <p id="generated-quote" class="leading-relaxed"></p>
+                    <!-- Navigation bar directly on top of the picture - now horizontal -->
+                    <nav class="absolute top-8 left-0 right-0 p-4 flex justify-around items-center text-white text-xs md:text-sm">
+                        <a href="cyclei.html" class="hover:underline">cycle i</a>
+                        <a href="cycleii.html" class="hover:underline">cycle ii</a>
+                        <a href="cycleiii.html" class="hover:underline">cycle iii</a>
+                        <a href="manifesto.html" class="hover:underline">manifesto</a>
+                    </nav>
 
+                    <!-- "renj's poems" text - now overlaid on the photo, lower-left -->
+                    <h1 class="font-cedarville text-5xl md:text-7xl absolute bottom-4 left-4 z-10 animate-fade-in-up delay-100">
+                        renj's poems
+                    </h1>
+                </div>
+
+                <!-- Descriptive text - justified -->
+                <p class="text-justify text-sm md:text-base leading-relaxed animate-fade-in-up delay-200">
+                    A poet's soul, weaving verses from the whispers of the world. Each word a brushstroke, painting emotions across the canvas of silence, inviting reflection, and revealing the profound beauty in fleeting moments and enduring truths.
+                </p>
+
+                <!-- Latest Updates Section -->
+                <div class="w-full mt-8">
+                    <h2 class="font-cedarville text-3xl mb-2 animate-fade-in-up delay-300">
+                        latest updates
+                    </h2>
+                    <p class="font-inter text-sm md:text-base leading-relaxed animate-fade-in-up delay-400">
+                        Stay tuned for new collections and insights into the creative process. Recent works explore themes of nature's resilience and the quiet strength found in everyday moments. More to come soon!
+                    </p>
+                </div>
+
+                <!-- Slideshow Section -->
+                <div id="slideshow" class="slideshow-container animate-fade-in delay-400">
+                    <div class="progress-bars" id="progress-bars">
+                        <!-- Progress bars will be generated by JS -->
+                    </div>
+
+                    <!-- Slideshow Images -->
+                    <img class="slideshow-image active" src="https://placehold.co/400x400/FF5733/FFFFFF?text=Slide+1" alt="Slideshow Image 1">
+                    <img class="slideshow-image" src="https://placehold.co/400x400/33FF57/FFFFFF?text=Slide+2" alt="Slideshow Image 2">
+                    <img class="slideshow-image" src="https://placehold.co/400x400/3357FF/FFFFFF?text=Slide+3" alt="Slideshow Image 3">
+                    <img class="slideshow-image" src="https://placehold.co/400x400/FF33A1/FFFFFF?text=Slide+4" alt="Slideshow Image 4">
+
+                    <!-- Navigation Buttons for Slideshow -->
+                    <button id="prev-slide" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-20 focus:outline-none hover:bg-opacity-75 transition-opacity">
+                        &lt;
+                    </button>
+                    <button id="next-slide" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-20 focus:outline-none hover:bg-opacity-75 transition-opacity">
+                        &gt;
+                    </button>
+
+                    <div class="controls flex justify-between items-center">
+                        <!-- Star Icon (SVG) -->
+                        <svg class="star-icon" id="star-icon" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                        <button id="replay-button" class="replay-button">Replay</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer - aligns with the max-w-sm content block -->
+        <footer class="w-full flex justify-between items-end text-xs md:text-sm mt-8 max-w-sm">
+            <div class="flex space-x-4">
+                <a href="#" class="hover:underline">INSTAGRAM</a>
+                <a href="#" class="hover:underline">FACEBOOK</a>
+            </div>
+            <div class="text-right">
+                <p>sibulan, <span id="current-time"></span></p>
+                <p>&copy; 2025</p>
+            </div>
+        </footer>
     </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const generateQuoteButton = document.getElementById('generate-quote-button');
-            const generatedQuote = document.getElementById('generated-quote');
-            const loadingSpinner = document.getElementById('loading-spinner');
+        // Function to update the time
+        function updateTime() {
+            const now = new Date();
+            // Format the time as HH:MM AM/PM
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+            const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
 
-            generateQuoteButton.addEventListener('click', async function() {
-                generatedQuote.textContent = ""; // Clear previous quote
-                generatedQuote.classList.remove('text-red-500'); // Remove error styling if present
-                generateQuoteButton.disabled = true; // Disable button
-                loadingSpinner.classList.add('active'); // Show spinner
+        // Update time immediately and then every minute
+        updateTime();
+        setInterval(updateTime, 60000); // Update every 60 seconds (1 minute)
 
-                // Updated prompt to include the poet's name
-                const prompt = "Provide a single, concise, and inspiring one-liner quote about poetry or writing from a famous poet, including their name. Format it as '\"Quote text\" - Poet Name'.";
-                let chatHistory = [];
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = { contents: chatHistory };
-                const apiKey = ""; // Leave as empty string, Canvas will provide
 
-                try {
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+        // Slideshow Logic
+        const slideshowContainer = document.getElementById('slideshow');
+        const slideshowImages = document.querySelectorAll('.slideshow-image');
+        const progressBarsContainer = document.getElementById('progress-bars');
+        const starIcon = document.getElementById('star-icon');
+        const replayButton = document.getElementById('replay-button');
+        const prevSlideButton = document.getElementById('prev-slide');
+        const nextSlideButton = document.getElementById('next-slide');
 
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+        let currentSlideIndex = 0;
+        let slideDuration = 5000; // 5 seconds per slide
+        let animationFrameId;
+        let startTime;
+        let pausedTime = 0;
+        let isPaused = false;
 
-                    const result = await response.json();
+        // Create progress bars dynamically based on the number of images
+        slideshowImages.forEach((_, index) => {
+            const progressBar = document.createElement('div');
+            progressBar.className = 'progress-bar';
+            const progressFill = document.createElement('div');
+            progressFill.className = 'progress-fill';
+            progressBar.appendChild(progressFill);
+            progressBarsContainer.appendChild(progressBar);
+        });
 
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const quoteText = result.candidates[0].content.parts[0].text;
-                        generatedQuote.textContent = quoteText;
-                    } else {
-                        generatedQuote.textContent = "Failed to generate quote. Please try again.";
-                        generatedQuote.classList.add('text-red-500'); // Add error styling
-                        console.error("Gemini API response structure unexpected:", result);
-                    }
-                } catch (error) {
-                    generatedQuote.textContent = "Error: " + error.message;
-                    generatedQuote.classList.add('text-red-500'); // Add error styling
-                    console.error("Error calling Gemini API:", error);
-                } finally {
-                    generateQuoteButton.disabled = false; // Re-enable button
-                    loadingSpinner.classList.remove('active'); // Hide spinner
+        const progressFills = document.querySelectorAll('.progress-fill');
+
+        function showSlide(index) {
+            // Ensure index wraps around
+            if (index >= slideshowImages.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slideshowImages.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+
+            // Hide replay button
+            replayButton.style.display = 'none';
+            // Reset star icon state
+            starIcon.classList.remove('liked');
+            starIcon.style.fill = 'white';
+
+            // Hide all images
+            slideshowImages.forEach(img => img.classList.remove('active'));
+            // Show the current image
+            slideshowImages[currentSlideIndex].classList.add('active');
+
+            // Reset all previous progress bars and fill the completed ones
+            progressFills.forEach((fill, i) => {
+                fill.style.width = '0%'; // Reset current and future fills
+                if (i < currentSlideIndex) {
+                    fill.style.width = '100%'; // Fill completed ones
                 }
             });
+
+            // Start progress for the current slide
+            pausedTime = 0; // Reset paused time for new slide
+            startProgress();
+        }
+
+        function startProgress() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            startTime = performance.now() - pausedTime; // Adjust start time if resuming
+            isPaused = false;
+
+            function animateProgress(currentTime) {
+                if (isPaused) return;
+
+                const elapsedTime = currentTime - startTime;
+                const progress = (elapsedTime / slideDuration) * 100;
+
+                if (progress <= 100) {
+                    progressFills[currentSlideIndex].style.width = `${progress}%`;
+                    animationFrameId = requestAnimationFrame(animateProgress);
+                } else {
+                    nextSlideAuto(); // Call auto-advance for next slide
+                }
+            }
+            animationFrameId = requestAnimationFrame(animateProgress);
+        }
+
+        function pauseProgress() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            pausedTime = performance.now() - startTime; // Store elapsed time when paused
+            isPaused = true;
+        }
+
+        function resumeProgress() {
+            if (isPaused) {
+                startProgress();
+            }
+        }
+
+        // Function for automatic slide advance
+        function nextSlideAuto() {
+            currentSlideIndex++;
+            if (currentSlideIndex < slideshowImages.length) {
+                showSlide(currentSlideIndex);
+            } else {
+                // End of slideshow
+                progressFills[slideshowImages.length - 1].style.width = '100%'; // Ensure last bar is full
+                replayButton.style.display = 'block'; // Show replay button
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            }
+        }
+
+        // Manual navigation functions
+        function prevSlideManual() {
+            showSlide(currentSlideIndex - 1);
+        }
+
+        function nextSlideManual() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        function replaySlideshow() {
+            currentSlideIndex = 0;
+            pausedTime = 0; // Reset paused time for replay
+            showSlide(currentSlideIndex);
+        }
+
+        // Event Listeners for pause/resume
+        slideshowContainer.addEventListener('mouseenter', pauseProgress);
+        slideshowContainer.addEventListener('mouseleave', resumeProgress);
+        slideshowContainer.addEventListener('touchstart', pauseProgress);
+        slideshowContainer.addEventListener('touchend', resumeProgress);
+
+        // Star icon click listener (single tap/click only)
+        starIcon.addEventListener('click', () => {
+            starIcon.classList.toggle('liked');
+            if (starIcon.classList.contains('liked')) {
+                starIcon.style.fill = '#FFD700'; // Gold color
+            } else {
+                starIcon.style.fill = 'white';
+            }
         });
+
+        // Replay button click listener
+        replayButton.addEventListener('click', replaySlideshow);
+
+        // Manual navigation button listeners
+        prevSlideButton.addEventListener('click', prevSlideManual);
+        nextSlideButton.addEventListener('click', nextSlideManual);
+
+
+        // Initialize slideshow
+        showSlide(currentSlideIndex);
     </script>
 </body>
 </html>
