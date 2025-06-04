@@ -252,27 +252,38 @@
             to { width: 100%; }
         }
 
-        /* Styles for catalog photo placeholders */
-        .catalog-photo-placeholder {
-            position: relative;
-            width: 100%;
-            padding-bottom: 100%; /* Makes it square */
-            background-color: #2A4E7E; /* A darker shade of blue for the background */
-            border-radius: 0.75rem; /* Reduced corner rounding */
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            cursor: pointer; /* Added cursor for interactivity hint */
+        /* NEW: Styles for the clickable catalog link container */
+        .catalog-link {
+            position: relative; /* Establish positioning context for children */
+            display: block; /* Make it a block element to take up space in the grid */
+            width: 100%; /* Fill grid column width */
+            padding-bottom: 100%; /* Create a square aspect ratio (1:1) */
+            border-radius: 0.75rem; /* Rounded corners */
+            overflow: hidden; /* Hide any overflow from image/overlay */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
             transition: transform 0.2s ease-in-out; /* Added transition for hover effect */
+            cursor: pointer; /* Indicate it's clickable */
+            background-color: #2A4E7E; /* Fallback background if image fails or isn't present */
         }
 
-        .catalog-photo-placeholder:hover {
+        .catalog-link:hover {
             transform: translateY(-5px); /* Lift effect on hover */
         }
 
-        .catalog-photo-overlay {
+        /* Styles for the image inside the link */
+        .catalog-link .catalog-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the area, cropping if necessary */
+            border-radius: 0.75rem; /* Match the parent's border-radius */
+            z-index: 0; /* Place image behind the overlay text */
+        }
+
+        /* Styles for the text overlay inside the link */
+        .catalog-link .catalog-photo-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -285,6 +296,7 @@
             align-items: center;
             padding: 0.5rem;
             color: #D1DBD7; /* Light text color */
+            z-index: 1; /* Ensure text overlay is above the image */
         }
 
         .catalog-photo-overlay .release-type {
@@ -325,29 +337,6 @@
             gap: 0.5rem; /* Further reduced gap between photos */
             grid-template-columns: repeat(2, 1fr); /* Explicitly 2 columns for the two images */
         }
-        /* Ensure individual photo placeholder is strictly square */
-    
-        .catalog-photo-placeholder .catalog-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the image covers the area, cropping if necessary */
-    border-radius: 0.75rem; /* Match the parent's border-radius */
-    z-index: 0; /* Place image behind the overlay text */
-}
-
-/* Remove the background-color from the placeholder when using an <img> tag */
-.catalog-photo-placeholder {
-    /* Keep other styles like position, width, padding-bottom, etc. */
-    background-color: transparent; /* Or remove this line entirely if you prefer */
-}
-
-/* Ensure the overlay is on top */
-.catalog-photo-overlay {
-    z-index: 1; /* Ensure text overlay is above the image */
-}
     </style>
 </head>
 <body class="h-full bg-[#1A325C] text-[#D1DBD7]">
@@ -404,28 +393,29 @@
                 </div>
             </div>
 
-            
             <!-- Catalog Section (Now a full-width section below other content) -->
             <div class="catalog-section bg-[#D1DBD7] text-[#1A325C] rounded-xl p-4 md:p-6 shadow-lg">
-    <h2 class="font-bold-custom text-2xl md:text-3xl mb-4 text-center">catalog</h2>
-    <div class="catalog-photos-grid grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4">
-        <a href="your-previous-release-page.html" class="block w-full h-full"> <div class="catalog-photo-placeholder transition-transform duration-200 hover:translate-y-[-5px]">
-                <div class="catalog-photo-overlay">
-                    <span class="release-type">Previous Release</span>
-                    <span class="release-title">Title Here</span>
+                <h2 class="font-bold-custom text-2xl md:text-3xl mb-4 text-center">catalog</h2>
+                <div class="catalog-photos-grid grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4">
+                    <!-- First Catalog Item - Now wrapped correctly with 'catalog-link' class -->
+                    <a href="your-previous-release-page.html" class="catalog-link">
+                        <img src="covers/mr13.jpg" alt="Previous Release" class="catalog-image">
+                        <div class="catalog-photo-overlay">
+                            <span class="release-type">Previous Release</span>
+                            <span class="release-title">coversations with the ghosts i exhumed</span>
+                        </div>
+                    </a>
+                    
+                    <!-- Second Catalog Item - Now wrapped correctly with 'catalog-link' class -->
+                    <a href="your-next-release-page.html" class="catalog-link">
+                        <img src="covers/the%20time%20to%20ignore.png" alt="Next Release" class="catalog-image">
+                        <div class="catalog-photo-overlay">
+                            <span class="release-type">Next Release</span>
+                            <span class="release-title">the time to ignore</span>
+                        </div>
+                    </a>
                 </div>
             </div>
-        </a>
-        
-        <a href="your-next-release-page.html" class="block w-full h-full"> <div class="catalog-photo-placeholder transition-transform duration-200 hover:translate-y-[-5px]">
-                <div class="catalog-photo-overlay">
-                    <span class="release-type">Next Release</span>
-                    <span class="release-title">Title Here</span>
-                </div>
-            </div>
-        </a>
-    </div>
-</div>
         </div>
     </div>
 
