@@ -326,9 +326,28 @@
             grid-template-columns: repeat(2, 1fr); /* Explicitly 2 columns for the two images */
         }
         /* Ensure individual photo placeholder is strictly square */
-        .catalog-photo-placeholder {
-            padding-bottom: 100%; /* Makes it strictly square (1:1 aspect ratio) */
-        }
+    
+        .catalog-photo-placeholder .catalog-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the area, cropping if necessary */
+    border-radius: 0.75rem; /* Match the parent's border-radius */
+    z-index: 0; /* Place image behind the overlay text */
+}
+
+/* Remove the background-color from the placeholder when using an <img> tag */
+.catalog-photo-placeholder {
+    /* Keep other styles like position, width, padding-bottom, etc. */
+    background-color: transparent; /* Or remove this line entirely if you prefer */
+}
+
+/* Ensure the overlay is on top */
+.catalog-photo-overlay {
+    z-index: 1; /* Ensure text overlay is above the image */
+}
     </style>
 </head>
 <body class="h-full bg-[#1A325C] text-[#D1DBD7]">
@@ -388,23 +407,25 @@
             
             <!-- Catalog Section (Now a full-width section below other content) -->
             <div class="catalog-section bg-[#D1DBD7] text-[#1A325C] rounded-xl p-4 md:p-6 shadow-lg">
-                <h2 class="font-bold-custom text-2xl md:text-3xl mb-4 text-center">catalog</h2>
-                <!-- Reduced gap-4 md:gap-6 to gap-2 md:gap-4 -->
-                <div class="catalog-photos-grid grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4">
-                    <div class="catalog-photo-placeholder transition-transform duration-200 hover:translate-y-[-5px]">
-                        <div class="catalog-photo-overlay">
-                            <span class="release-type">Previous Release</span>
-                            <span class="release-title">conversations with the ghosts i exhumed</span>
-                        </div>
-                    </div>
-                    <div class="catalog-photo-placeholder transition-transform duration-200 hover:translate-y-[-5px]">
-                        <div class="catalog-photo-overlay">
-                            <span class="release-type">Next Release</span>
-                            <span class="release-title">the time to ignore</span>
-                        </div>
-                    </div>
+    <h2 class="font-bold-custom text-2xl md:text-3xl mb-4 text-center">catalog</h2>
+    <div class="catalog-photos-grid grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4">
+        <a href="your-previous-release-page.html" class="block w-full h-full"> <div class="catalog-photo-placeholder transition-transform duration-200 hover:translate-y-[-5px]">
+                <div class="catalog-photo-overlay">
+                    <span class="release-type">Previous Release</span>
+                    <span class="release-title">Title Here</span>
                 </div>
             </div>
+        </a>
+        
+        <a href="your-next-release-page.html" class="block w-full h-full"> <div class="catalog-photo-placeholder transition-transform duration-200 hover:translate-y-[-5px]">
+                <div class="catalog-photo-overlay">
+                    <span class="release-type">Next Release</span>
+                    <span class="release-title">Title Here</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
         </div>
     </div>
 
