@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cycle i</title> <!-- Corrected title here -->
+    <title>cycle i</title> <!-- Corrected title -->
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="renjfavicon.png">
     <!-- Tailwind CSS CDN -->
@@ -72,26 +72,23 @@
 
         .lightbox-content {
             position: relative;
-            /* Fixed max dimensions for uniformity, allowing content to scale down on small screens */
-            max-width: 800px; /* Example fixed maximum width */
-            max-height: 600px; /* Example fixed maximum height */
-            width: 90%; /* Responsive width for smaller screens */
-            height: 90%; /* Responsive height for smaller screens */
-            padding: 20px; /* Added padding inside the content box */
-            background-color: #1a1a1a; /* Added a subtle background to define the modal box */
-            border-radius: 12px; /* Slightly more rounded corners for the modal box */
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* Stronger shadow for depth */
+            /* Removed max-width/height here to let image control size */
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column; /* Align image and potentially other content vertically */
-            box-sizing: border-box; /* Include padding in width/height calculation */
+            flex-direction: column;
         }
 
         .lightbox-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* Ensures image fits within its container without cropping */
+            max-width: 800px; /* Fixed maximum width for enlarged images */
+            max-height: 600px; /* Fixed maximum height for enlarged images */
+            width: auto; /* Allow image to scale down if smaller than max-width */
+            height: auto; /* Allow image to scale down if smaller than max-height */
+            object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
@@ -159,6 +156,10 @@
                 max-width: 90%; /* Allow more space on smaller screens */
                 max-height: 90%;
             }
+            .lightbox-image {
+                max-width: 100%; /* Ensure image fits within smaller modal */
+                max-height: 100%;
+            }
         }
     </style>
 </head>
@@ -220,8 +221,8 @@
                     poetry collections
                 </h2>
 
-                <!-- Two 1x1 cards per line -->
-                <div class="w-full grid grid-cols-2 gap-4 mt-8">
+                <!-- Poetry Collections Grid - Adjusted for mobile -->
+                <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
                     <!-- Card 1 -->
                     <a href="linesunbent.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://i.postimg.cc/SNzhMf5C/mr1.jpg"
@@ -366,8 +367,8 @@
                     special releases
                 </h2>
 
-                <!-- Two 1x1 cards per line for Special Releases -->
-                <div class="w-full grid grid-cols-2 gap-4 mt-8">
+                <!-- Special Releases Grid - Adjusted for mobile -->
+                <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
                     <!-- Special Release Card 1 -->
                     <a href="linesunbent-dlx.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://i.postimg.cc/RF8N1554/mrf1.jpg"
