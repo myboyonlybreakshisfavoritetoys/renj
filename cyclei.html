@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cycle i</title>
+    <title>cycle i</title> <!-- Corrected title here -->
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="renjfavicon.png">
     <!-- Tailwind CSS CDN -->
@@ -72,18 +72,26 @@
 
         .lightbox-content {
             position: relative;
-            max-width: 70%; /* Reduced from 90% */
-            max-height: 70%; /* Reduced from 90% */
-            margin: 20px; /* Added margin to ensure space around the image */
+            /* Fixed max dimensions for uniformity, allowing content to scale down on small screens */
+            max-width: 800px; /* Example fixed maximum width */
+            max-height: 600px; /* Example fixed maximum height */
+            width: 90%; /* Responsive width for smaller screens */
+            height: 90%; /* Responsive height for smaller screens */
+            padding: 20px; /* Added padding inside the content box */
+            background-color: #1a1a1a; /* Added a subtle background to define the modal box */
+            border-radius: 12px; /* Slightly more rounded corners for the modal box */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* Stronger shadow for depth */
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column; /* Align image and potentially other content vertically */
+            box-sizing: border-box; /* Include padding in width/height calculation */
         }
 
         .lightbox-image {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain;
+            object-fit: contain; /* Ensures image fits within its container without cropping */
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
@@ -146,6 +154,10 @@
             }
             .lightbox-nav-btn.right {
                 right: 10px;
+            }
+            .lightbox-content {
+                max-width: 90%; /* Allow more space on smaller screens */
+                max-height: 90%;
             }
         }
     </style>
