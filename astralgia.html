@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full"> <head>
+<html lang="en" class="h-full">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astralgia</title>
-<link rel="icon" type="image/png" href="renjfavicon.png"> <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Define custom font families.
             You will need to import 'NeueHaasGroteskDisp Pro' and 'NeueHaasGroteskDisp Pro Blk'
@@ -20,7 +22,7 @@
         }
         @font-face {
             font-family: 'NeueHaasGroteskDisp Pro Blk';
-            src: url('path/to/NeueHaasHaasGroteskDispProBlk.woff2') format('woff2');
+            src: url('path/to/NeueHaasGroteskDispProBlk.woff2') format('woff2');
             font-weight: 900; /* Or appropriate bold weight */
             font-style: normal;
         }
@@ -28,15 +30,10 @@
 
         body {
             font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Fallback to sans-serif */
-            /* background-color: #1A325C; Removed, now handled by Tailwind class on body tag */
             margin: 0;
             padding: 0;
-            /* min-height: 100vh; Removed, now handled by h-full Tailwind class on body tag */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center content vertically */
-            align-items: center; /* Center content horizontally */
             color: #D1DBD7; /* Text outside boxes, e.g., 'astralgia' title */
+            overflow-x: hidden; /* Prevent horizontal scroll due to parallax */
         }
 
         .font-bold-custom {
@@ -44,11 +41,11 @@
             font-weight: 900; /* Ensure it's bold */
         }
 
+        /* General box styling applied via Tailwind classes now, but kept for consistency */
         .content-box {
             background-color: #D1DBD7; /* Light grey for boxes */
-            border-radius: 1.5rem; /* Uniform rounded corners (rounded-3xl in Tailwind) */
-            padding: 1.5rem;
-            margin-bottom: 1.5rem; /* Spacing between boxes */
+            border-radius: 0.75rem; /* Reduced uniform rounded corners (rounded-xl in Tailwind) */
+            padding: 1rem; /* Reduced padding */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         }
 
@@ -69,73 +66,39 @@
 
         .collapsible-content.expanded {
             max-height: 500px; /* Adjust as needed for content height */
-            padding-top: 1rem; /* Add padding when expanded */
+            padding-top: 0.75rem; /* Reduced padding when expanded */
         }
 
         .arrow {
             transition: transform 0.3s ease-out;
-            color: #1A325C; /* Dark blue for contrast on light background */
+            color: #1A325C; /* Dark color for contrast on light background */
         }
 
         .arrow.expanded {
             transform: rotate(90deg);
         }
 
-        /* Specific styling for the top navigation/header */
-        .header-nav {
-            background-color: #D1DBD7; /* Light grey for header */
-            border-radius: 1.5rem; /* Rounded corners */
-            padding: 1rem 2rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #1A325C; /* Dark blue for contrast on light background */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Styling for the main astralgia title within header */
+        .astralgia-site-title {
+            color: #D1DBD7; /* Light grey on dark blue background */
+            transition: none; /* No transition */
         }
-        .header-nav a {
-            color: #1A325C; /* Dark blue for contrast on light background */
-            text-decoration: none;
-            margin-left: 2rem;
-            font-size: 1.1rem;
-        }
-        .header-nav a:hover {
-            text-decoration: underline;
-        }
-        /* Styling for the logo image */
-        .header-nav .logo-img {
-            height: 2.5rem; /* Adjust height as needed */
+
+        /* Styling for the logo image within the nav */
+        .sidebar-nav .logo-img {
+            height: 2rem; /* Slightly smaller height */
             width: auto; /* Maintain aspect ratio */
         }
-
-        /* Styling for the main astralgia title */
-        .astralgia-title {
-            color: #D1DBD7; /* Astralgia title color (light grey) */
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            cursor: pointer; /* Indicate it's clickable */
-            /* Removed text-shadow */
-            transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Smooth transition for hover effect */
-            /* Assuming astralgia is part of the NeueHaasGroteskDisp Pro Blk font */
-        }
-        .astralgia-title:hover {
-            transform: scale(1.05); /* Slightly enlarge on hover */
-            opacity: 0.9; /* Subtle fade on hover */
-        }
-
 
         /* Styling for the flipbook embed container */
         .flipbook-container {
             background-color: #D1DBD7; /* Light grey for flipbook container */
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            border-radius: 0.75rem; /* Reduced corner rounding */
+            padding: 1rem; /* Reduced padding */
             overflow: hidden; /* Ensure embed fits and no scrollbars */
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Remove min-height here, aspect ratio will control height */
         }
 
         /* Aspect ratio container for the iframe */
@@ -155,94 +118,36 @@
             width: 100%;
             height: 100%;
             border: none;
-            /* border-radius already applied to parent .iframe-aspect-ratio */
         }
 
-
-        /* Responsive adjustments for widening the layout */
-        @media (min-width: 640px) { /* sm breakpoint */
-            .main-container {
-                padding-left: 2rem;
-                padding-right: 2rem;
-            }
-        }
-        @media (min-width: 768px) { /* md breakpoint */
-            .main-container {
-                padding-left: 4rem;
-                padding-right: 4rem;
-            }
-        }
-        @media (min-width: 1024px) { /* lg breakpoint */
-            .main-container {
-                padding-left: 8rem; /* Adjusted for narrower content */
-                padding-right: 8rem;
-            }
-        }
-        @media (min-width: 1280px) { /* xl breakpoint */
-            .main-container {
-                padding-left: 10rem; /* Adjusted for narrower content */
-                padding-right: 10rem;
-            }
-        }
-        @media (min-width: 1536px) { /* 2xl breakpoint */
-            .main-container {
-                padding-left: 12rem; /* Adjusted for narrower content */
-                padding-right: 12rem;
-            }
-        }
-
-        /* Instagram Story Modal Styles */
-        .story-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Darker overlay */
+        /* New Story Viewer Section Styles */
+        .story-viewer-section {
+            background-color: #D1DBD7; /* Light grey background */
+            border-radius: 0.75rem; /* Reduced corner rounding */
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative; /* For absolute positioning of children */
+            overflow: hidden; /* Hide overflow from image */
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            z-index: 1000; /* Ensure it's on top */
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            justify-content: center;
+            text-align: center;
         }
 
-        .story-modal-overlay.open {
-            opacity: 1;
-            visibility: visible;
+        .story-section-title {
+            color: #1A325C; /* Dark blue for the title */
         }
 
-        .story-container {
+        .story-content-wrapper {
             position: relative;
-            width: 90vw; /* Max width 90% of viewport width */
-            max-width: 400px; /* Max width for story (typical phone portrait) */
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100%) for the story content area */
             height: 0;
-            padding-bottom: calc(90vw * 16 / 9); /* 9:16 aspect ratio based on width */
-            max-height: 90vh; /* Max height 90% of viewport height */
-            background-color: #D1DBD7; /* Light grey for story container */
-            border-radius: 1.5rem;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column; /* For content inside */
+            border-radius: 0.75rem; /* Rounded corners for the story display area */
+            background-color: #1A325C; /* Dark background for the image area */
         }
-
-        @media (min-width: 400px) { /* Adjust for larger screens to maintain aspect ratio */
-            .story-container {
-                width: 400px; /* Fixed width for better control */
-                padding-bottom: calc(400px * 16 / 9); /* Maintain 9:16 aspect ratio */
-            }
-        }
-        @media (min-height: 600px) { /* Adjust if height is limiting factor */
-            .story-container {
-                height: 90vh;
-                width: calc(90vh * 9 / 16); /* Adjust width based on height to maintain 9:16 */
-                padding-bottom: 0; /* No padding-bottom needed if height is fixed */
-            }
-        }
-
 
         .story-image {
             position: absolute;
@@ -251,7 +156,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain; /* Ensure image fits without cropping */
-            background-color: #1A325C; /* Background for image area within story */
+            transition: opacity 0.5s ease-in-out; /* Smooth fade for image */
         }
 
         .story-nav-button {
@@ -276,19 +181,43 @@
             right: 1rem;
         }
 
-        .story-close-button {
+        /* Replay Story Overlay Styles */
+        .replay-story-overlay {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 50%; /* Circular button */
-            cursor: pointer;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Almost black overlay */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
+
+        .replay-story-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .replay-story-button {
+            background-color: #D1DBD7; /* Light grey button */
+            color: #1A325C; /* Dark blue text */
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
             font-size: 1.2rem;
             font-weight: bold;
-            z-index: 1002;
-            line-height: 1; /* Adjust line height for better centering of X */
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .replay-story-button:hover {
+            background-color: #C0C8C4; /* Slightly darker grey on hover */
+            transform: translateY(-2px);
         }
 
         /* Story Progress Bar Styles */
@@ -322,68 +251,160 @@
             from { width: 0; }
             to { width: 100%; }
         }
+
+        /* Styles for catalog photo placeholders */
+        .catalog-photo-placeholder {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* Makes it square */
+            background-color: #2A4E7E; /* A darker shade of blue for the background */
+            border-radius: 0.75rem; /* Reduced corner rounding */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer; /* Added cursor for interactivity hint */
+            transition: transform 0.2s ease-in-out; /* Added transition for hover effect */
+        }
+
+        .catalog-photo-placeholder:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+
+        .catalog-photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
+            color: #D1DBD7; /* Light text color */
+        }
+
+        .catalog-photo-overlay .release-type {
+            font-size: 0.65rem; /* Smaller text */
+            font-style: italic; /* Italic */
+            margin-bottom: 0.1rem; /* Reduced margin */
+            line-height: 1.1; /* Tighter line height */
+        }
+
+        .catalog-photo-overlay .release-title {
+            font-size: 0.8rem; /* Slightly bigger than release-type */
+            font-weight: bold; /* Bold */
+            line-height: 1.1; /* Tighter line height */
+        }
+
+        /* Consistent font sizes for content */
+        .content-box p {
+            color: #1A325C; /* Dark blue text */
+            font-size: 0.9rem; /* Consistent font size */
+        }
+        .content-box h3 {
+            color: #1A325C; /* Dark blue text */
+            font-size: 1.25rem; /* Consistent font size for section titles */
+        }
+        .catalog-section h2 {
+            color: #1A325C; /* Dark blue text */
+            font-size: 1.25rem; /* Consistent font size for catalog title */
+        }
+        /* Adjust padding and gap for a smaller catalog section */
+        .catalog-section {
+            padding: 0.5rem; /* Further reduced padding */
+            margin-bottom: 1rem; /* Reduced margin */
+            max-width: 400px; /* Further reduced max width for the catalog section */
+            margin-left: auto; /* Center the section */
+            margin-right: auto; /* Center the section */
+        }
+        .catalog-photos-grid {
+            gap: 0.5rem; /* Further reduced gap between photos */
+            grid-template-columns: repeat(2, 1fr); /* Explicitly 2 columns for the two images */
+        }
+        /* Ensure individual photo placeholder is strictly square */
+        .catalog-photo-placeholder {
+            padding-bottom: 100%; /* Makes it strictly square (1:1 aspect ratio) */
+        }
     </style>
 </head>
-<body class="p-4 sm:p-8 bg-[#1A325C] h-full"> <div class="main-container w-full max-w-screen-xl mx-auto">
-        <div class="header-nav">
-            <img src="renjlogo.png" alt="RED Logo" class="logo-img">
-            <nav>
-                <a href="#" class="font-bold-custom">home</a>
-                <a href="#" class="font-bold-custom">cycle ii</a>
+<body class="h-full bg-[#1A325C] text-[#D1DBD7]">
+    <!-- Changed max-w-screen-md to max-w-screen-lg to widen the layout slightly -->
+    <div class="main-layout-container mx-auto p-4 md:p-6 lg:p-8 max-w-screen-lg">
+        <!-- Header (New) -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-8">
+            <!-- Astralgia title for the overall site -->
+            <h1 class="astralgia-site-title font-bold-custom text-4xl md:text-5xl lg:text-6xl text-[#D1DBD7] mb-4 md:mb-0">astralgia</h1>
+            <!-- Logo and navigation links -->
+            <nav class="sidebar-nav flex items-center gap-4 md:gap-6">
+                <img src="renjlogo.png" alt="renj logo" class="logo-img">
+                <a href="index.html" class="text-[#D1DBD7] text-lg hover:underline">home</a>
+                <a href="cyleii.html" class="text-[#D1DBD7] text-lg hover:underline">cycle ii</a>
             </nav>
-        </div>
+        </header>
 
-        <h2 id="astralgia-title" class="astralgia-title font-bold-custom">astralgia</h2>
-
-        <div class="flipbook-container">
+        <!-- Flipbook Container (at the very top, below header) -->
+        <!-- Reduced mb-6 md:mb-8 to mb-4 md:mb-6 -->
+        <div class="flipbook-container mb-4 md:mb-6">
             <div class="iframe-aspect-ratio">
                 <iframe src="https://online.pubhtml5.com/nbxmf/mblk/" allowfullscreen></iframe>
             </div>
         </div>
 
-        <div class="content-box">
-            <div class="collapsible-header" data-target="about-astralgia-content">
-                <h3 class="text-2xl font-bold-custom text-[#1A325C]">about astralgia</h3>
-                <span class="arrow text-2xl">+</span>
+        <!-- Main Content Area (Stacked Sections) -->
+        <!-- Reduced space-y-6 md:space-y-8 to space-y-4 md:space-y-6 -->
+        <div class="main-content-area space-y-4 md:space-y-6">
+            <!-- Story Viewer Section -->
+            <!-- Changed rounded-3xl to rounded-xl -->
+            <div id="story-viewer-section" class="story-viewer-section bg-[#D1DBD7] text-[#1A325C] rounded-xl p-4 md:p-6 shadow-lg">
+                <h2 class="story-section-title font-bold-custom text-2xl md:text-3xl mb-4">astralgia stories</h2>
+                <div class="story-content-wrapper">
+                    <div id="story-progress-container" class="story-progress-container"></div>
+                    <img id="story-image" src="" alt="Story Image" class="story-image">
+                    <div id="prev-story-button" class="story-nav-button prev">&lt;</div>
+                    <div id="next-story-button" class="story-nav-button next">&gt;</div>
+                    <div id="replay-story-overlay" class="replay-story-overlay">
+                        <button id="replay-story-button" class="replay-story-button">Replay Story</button>
+                    </div>
+                </div>
             </div>
-            <div id="about-astralgia-content" class="collapsible-content">
-                <p class="text-[#1A325C] leading-relaxed">
-                    Astralgia. Released July 5, 2024. This was a lot to make. There were so many poems that it hurts to cut
-                    and discard the others. Although not my biggest release, it's above the average of around 11-12
-                    poems. Most of this was written during the summer vacation. I found myself writing about the past,
-                    present, and future. I even wrote about the people I met, the people I am with, the people I wish to be
-                    with, people I wished I never met, and the person I don't want to become. This was a lot to pack and
-                    unpack. My emotions wrapped in carbed wires but tied with a cute silver sparkly ribbon, Astralgia.
-                </p>
-            </div>
-        </div>
 
-        <div class="content-box">
-            <div class="collapsible-header" data-target="more-astralgia-content">
-                <h3 class="text-2xl font-bold-custom text-[#1A325C]">more astralgia content</h3>
-                <span class="arrow text-2xl">+</span>
+            <!-- About Astralgia Content Box -->
+            <div class="content-box bg-[#D1DBD7] text-[#1A325C] rounded-xl p-4 md:p-6 shadow-lg">
+                <div class="collapsible-header" data-target="about-astralgia-content">
+                    <h3 class="font-bold-custom text-xl md:text-2xl">About Astralgia</h3>
+                    <span class="arrow text-2xl">+</span>
+                </div>
+                <div id="about-astralgia-content" class="collapsible-content">
+                    <p class="leading-relaxed text-base md:text-lg">
+                        Astralgia. Released July 5, 2024. This was a lot to make. There were so many poemsthat it hurts to cut and discard the otthers. Although not my biggest release, it's above the average of around 11-12 poems. Most of this was written during the summer vacation. I found myself writing about the past, present, and future. I even wrote about the people I met, the people I am with, the people I wish to be with, people I wished I never met, and the person I don't want to become. THis was a lot to pack and unpack. My emotions wrapped in carbed wires but tied with a cute silver sparkly ribbon, Astralgia.
+                    </p>
+                </div>
             </div>
-            <div id="more-astralgia-content" class="collapsible-content">
-                <p class="text-[#1A325C]">photos etc ect</p>
-            </div>
-        </div>
 
-        <div class="content-box">
-            <h3 class="text-2xl font-bold-custom text-[#1A325C] mb-4">catalog</h3>
-            <div class="flex flex-col sm:flex-row justify-between text-[#1A325C]">
-                <a href="#" class="text-[#1A325C] hover:underline mb-2 sm:mb-0">link to previous release</a>
-                <a href="#" class="text-[#1A325C] hover:underline">link to next release</a>
+            
+            <!-- Catalog Section (Now a full-width section below other content) -->
+            <div class="catalog-section bg-[#D1DBD7] text-[#1A325C] rounded-xl p-4 md:p-6 shadow-lg">
+                <h2 class="font-bold-custom text-2xl md:text-3xl mb-4 text-center">catalog</h2>
+                <!-- Reduced gap-4 md:gap-6 to gap-2 md:gap-4 -->
+                <div class="catalog-photos-grid grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4">
+                    <div class="catalog-photo-placeholder transition-transform duration-200 hover:translate-y-[-5px]">
+                        <div class="catalog-photo-overlay">
+                            <span class="release-type">Previous Release</span>
+                            <span class="release-title">conversations with the ghosts i exhumed</span>
+                        </div>
+                    </div>
+                    <div class="catalog-photo-placeholder transition-transform duration-200 hover:translate-y-[-5px]">
+                        <div class="catalog-photo-overlay">
+                            <span class="release-type">Next Release</span>
+                            <span class="release-title">the time to ignore</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div id="story-modal-overlay" class="story-modal-overlay">
-        <div class="story-container">
-            <div id="story-progress-container" class="story-progress-container"></div>
-            <img id="story-image" src="" alt="Story Image" class="story-image">
-            <div id="prev-story-button" class="story-nav-button prev">&lt;</div>
-            <div id="next-story-button" class="story-nav-button next">&gt;</div>
-            <div id="story-close-button" class="story-close-button">X</div>
         </div>
     </div>
 
@@ -424,14 +445,14 @@
                 });
             });
 
-            // Instagram Story Modal Logic
-            const astralgiaTitle = document.getElementById('astralgia-title');
-            const storyModalOverlay = document.getElementById('story-modal-overlay');
+            // Astralgia Story Section Logic
+            const storyViewerSection = document.getElementById('story-viewer-section');
             const storyImage = document.getElementById('story-image');
             const prevStoryButton = document.getElementById('prev-story-button');
             const nextStoryButton = document.getElementById('next-story-button');
-            const storyCloseButton = document.getElementById('story-close-button');
             const storyProgressContainer = document.getElementById('story-progress-container');
+            const replayStoryOverlay = document.getElementById('replay-story-overlay');
+            const replayStoryButton = document.getElementById('replay-story-button');
 
             // --- USER EDITABLE: Add your image URLs here ---
             const storyPhotos = [
@@ -471,7 +492,7 @@
              */
             function startStoryTimer() {
                 clearInterval(storyInterval); // Clear any existing timer
-                if (storyPhotos.length > 1) { // Only auto-scroll if there's more than one story
+                if (storyPhotos.length > 0) { // Only auto-scroll if there are stories
                     storyInterval = setInterval(() => {
                         showNextStory(true); // Pass 'true' to indicate auto-scroll
                     }, STORY_DURATION);
@@ -498,32 +519,14 @@
             }
 
             /**
-             * Opens the Instagram story modal.
-             */
-            function openStoryModal() {
-                if (storyPhotos.length === 0) {
-                    console.warn("No story photos defined. Add URLs to the 'storyPhotos' array.");
-                    return;
-                }
-                currentStoryIndex = 0; // Always start from the first story when opening
-                createProgressBars(); // Create bars when opening
-                updateStoryImage();
-                storyModalOverlay.classList.add('open');
-                startStoryTimer(); // Start timer when modal opens
-            }
-
-            /**
-             * Closes the Instagram story modal.
-             */
-            function closeStoryModal() {
-                storyModalOverlay.classList.remove('open');
-                clearInterval(storyInterval); // Stop timer when modal closes
-            }
-
-            /**
              * Updates the displayed story image and progress bar.
              */
             function updateStoryImage() {
+                if (storyPhotos.length === 0) {
+                    storyImage.src = ''; // Clear image if no photos
+                    console.warn("No story photos defined. Add URLs to the 'storyPhotos' array.");
+                    return;
+                }
                 storyImage.src = storyPhotos[currentStoryIndex];
                 updateProgressBarAnimation(); // Update animation on image change
             }
@@ -535,15 +538,9 @@
             function showNextStory(isAutoScroll = false) {
                 if (currentStoryIndex === storyPhotos.length - 1) {
                     // This is the last story
-                    if (isAutoScroll) {
-                        // If it's auto-scroll and the last story, close the modal
-                        closeStoryModal();
-                    } else {
-                        // If it's manual click on last story, loop back to the first
-                        currentStoryIndex = 0;
-                        updateStoryImage();
-                        startStoryTimer(); // Restart timer for new slide
-                    }
+                    clearInterval(storyInterval); // Stop the timer
+                    replayStoryOverlay.classList.add('visible'); // Show replay overlay
+                    storyImage.style.opacity = '0'; // Fade out image
                 } else {
                     // Go to the next story
                     currentStoryIndex++;
@@ -556,34 +553,52 @@
              * Shows the previous story in the sequence.
              */
             function showPrevStory() {
+                replayStoryOverlay.classList.remove('visible'); // Hide replay overlay if navigating back
+                storyImage.style.opacity = '1'; // Ensure image is visible
                 currentStoryIndex = (currentStoryIndex - 1 + storyPhotos.length) % storyPhotos.length;
                 updateStoryImage();
                 startStoryTimer(); // Restart timer for new slide
             }
 
-            // Event Listeners for Story Modal
-            astralgiaTitle.addEventListener('click', openStoryModal);
-            storyCloseButton.addEventListener('click', closeStoryModal);
+            /**
+             * Resets and restarts the story sequence.
+             */
+            function replayStory() {
+                replayStoryOverlay.classList.remove('visible'); // Hide replay overlay
+                storyImage.style.opacity = '1'; // Ensure image is visible
+                currentStoryIndex = 0;
+                createProgressBars(); // Recreate bars to reset their state
+                updateStoryImage();
+                startStoryTimer(); // Start timer from beginning
+            }
+
+            // Event Listeners for Story Section
             nextStoryButton.addEventListener('click', () => showNextStory(false)); // Manual click
             prevStoryButton.addEventListener('click', showPrevStory);
+            replayStoryButton.addEventListener('click', replayStory);
 
-            // Close modal on overlay click (but not on content click)
-            storyModalOverlay.addEventListener('click', function(event) {
-                if (event.target === storyModalOverlay) {
-                    closeStoryModal();
-                }
-            });
+            // Initialize story on page load
+            if (storyPhotos.length > 0) {
+                createProgressBars();
+                updateStoryImage();
+                startStoryTimer();
+            } else {
+                console.warn("No story photos defined. The story section will remain empty.");
+                // Optionally hide story section if no photos
+                storyViewerSection.style.display = 'none';
+            }
 
-            // Keyboard navigation for stories (optional)
+            // Keyboard navigation for stories
             document.addEventListener('keydown', function(event) {
-                if (storyModalOverlay.classList.contains('open')) {
+                // Only respond to keyboard if story section is visible and not in replay state
+                if (storyViewerSection.offsetParent !== null && !replayStoryOverlay.classList.contains('visible')) {
                     if (event.key === 'ArrowRight') {
                         showNextStory(false); // Manual keyboard navigation
                     } else if (event.key === 'ArrowLeft') {
                         showPrevStory();
-                    } else if (event.key === 'Escape') {
-                        closeStoryModal();
                     }
+                } else if (event.key === 'Enter' && replayStoryOverlay.classList.contains('visible')) {
+                    replayStory(); // Replay on Enter key when in replay state
                 }
             });
         });
