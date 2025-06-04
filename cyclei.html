@@ -34,14 +34,18 @@
         }
 
         .banner-slideshow-image {
+            position: absolute; /* Added for overlapping images */
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none; /* Hidden by default */
+            opacity: 0; /* Hidden by default for fade effect */
+            transition: opacity 1s ease-in-out; /* Smooth fade transition */
         }
 
         .banner-slideshow-image.active {
-            display: block;
+            opacity: 1; /* Visible when active */
         }
 
         /* Gallery Lightbox Styles */
@@ -68,8 +72,9 @@
 
         .lightbox-content {
             position: relative;
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 70%; /* Reduced from 90% */
+            max-height: 70%; /* Reduced from 90% */
+            margin: 20px; /* Added margin to ensure space around the image */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -158,7 +163,7 @@
                 <div class="relative w-full pt-8 banner-slideshow-container" id="banner-slideshow">
                     <!-- Banner Slideshow Images -->
                     <img src="https://renj.neocities.org/hosting/Picsart_23-08-03_21-48-45-862.jpg"
-                         onerror="this.onerror=null; this.src='https://placehold.co/900x675/555555/FFFFFF?text=Image+Not+Found';"
+                         onerror="this.onerror=null; this.src='https://placehold.co/900x675/555555/FFFFFF?text=Cycle+I+Banner+1';"
                          alt="Cycle I Banner 1"
                          class="banner-slideshow-image active">
                     <img src="https://renj.neocities.org/hosting/Picsart_23-10-31_22-00-55-229.webp"
@@ -217,6 +222,7 @@
                         </div>
                     </a>
 
+                    <!-- Card 2 -->
                     <a href="afterthoughts.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr2.jpg"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
@@ -228,6 +234,7 @@
                         </div>
                     </a>
 
+                    <!-- Card 3 (Example for next line) -->
                     <a href="hiddenchapters.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr3.png"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
@@ -239,6 +246,7 @@
                         </div>
                     </a>
 
+                    <!-- Card 4 (Example for next line) -->
                     <a href="wufast.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://i.postimg.cc/NFZvnKyK/mr4.jpg"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
@@ -261,8 +269,6 @@
                         </div>
                     </a>
 
-         
-
                     <a href="sstyou.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr6.png"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
@@ -274,7 +280,7 @@
                         </div>
                     </a>
 
-           <a href="novalunosis.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
+                    <a href="novalunosis.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr7.jpg"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
                              alt="NOVALUNOSIS"
@@ -284,7 +290,7 @@
                             <em class="font-inter text-xs md:text-sm block">Released December 16, 2023</em>
                         </div>
                     </a>
-                    
+
                     <a href="jouska.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr8.jpg"
                              onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
@@ -382,8 +388,8 @@
 
                 <!-- Gallery Grid -->
                 <div class="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8" id="gallery-grid">
-                    <img src="" alt="Gallery Image 1" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
-                    <img src="https://renj.neocities.org/hosting/AddText_06-02-08.03.06.webp" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="https://renj.neocities.org/hosting/AddText_06-02-08.03.06.webp" alt="Gallery Image 1" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="https://renj.neocities.org/hosting/AddText_10-08-04.26.29.webp" alt="Gallery Image 2" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
                     <img src="https://renj.neocities.org/hosting/AddText_11-01-10.16.55.webp" alt="Gallery Image 3" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
                     <img src="https://renj.neocities.org/hosting/AddText_06-18-09.12.02.webp" alt="Gallery Image 4" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
                     <img src="https://renj.neocities.org/hosting/AddText_08-03-04.22.34.webp" alt="Gallery Image 5" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
@@ -411,14 +417,14 @@
                 <a href="https://www.instagram.com/renjpoems_hq/" class="hover:underline">INSTAGRAM</a>
                 <a href="https://web.facebook.com/renjcreatives" class="hover:underline">FACEBOOK</a>
             </div>
-            <div class="text-right flex items-center space-x-2"> <!-- Added flex and space-x-2 for logo alignment -->
+            <div class="text-right flex items-center space-x-2">
                 <p>sibulan, <span id="current-time"></span></p>
                 <p>&copy; 2025</p>
                 <!-- Small logo in the footer -->
                 <img src="renjwhite.png"
                      onerror="this.onerror=null; this.src='https://placehold.co/20x20/FFFFFF/000000?text=Logo';"
                      alt="Renj Logo"
-                     class="h-5 w-auto"> <!-- Adjusted size for small logo -->
+                     class="h-5 w-auto">
             </div>
         </footer>
     </div>
@@ -438,7 +444,7 @@
         updateTime();
         setInterval(updateTime, 60000);
 
-        // --- Banner Slideshow Logic (Automatic, Looping) ---
+        // --- Banner Slideshow Logic (Automatic, Looping with Fade) ---
         const bannerSlideshowContainer = document.getElementById('banner-slideshow');
         const bannerSlideshowImages = bannerSlideshowContainer.querySelectorAll('.banner-slideshow-image');
 
@@ -450,10 +456,14 @@
             // Ensure index wraps around for continuous loop
             currentBannerSlideIndex = (index + bannerSlideshowImages.length) % bannerSlideshowImages.length;
 
-            // Hide all images
+            // Remove 'active' from all images to start fade-out
             bannerSlideshowImages.forEach(img => img.classList.remove('active'));
-            // Show the current image
+
+            // After a short delay (to allow current image to fade out), make the next image active
+            // This creates a cross-fade effect if the transition duration is longer than the delay
+            // For a simple fade-in, we just make the new image active immediately.
             bannerSlideshowImages[currentBannerSlideIndex].classList.add('active');
+
 
             // Clear any existing timeout and set a new one for the next slide
             if (bannerTimeoutId) {
