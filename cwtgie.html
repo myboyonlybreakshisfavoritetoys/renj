@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>starfall</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font family for Inter */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom font family for Cedarville Cursive */
+        .font-cedarville {
+            font-family: 'Cedarville Cursive', cursive;
+        }
+
+        /* Banner container with parallax effect */
+        .banner-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3; /* Strictly 4:3 aspect ratio */
+            overflow: hidden;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            /* Parallax specific styles */
+            background-image: url('cycle ii/cwtgie/18.png'); /* Updated banner image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* This creates the parallax effect */
+        }
+
+        /* Banner navigation arrows - REMOVED, keeping the style block empty for now */
+        /*
+        .banner-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .banner-arrow:hover {
+            opacity: 1;
+        }
+
+        .banner-arrow.left {
+            left: 10px;
+        }
+
+        .banner-arrow.right {
+            right: 10px;
+        }
+        */
+
+        /* Lightbox styles for image enlargement */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .lightbox-image {
+            max-width: 800px; /* Fixed maximum width for enlarged images */
+            max-height: 600px; /* Fixed maximum height for enlarged images */
+            width: auto; /* Allow image to scale down if smaller than max-width */
+            height: auto; /* Allow image to scale down if smaller than max-height */
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Navigation buttons for lightbox */
+        .lightbox-nav-btn {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 2rem;
+            line-height: 1;
+            z-index: 1010;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .lightbox-nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .lightbox-nav-btn.left {
+            left: -50px;
+        }
+
+        .lightbox-nav-btn.right {
+            right: -50px;
+        }
+
+        /* Close button for lightbox */
+        .lightbox-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+            z-index: 1010;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .lightbox-close-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Responsive adjustments for lightbox buttons */
+        @media (max-width: 768px) {
+            .lightbox-nav-btn.left {
+                left: 10px;
+            }
+            .lightbox-nav-btn.right {
+                right: 10px;
+            }
+            .lightbox-content {
+                max-width: 90%;
+                max-height: 90%;
+            }
+            .lightbox-image {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+
+        /* Responsive iframe for the flipbook */
+        .responsive-iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 75%; /* 4:3 Aspect Ratio (3 / 4 * 100) */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .responsive-iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Text shadow for banner overlay text */
+        .banner-text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Subtle shadow: horizontal-offset vertical-offset blur-radius color */
+        }
+
+        /* Buttons for Previous/Next Release */
+        .release-button {
+            background-color: rgba(51, 51, 51, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            white-space: nowrap; /* Prevent text wrapping */
+            text-align: center; /* Center text within the button */
+            display: block; /* Ensure it takes full width of its grid cell */
+            width: 100%; /* Make button fill its grid column */
+        }
+
+        .release-button:hover {
+            background-color: rgba(51, 51, 51, 0.9);
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-inter min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="max-w-4xl w-full flex flex-col items-center space-y-8">
+
+        <main class="w-full flex flex-col items-center">
+            <div class="w-full max-w-sm sm:max-w-xl lg:max-w-2xl flex flex-col items-start space-y-6">
+
+                <!-- Main Banner (now with parallax background) -->
+                <div class="relative w-full pt-8 banner-container" id="banner-container">
+                    <!-- Navigation bar directly on top of the picture -->
+                    <nav class="absolute top-8 left-0 right-0 p-4 flex justify-around items-center text-white text-xs md:text-sm">
+                        <a href="index.html" class="hover:underline">home</a>
+                        <a href="cyclei.html" class="hover:underline">cycle i</a>
+                        <a href="cycleii.html" class="hover:underline">cycle ii</a>
+                        <a href="cycleiii.html" class="hover:underline">cycle iii</a>
+                        <a href="manifesto.html" class="hover:underline">manifesto</a>
+                    </nav>
+
+                    <!-- "lines unbent" title and release date -->
+                    <div class="absolute bottom-4 left-4 z-10 flex flex-col items-start">
+                        <h1 class="font-cedarville text-4xl md:text-6xl banner-text-shadow">
+                            conversations with the ghosts i exhumed
+                        </h1>
+                        <em class="font-inter text-sm md:text-base italic banner-text-shadow">June 7, 2024</em>
+                    </div>
+                </div>
+
+                <!-- Short Introduction Text -->
+                <p class="text-justify text-sm md:text-base leading-relaxed mt-8">
+                conversations with the ghosts i exhumed is my 13th collection, a raw exploration of how profound connections can become haunting echoes, where unspoken words and enduring silences carve indelible marks on our souls. It’s a tribute to the lingering power of what was, and what could have been.
+                </p>
+
+                <!-- Flipbook Embed -->
+                <div class="w-full responsive-iframe-container mt-8 shadow-lg rounded-lg">
+                    <iframe src="https://online.pubhtml5.com/nbxmf/fijc/" allowfullscreen="true" loading="lazy"></iframe>
+                </div>
+
+                <!-- "About Lines Unbent" Section -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    me and my ghosts
+                </h2>
+                <p class="text-justify text-sm md:text-base leading-relaxed">
+                Welcome to conversations with the ghosts i exhumed. This is my 13th collection, and I have to tell you, it really takes on some of the most complicated emotions. It talks about those connections you thought were so profound, only for them to turn into utter strangers. It's about how everything can fall silent, yet the echoes of the words you shared with them just linger. Those words, they haunt you, creating a ghost in your mind that you truly can't exorcise, leading you to still talk to them, even when they're long gone from your life.
+                </p>
+                <p class="text-justify text-sm md:text-base leading-relaxed">
+                This collection is a deep dive into how loud silence can actually be, and how the things left unsaid can carve a huge dent right into our lives. For me, this is a tribute to the power of unspoken emotions and those words that leave such a lasting imprint on our minds. It’s a reminder that some connections, no matter how brief or intense, can leave an indelible mark on our hearts and minds, becoming silent conversations that linger long after they end.
+                </p>
+              
+                <!-- Previous/Next Release Buttons -->
+                <div class="w-full grid grid-cols-2 gap-4 mt-8">
+                    <a href="cycleii.html" class="release-button">cycle ii</a>
+                    <a href="astralgia.html" class="release-button">next release</a>
+                </div>
+
+                <!-- Gallery Section -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    gallery
+                </h2>
+
+                <!-- Gallery Grid -->
+                <div class="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8" id="gallery-grid">
+                  <img src="cycle ii/cwtgie/4.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/6.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/7.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/8.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/9.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/10.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/11.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/12.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/13.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/14.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/15.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/16.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/17.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/18.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                  <img src="cycle ii/cwtgie/19.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                </div>
+            </div>
+        </main>
+
+        <!-- Lightbox Overlay (Hidden by default) -->
+        <div class="lightbox-overlay" id="lightbox-overlay">
+            <div class="lightbox-content">
+                <img src="" alt="Enlarged Gallery Image" class="lightbox-image" id="lightbox-image">
+                <button class="lightbox-nav-btn left" id="lightbox-prev">&lt;</button>
+                <button class="lightbox-nav-btn right" id="lightbox-next">&gt;</button>
+                <button class="lightbox-close-btn" id="lightbox-close">&times;</button>
+            </div>
+        </div>
+
+        <!-- Footer - aligns with the max-w-sm content block -->
+        <footer class="w-full flex justify-between items-end text-xs md:text-sm mt-8 max-w-sm">
+            <div class="flex space-x-4">
+                <a href="https://www.instagram.com/renjpoems_hq/" class="hover:underline">INSTAGRAM</a>
+                <a href="https://web.facebook.com/renjcreatives" class="hover:underline">FACEBOOK</a>
+            </div>
+            <div class="text-right flex items-center space-x-2">
+                <p>sibulan, <span id="current-time"></span></p>
+                <p>&copy; 2025</p>
+                <!-- Small logo in the footer -->
+                <img src="renjwhite.png"
+                     onerror="this.onerror=null; this.src='https://placehold.co/20x20/FFFFFF/000000?text=Logo';"
+                     alt="Renj Logo"
+                     class="h-5 w-auto">
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to update the time for the footer
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+        updateTime(); // Initial call
+        setInterval(updateTime, 60000); // Update every minute
+
+        // --- Gallery Lightbox Logic ---
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightboxOverlay = document.getElementById('lightbox-overlay');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxPrevBtn = document.getElementById('lightbox-prev');
+        const lightboxNextBtn = document.getElementById('lightbox-next');
+        const lightboxCloseBtn = document.getElementById('lightbox-close');
+
+        let currentGalleryIndex = 0; // Tracks the currently displayed image in the lightbox
+
+        // Function to open the lightbox with a specific image
+        function openLightbox(index) {
+            currentGalleryIndex = index;
+            lightboxImage.src = galleryItems[currentGalleryIndex].src;
+            lightboxImage.alt = galleryItems[currentGalleryIndex].alt;
+            lightboxOverlay.classList.add('active'); // Show the lightbox
+            document.body.style.overflow = 'hidden'; // Prevent main page scrolling
+        }
+
+        // Function to close the lightbox
+        function closeLightbox() {
+            lightboxOverlay.classList.remove('active'); // Hide the lightbox
+            document.body.style.overflow = ''; // Restore main page scrolling
+        }
+
+        // Function to show the next image in the gallery
+        function showNextGalleryImage() {
+            currentGalleryIndex = (currentGalleryIndex + 1) % galleryItems.length;
+            lightboxImage.src = galleryItems[currentGalleryIndex].src;
+            lightboxImage.alt = galleryItems[currentGalleryIndex].alt;
+        }
+
+        // Function to show the previous image in the gallery
+        function showPrevGalleryImage() {
+            currentGalleryIndex = (currentGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
+            lightboxImage.src = galleryItems[currentGalleryIndex].src;
+            lightboxImage.alt = galleryItems[currentGalleryIndex].alt;
+        }
+
+        // Event listeners for each gallery item to open the lightbox
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => openLightbox(index));
+        });
+
+        // Event listeners for lightbox controls
+        lightboxCloseBtn.addEventListener('click', closeLightbox); // Close button click
+        lightboxOverlay.addEventListener('click', (e) => {
+            // Close lightbox only if clicking on the overlay itself, not the image or buttons
+            if (e.target === lightboxOverlay) {
+                closeLightbox();
+            }
+        });
+        lightboxPrevBtn.addEventListener('click', showPrevGalleryImage); // Previous button click
+        lightboxNextBtn.addEventListener('click', showNextGalleryImage); // Next button click
+
+        // Keyboard navigation for lightbox (Arrow keys and Escape)
+        document.addEventListener('keydown', (e) => {
+            if (lightboxOverlay.classList.contains('active')) {
+                if (e.key === 'ArrowRight') {
+                    showNextGalleryImage();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevGalleryImage();
+                } else if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
