@@ -1,619 +1,428 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astralgia</title>
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="renjfavicon.png">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Define custom font families.
-            You will need to import 'NeueHaasGroteskDisp Pro' and 'NeueHaasGroteskDisp Pro Blk'
-            via @font-face rules or a font hosting service (e.g., Adobe Fonts, MyFonts)
-            for them to display correctly.
-            Example (replace with your actual font file paths/URLs):
-        */
+        /* Custom font family for Inter */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom font family for Cedarville Cursive */
+        .font-cedarville {
+            font-family: 'Cedarville Cursive', cursive;
+        }
+
+        /* Banner container with parallax effect */
+        .banner-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3; /* Strictly 4:3 aspect ratio */
+            overflow: hidden;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            /* Parallax specific styles */
+            background-image: url('cycle ii/astralgia/Astralgia-19.png'); /* Updated banner image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* This creates the parallax effect */
+        }
+
+        /* Banner navigation arrows - REMOVED, keeping the style block empty for now */
         /*
-        @font-face {
-            font-family: 'NeueHaasGroteskDisp Pro';
-            src: url('path/to/NeueHaasGroteskDispPro.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-        }
-        @font-face {
-            font-family: 'NeueHaasGroteskDisp Pro Blk';
-            src: url('path/to/NeueHaasGroteskDispProBlk.woff2') format('woff2');
-            font-weight: 900; /* Or appropriate bold weight */
-            font-style: normal;
-        }
-        */
-
-        body {
-            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Fallback to sans-serif */
-            margin: 0;
-            padding: 0;
-            color: #D1DBD7; /* Text outside boxes, e.g., 'astralgia' title */
-            overflow-x: hidden; /* Prevent horizontal scroll due to parallax */
-        }
-
-        .font-bold-custom {
-            font-family: 'NeueHaasGroteskDisp Pro Blk', sans-serif; /* Fallback to sans-serif */
-            font-weight: 900; /* Ensure it's bold */
-        }
-
-        /* General box styling applied via Tailwind classes now, but kept for consistency */
-        .content-box {
-            background-color: #D1DBD7; /* Light grey for boxes */
-            border-radius: 0.75rem; /* Reduced uniform rounded corners (rounded-xl in Tailwind) */
-            padding: 1rem; /* Reduced padding */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        }
-
-        .collapsible-header {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 0; /* Padding for click area */
-        }
-
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            padding-top: 0; /* Start with no padding */
-        }
-
-        .collapsible-content.expanded {
-            max-height: 500px; /* Adjust as needed for content height */
-            padding-top: 0.75rem; /* Reduced padding when expanded */
-        }
-
-        .arrow {
-            transition: transform 0.3s ease-out;
-            color: #1A325C; /* Dark color for contrast on light background */
-        }
-
-        .arrow.expanded {
-            transform: rotate(90deg);
-        }
-
-        /* Styling for the main astralgia title within header */
-        .astralgia-site-title {
-            color: #D1DBD7; /* Light grey on dark blue background */
-            transition: none; /* No transition */
-        }
-
-        /* Styling for the logo image within the nav */
-        .sidebar-nav .logo-img {
-            height: 2rem; /* Slightly smaller height */
-            width: auto; /* Maintain aspect ratio */
-        }
-
-        /* Styling for the flipbook embed container */
-        .flipbook-container {
-            background-color: #D1DBD7; /* Light grey for flipbook container */
-            border-radius: 0.75rem; /* Reduced corner rounding */
-            padding: 1rem; /* Reduced padding */
-            overflow: hidden; /* Ensure embed fits and no scrollbars */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Aspect ratio container for the iframe */
-        .iframe-aspect-ratio {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100%) */
-            height: 0;
-            overflow: hidden; /* Hide any overflow from the iframe */
-            border-radius: 0.75rem; /* Apply rounded corners to the aspect ratio container */
-        }
-
-        .flipbook-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* New Story Viewer Section Styles */
-        .story-viewer-section {
-            background-color: #D1DBD7; /* Light grey background */
-            border-radius: 0.75rem; /* Reduced corner rounding */
-            padding: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative; /* For absolute positioning of children */
-            overflow: hidden; /* Hide overflow from image */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .story-section-title {
-            color: #1A325C; /* Dark blue for the title */
-        }
-
-        .story-content-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100%) for the story content area */
-            height: 0;
-            overflow: hidden;
-            border-radius: 0.75rem; /* Rounded corners for the story display area */
-            background-color: #1A325C; /* Dark background for the image area */
-        }
-
-        .story-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Ensure image fits without cropping */
-            transition: opacity 0.5s ease-in-out; /* Smooth fade for image */
-        }
-
-        .story-nav-button {
+        .banner-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.3);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
             cursor: pointer;
             font-size: 1.5rem;
-            z-index: 1001;
-            user-select: none; /* Prevent text selection */
+            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            z-index: 10;
         }
 
-        .story-nav-button.prev {
-            left: 1rem;
+        .banner-arrow:hover {
+            opacity: 1;
         }
 
-        .story-nav-button.next {
-            right: 1rem;
+        .banner-arrow.left {
+            left: 10px;
         }
 
-        /* Replay Story Overlay Styles */
-        .replay-story-overlay {
-            position: absolute;
+        .banner-arrow.right {
+            right: 10px;
+        }
+        */
+
+        /* Lightbox styles for image enlargement */
+        .lightbox-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); /* Almost black overlay */
+            background-color: rgba(0, 0, 0, 0.8);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            transition: opacity 0.3s ease;
         }
 
-        .replay-story-overlay.visible {
+        .lightbox-overlay.active {
             opacity: 1;
             visibility: visible;
         }
 
-        .replay-story-button {
-            background-color: #D1DBD7; /* Light grey button */
-            color: #1A325C; /* Dark blue text */
-            padding: 1rem 2rem;
-            border-radius: 0.75rem;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-        }
-
-        .replay-story-button:hover {
-            background-color: #C0C8C4; /* Slightly darker grey on hover */
-            transform: translateY(-2px);
-        }
-
-        /* Story Progress Bar Styles */
-        .story-progress-container {
-            position: absolute;
-            top: 0.5rem;
-            left: 0.5rem;
-            right: 0.5rem;
+        .lightbox-content {
+            position: relative;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
             display: flex;
-            gap: 0.25rem; /* Space between bars */
-            z-index: 1003;
-        }
-
-        .story-progress-bar {
-            flex-grow: 1;
-            height: 0.25rem; /* Height of the bar */
-            background-color: rgba(255, 255, 255, 0.5); /* Inactive bar color */
-            border-radius: 0.125rem;
-            overflow: hidden; /* For the inner progress animation */
-        }
-
-        .story-progress-fill {
-            width: 0;
-            height: 100%;
-            background-color: #ffffff; /* Active bar color */
-            border-radius: 0.125rem;
-            /* Animation will be applied via JS */
-        }
-
-        @keyframes fillProgressBar {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        /* NEW: Styles for the clickable catalog link container */
-        .catalog-link {
-            position: relative; /* Establish positioning context for children */
-            display: block; /* Make it a block element to take up space in the grid */
-            width: 100%; /* Fill grid column width */
-            padding-bottom: 100%; /* Create a square aspect ratio (1:1) */
-            border-radius: 0.75rem; /* Rounded corners */
-            overflow: hidden; /* Hide any overflow from image/overlay */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            transition: transform 0.2s ease-in-out; /* Added transition for hover effect */
-            cursor: pointer; /* Indicate it's clickable */
-            background-color: #2A4E7E; /* Fallback background if image fails or isn't present */
-        }
-
-        .catalog-link:hover {
-            transform: translateY(-5px); /* Lift effect on hover */
-        }
-
-        /* Styles for the image inside the link */
-        .catalog-link .catalog-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensures the image covers the area, cropping if necessary */
-            border-radius: 0.75rem; /* Match the parent's border-radius */
-            z-index: 0; /* Place image behind the overlay text */
-        }
-
-        /* Styles for the text overlay inside the link */
-        /* Styles for the text overlay inside the link */
-        .catalog-link .catalog-photo-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0.5rem;
-            color: #D1DBD7; /* Light text color */
-            z-index: 1; /* Ensure text overlay is above the image */
-            text-align: center; /* <--- THIS IS THE LINE I ADDED */
+            flex-direction: column;
         }
 
-        .catalog-photo-overlay .release-type {
-            font-size: 0.65rem; /* Smaller text */
-            font-style: italic; /* Italic */
-            margin-bottom: 0.1rem; /* Reduced margin */
-            line-height: 1.1; /* Tighter line height */
+        .lightbox-image {
+            max-width: 800px; /* Fixed maximum width for enlarged images */
+            max-height: 600px; /* Fixed maximum height for enlarged images */
+            width: auto; /* Allow image to scale down if smaller than max-width */
+            height: auto; /* Allow image to scale down if smaller than max-height */
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
-        .catalog-photo-overlay .release-title {
-            font-size: 0.8rem; /* Slightly bigger than release-type */
-            font-weight: bold; /* Bold */
-            line-height: 1.1; /* Tighter line height */
+        /* Navigation buttons for lightbox */
+        .lightbox-nav-btn {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 2rem;
+            line-height: 1;
+            z-index: 1010;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
-        /* Consistent font sizes for content */
-        .content-box p {
-            color: #1A325C; /* Dark blue text */
-            font-size: 0.9rem; /* Consistent font size */
+        .lightbox-nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
         }
-        .content-box h3 {
-            color: #1A325C; /* Dark blue text */
-            font-size: 1.25rem; /* Consistent font size for section titles */
+
+        .lightbox-nav-btn.left {
+            left: -50px;
         }
-        .catalog-section h2 {
-            color: #1A325C; /* Dark blue text */
-            font-size: 1.25rem; /* Consistent font size for catalog title */
+
+        .lightbox-nav-btn.right {
+            right: -50px;
         }
-        /* Adjust padding and gap for a smaller catalog section */
-        .catalog-section {
-            padding: 0.5rem; /* Further reduced padding */
-            margin-bottom: 1rem; /* Reduced margin */
-            max-width: 400px; /* Further reduced max width for the catalog section */
-            margin-left: auto; /* Center the section */
-            margin-right: auto; /* Center the section */
+
+        /* Close button for lightbox */
+        .lightbox-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+            z-index: 1010;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
-        .catalog-photos-grid {
-            gap: 0.5rem; /* Further reduced gap between photos */
-            grid-template-columns: repeat(2, 1fr); /* Explicitly 2 columns for the two images */
+
+        .lightbox-close-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Responsive adjustments for lightbox buttons */
+        @media (max-width: 768px) {
+            .lightbox-nav-btn.left {
+                left: 10px;
+            }
+            .lightbox-nav-btn.right {
+                right: 10px;
+            }
+            .lightbox-content {
+                max-width: 90%;
+                max-height: 90%;
+            }
+            .lightbox-image {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+
+        /* Responsive iframe for the flipbook */
+        .responsive-iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 75%; /* 4:3 Aspect Ratio (3 / 4 * 100) */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .responsive-iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Text shadow for banner overlay text */
+        .banner-text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Subtle shadow: horizontal-offset vertical-offset blur-radius color */
+        }
+
+        /* Buttons for Previous/Next Release */
+        .release-button {
+            background-color: rgba(51, 51, 51, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            white-space: nowrap; /* Prevent text wrapping */
+            text-align: center; /* Center text within the button */
+            display: block; /* Ensure it takes full width of its grid cell */
+            width: 100%; /* Make button fill its grid column */
+        }
+
+        .release-button:hover {
+            background-color: rgba(51, 51, 51, 0.9);
         }
     </style>
 </head>
-<body class="h-full bg-[#1A325C] text-[#D1DBD7]">
-    <!-- Changed max-w-screen-md to max-w-screen-lg to widen the layout slightly -->
-    <div class="main-layout-container mx-auto p-4 md:p-6 lg:p-8 max-w-screen-lg">
-        <!-- Header (New) -->
-        <header class="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-8">
-            <!-- Astralgia title for the overall site -->
-            <h1 class="astralgia-site-title font-bold-custom text-4xl md:text-5xl lg:text-6xl text-[#D1DBD7] mb-4 md:mb-0">astralgia</h1>
-            <!-- Logo and navigation links -->
-            <nav class="sidebar-nav flex items-center gap-4 md:gap-6">
-                <img src="renjlogo.png" alt="renj logo" class="logo-img">
-                <a href="index.html" class="text-[#D1DBD7] text-lg hover:underline">home</a>
-                <a href="cyleii.html" class="text-[#D1DBD7] text-lg hover:underline">cycle ii</a>
-            </nav>
-        </header>
+<body class="bg-black text-white font-inter min-h-screen flex flex-col items-center justify-center p-4">
 
-        <!-- Flipbook Container (at the very top, below header) -->
-        <!-- Reduced mb-6 md:mb-8 to mb-4 md:mb-6 -->
-        <div class="flipbook-container mb-4 md:mb-6">
-            <div class="iframe-aspect-ratio">
-                <iframe src="https://online.pubhtml5.com/nbxmf/mblk/" allowfullscreen></iframe>
-            </div>
-        </div>
+    <div class="max-w-4xl w-full flex flex-col items-center space-y-8">
 
-        <!-- Main Content Area (Stacked Sections) -->
-        <!-- Reduced space-y-6 md:space-y-8 to space-y-4 md:space-y-6 -->
-        <div class="main-content-area space-y-4 md:space-y-6">
-            <!-- Story Viewer Section -->
-            <!-- Changed rounded-3xl to rounded-xl -->
-            <div id="story-viewer-section" class="story-viewer-section bg-[#D1DBD7] text-[#1A325C] rounded-xl p-4 md:p-6 shadow-lg">
-                <h2 class="story-section-title font-bold-custom text-2xl md:text-3xl mb-4">astralgia stories</h2>
-                <div class="story-content-wrapper">
-                    <div id="story-progress-container" class="story-progress-container"></div>
-                    <img id="story-image" src="" alt="Story Image" class="story-image">
-                    <div id="prev-story-button" class="story-nav-button prev">&lt;</div>
-                    <div id="next-story-button" class="story-nav-button next">&gt;</div>
-                    <div id="replay-story-overlay" class="replay-story-overlay">
-                        <button id="replay-story-button" class="replay-story-button">Replay Story</button>
+        <main class="w-full flex flex-col items-center">
+            <div class="w-full max-w-sm sm:max-w-xl lg:max-w-2xl flex flex-col items-start space-y-6">
+
+                <!-- Main Banner (now with parallax background) -->
+                <div class="relative w-full pt-8 banner-container" id="banner-container">
+                    <!-- Navigation bar directly on top of the picture -->
+                    <nav class="absolute top-8 left-0 right-0 p-4 flex justify-around items-center text-white text-xs md:text-sm">
+                        <a href="index.html" class="hover:underline">home</a>
+                        <a href="cyclei.html" class="hover:underline">cycle i</a>
+                        <a href="cycleii.html" class="hover:underline">cycle ii</a>
+                        <a href="cycleiii.html" class="hover:underline">cycle iii</a>
+                        <a href="manifesto.html" class="hover:underline">manifesto</a>
+                    </nav>
+
+                    <!-- "lines unbent" title and release date -->
+                    <div class="absolute bottom-4 left-4 z-10 flex flex-col items-start">
+                        <h1 class="font-cedarville text-4xl md:text-6xl banner-text-shadow">
+                            Astralgia
+                        </h1>
+                        <em class="font-inter text-sm md:text-base italic banner-text-shadow">July 5, 2024</em>
                     </div>
                 </div>
-            </div>
 
-            <!-- About Astralgia Content Box -->
-            <div class="content-box bg-[#D1DBD7] text-[#1A325C] rounded-xl p-4 md:p-6 shadow-lg">
-                <div class="collapsible-header" data-target="about-astralgia-content">
-                    <h3 class="font-bold-custom text-xl md:text-2xl">About Astralgia</h3>
-                    <span class="arrow text-2xl">+</span>
-                </div>
-                <div id="about-astralgia-content" class="collapsible-content">
-                    <p class="leading-relaxed text-base md:text-lg">
-                        Astralgia. Released July 5, 2024. This was a lot to make. There were so many poemsthat it hurts to cut and discard the otthers. Although not my biggest release, it's above the average of around 11-12 poems. Most of this was written during the summer vacation. I found myself writing about the past, present, and future. I even wrote about the people I met, the people I am with, the people I wish to be with, people I wished I never met, and the person I don't want to become. THis was a lot to pack and unpack. My emotions wrapped in carbed wires but tied with a cute silver sparkly ribbon, Astralgia.
-                    </p>
-                </div>
-            </div>
+                <!-- Short Introduction Text -->
+                <p class="text-justify text-sm md:text-base leading-relaxed mt-8">
+                Astralgia is my fourteenth collection, a raw, intimate journey through what I call "the pain of stars"—poems born from challenging times, exploring the intricate depths of the mind where struggle and beauty intertwine. It’s a testament to writing through what hurts.
+                </p>
 
-            <!-- Catalog Section (Now a full-width section below other content) -->
-            <div class="catalog-section bg-[#D1DBD7] text-[#1A325C] rounded-xl p-4 md:p-6 shadow-lg">
-                <h2 class="font-bold-custom text-2xl md:text-3xl mb-4 text-center">catalog</h2>
-                <div class="catalog-photos-grid grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4">
-                    <!-- First Catalog Item - Now wrapped correctly with 'catalog-link' class -->
-                    <a href="cwtgie.html" class="catalog-link">
-                        <img src="https://github.com/myboyonlybreakshisfavoritetoys/renj/blob/main/covers/mr13.jpg?raw=true" alt="Previous Release" class="catalog-image">
-                        <div class="catalog-photo-overlay">
-                            <span class="release-type">Previous Release</span>
-                            <span class="release-title">coversations with the ghosts i exhumed</span>
-                        </div>
-                    </a>
-                    
-                    <!-- Second Catalog Item - Now wrapped correctly with 'catalog-link' class -->
-                    <a href="tttignore.html" class="catalog-link">
-                        <img src="https://github.com/myboyonlybreakshisfavoritetoys/renj/blob/main/covers/the%20time%20to%20ignore.png?raw=true" alt="Next Release" class="catalog-image">
-                        <div class="catalog-photo-overlay">
-                            <span class="release-type">Next Release</span>
-                            <span class="release-title">the time to ignore</span>
-                        </div>
-                    </a>
+                <!-- Flipbook Embed -->
+                <div class="w-full responsive-iframe-container mt-8 shadow-lg rounded-lg">
+                    <iframe src="https://online.pubhtml5.com/nbxmf/fijc/" allowfullscreen="true" loading="lazy"></iframe>
                 </div>
+
+                <!-- "About Lines Unbent" Section -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    the stars
+                </h2>
+                <p class="text-justify text-sm md:text-base leading-relaxed">
+                Welcome to Astralgia, my fourteenth collection. This one feels particularly close to my heart because it dives into some really raw emotions. I actually coined the term "Astralgia" myself—it combines "astra," meaning star, with "-algia," which means pain. So, "pain of stars." That's truly what this collection is all about: poems born from the challenging circumstances of a summer vacation, a time when things weren't exactly great. When you're down, in classic fashion, you write about it. And so, here we are, in these 14 poems.
+                </p>
+                <p class="text-justify text-sm md:text-base leading-relaxed">
+                These verses are a glimpse into the intricacies of my mind during that period. They explore that very specific "pain of stars"—the kind of ache that comes when you're looking up at something beautiful, but you're deeply connected to a hidden struggle. It’s about navigating those heavy feelings and finding a way to articulate them, even when it feels like everything is too much.
+                </p>
+              
+                <!-- Previous/Next Release Buttons -->
+                <div class="w-full grid grid-cols-2 gap-4 mt-8">
+                    <a href="cwtgie.html" class="release-button">previous release</a>
+                    <a href="tttignore.html" class="release-button">next release</a>
+                </div>
+
+                <!-- Gallery Section -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    gallery
+                </h2>
+
+                <!-- Gallery Grid -->
+                <div class="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8" id="gallery-grid">
+                  <img src="" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                <img src="" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-01.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-03.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-04.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-05.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-06.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-07.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-08.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-09.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-10.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-11.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-12.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-13.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-14.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-15.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-16.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-17.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="cycle ii/astralgia/Astralgia-18.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                <img src="cycle ii/astralgia/Astralgia-19.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                <img src="cycle ii/astralgia/Astralgia-20.png" alt="Gallery Image" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    </div>
+            </div>
+        </main>
+
+        <!-- Lightbox Overlay (Hidden by default) -->
+        <div class="lightbox-overlay" id="lightbox-overlay">
+            <div class="lightbox-content">
+                <img src="" alt="Enlarged Gallery Image" class="lightbox-image" id="lightbox-image">
+                <button class="lightbox-nav-btn left" id="lightbox-prev">&lt;</button>
+                <button class="lightbox-nav-btn right" id="lightbox-next">&gt;</button>
+                <button class="lightbox-close-btn" id="lightbox-close">&times;</button>
             </div>
         </div>
+
+        <!-- Footer - aligns with the max-w-sm content block -->
+        <footer class="w-full flex justify-between items-end text-xs md:text-sm mt-8 max-w-sm">
+            <div class="flex space-x-4">
+                <a href="https://www.instagram.com/renjpoems_hq/" class="hover:underline">INSTAGRAM</a>
+                <a href="https://web.facebook.com/renjcreatives" class="hover:underline">FACEBOOK</a>
+            </div>
+            <div class="text-right flex items-center space-x-2">
+                <p>sibulan, <span id="current-time"></span></p>
+                <p>&copy; 2025</p>
+                <!-- Small logo in the footer -->
+                <img src="renjwhite.png"
+                     onerror="this.onerror=null; this.src='https://placehold.co/20x20/FFFFFF/000000?text=Logo';"
+                     alt="Renj Logo"
+                     class="h-5 w-auto">
+            </div>
+        </footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Collapsible sections logic
-            const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
+        // Function to update the time for the footer
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+        updateTime(); // Initial call
+        setInterval(updateTime, 60000); // Update every minute
 
-            collapsibleHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const targetId = this.dataset.target;
-                    const content = document.getElementById(targetId);
-                    const arrow = this.querySelector('.arrow');
+        // --- Gallery Lightbox Logic ---
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightboxOverlay = document.getElementById('lightbox-overlay');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxPrevBtn = document.getElementById('lightbox-prev');
+        const lightboxNextBtn = document.getElementById('lightbox-next');
+        const lightboxCloseBtn = document.getElementById('lightbox-close');
 
-                    if (content.classList.contains('expanded')) {
-                        content.classList.remove('expanded');
-                        content.style.maxHeight = null; // Reset max-height
-                        arrow.classList.remove('expanded');
-                        arrow.textContent = '+';
-                    } else {
-                        // Collapse any other open sections first (optional, but good UX)
-                        document.querySelectorAll('.collapsible-content.expanded').forEach(openContent => {
-                            openContent.classList.remove('expanded');
-                            openContent.style.maxHeight = null;
-                            const openArrow = openContent.previousElementSibling.querySelector('.arrow');
-                            if (openArrow) {
-                                openArrow.classList.remove('expanded');
-                                openArrow.textContent = '+';
-                            }
-                        });
+        let currentGalleryIndex = 0; // Tracks the currently displayed image in the lightbox
 
-                        content.classList.add('expanded');
-                        // Set max-height to scrollHeight to allow smooth transition
-                        content.style.maxHeight = content.scrollHeight + "px";
-                        arrow.classList.add('expanded');
-                        arrow.textContent = '-';
-                    }
-                });
-            });
+        // Function to open the lightbox with a specific image
+        function openLightbox(index) {
+            currentGalleryIndex = index;
+            lightboxImage.src = galleryItems[currentGalleryIndex].src;
+            lightboxImage.alt = galleryItems[currentGalleryIndex].alt;
+            lightboxOverlay.classList.add('active'); // Show the lightbox
+            document.body.style.overflow = 'hidden'; // Prevent main page scrolling
+        }
 
-            // Astralgia Story Section Logic
-            const storyViewerSection = document.getElementById('story-viewer-section');
-            const storyImage = document.getElementById('story-image');
-            const prevStoryButton = document.getElementById('prev-story-button');
-            const nextStoryButton = document.getElementById('next-story-button');
-            const storyProgressContainer = document.getElementById('story-progress-container');
-            const replayStoryOverlay = document.getElementById('replay-story-overlay');
-            const replayStoryButton = document.getElementById('replay-story-button');
+        // Function to close the lightbox
+        function closeLightbox() {
+            lightboxOverlay.classList.remove('active'); // Hide the lightbox
+            document.body.style.overflow = ''; // Restore main page scrolling
+        }
 
-            // --- USER EDITABLE: Add your image URLs here ---
-            const storyPhotos = [
-                // Example placeholders:
-                "https://renj.neocities.org/hosting/astra1.png",
-                "https://renj.neocities.org/hosting/astra2.png",
-                "https://renj.neocities.org/hosting/astra3.png",
-                "https://renj.neocities.org/hosting/astra4.png",
-                // Add more image URLs as strings:
-                // "https://your-domain.com/path/to/your-photo-5.jpg",
-                // "https://your-domain.com/path/to/your-photo-6.png",
-            ];
-            // --- END USER EDITABLE ---
+        // Function to show the next image in the gallery
+        function showNextGalleryImage() {
+            currentGalleryIndex = (currentGalleryIndex + 1) % galleryItems.length;
+            lightboxImage.src = galleryItems[currentGalleryIndex].src;
+            lightboxImage.alt = galleryItems[currentGalleryIndex].alt;
+        }
 
-            let currentStoryIndex = 0;
-            let storyInterval;
-            const STORY_DURATION = 5000; // 5 seconds per story
+        // Function to show the previous image in the gallery
+        function showPrevGalleryImage() {
+            currentGalleryIndex = (currentGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
+            lightboxImage.src = galleryItems[currentGalleryIndex].src;
+            lightboxImage.alt = galleryItems[currentGalleryIndex].alt;
+        }
 
-            /**
-             * Creates and appends progress bars to the story progress container.
-             * Each bar represents a story slide.
-             */
-            function createProgressBars() {
-                storyProgressContainer.innerHTML = ''; // Clear existing bars
-                storyPhotos.forEach((_, index) => {
-                    const barWrapper = document.createElement('div');
-                    barWrapper.classList.add('story-progress-bar');
-                    const fill = document.createElement('div');
-                    fill.classList.add('story-progress-fill');
-                    barWrapper.appendChild(fill);
-                    storyProgressContainer.appendChild(barWrapper);
-                });
+        // Event listeners for each gallery item to open the lightbox
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => openLightbox(index));
+        });
+
+        // Event listeners for lightbox controls
+        lightboxCloseBtn.addEventListener('click', closeLightbox); // Close button click
+        lightboxOverlay.addEventListener('click', (e) => {
+            // Close lightbox only if clicking on the overlay itself, not the image or buttons
+            if (e.target === lightboxOverlay) {
+                closeLightbox();
             }
+        });
+        lightboxPrevBtn.addEventListener('click', showPrevGalleryImage); // Previous button click
+        lightboxNextBtn.addEventListener('click', showNextGalleryImage); // Next button click
 
-            /**
-             * Starts or restarts the auto-scroll timer and updates the progress bar animation.
-             */
-            function startStoryTimer() {
-                clearInterval(storyInterval); // Clear any existing timer
-                if (storyPhotos.length > 0) { // Only auto-scroll if there are stories
-                    storyInterval = setInterval(() => {
-                        showNextStory(true); // Pass 'true' to indicate auto-scroll
-                    }, STORY_DURATION);
-                }
-                // Reset and start animation for current bar
-                updateProgressBarAnimation();
-            }
-
-            /**
-             * Updates the animation state of the progress bars based on the current story index.
-             */
-            function updateProgressBarAnimation() {
-                const fills = storyProgressContainer.querySelectorAll('.story-progress-fill');
-                fills.forEach((fill, index) => {
-                    fill.style.animation = 'none'; // Reset animation
-                    fill.style.width = '0'; // Reset width
-                    if (index < currentStoryIndex) {
-                        fill.style.width = '100%'; // Previous bars are full
-                    } else if (index === currentStoryIndex) {
-                        // Current bar animates
-                        fill.style.animation = `fillProgressBar ${STORY_DURATION / 1000}s linear forwards`;
-                    }
-                });
-            }
-
-            /**
-             * Updates the displayed story image and progress bar.
-             */
-            function updateStoryImage() {
-                if (storyPhotos.length === 0) {
-                    storyImage.src = ''; // Clear image if no photos
-                    console.warn("No story photos defined. Add URLs to the 'storyPhotos' array.");
-                    return;
-                }
-                storyImage.src = storyPhotos[currentStoryIndex];
-                updateProgressBarAnimation(); // Update animation on image change
-            }
-
-            /**
-             * Shows the next story in the sequence.
-             * @param {boolean} [isAutoScroll=false] - True if called by auto-scroll, false if by manual click.
-             */
-            function showNextStory(isAutoScroll = false) {
-                if (currentStoryIndex === storyPhotos.length - 1) {
-                    // This is the last story
-                    clearInterval(storyInterval); // Stop the timer
-                    replayStoryOverlay.classList.add('visible'); // Show replay overlay
-                    storyImage.style.opacity = '0'; // Fade out image
-                } else {
-                    // Go to the next story
-                    currentStoryIndex++;
-                    updateStoryImage();
-                    startStoryTimer(); // Restart timer for new slide
+        // Keyboard navigation for lightbox (Arrow keys and Escape)
+        document.addEventListener('keydown', (e) => {
+            if (lightboxOverlay.classList.contains('active')) {
+                if (e.key === 'ArrowRight') {
+                    showNextGalleryImage();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevGalleryImage();
+                } else if (e.key === 'Escape') {
+                    closeLightbox();
                 }
             }
-
-            /**
-             * Shows the previous story in the sequence.
-             */
-            function showPrevStory() {
-                replayStoryOverlay.classList.remove('visible'); // Hide replay overlay if navigating back
-                storyImage.style.opacity = '1'; // Ensure image is visible
-                currentStoryIndex = (currentStoryIndex - 1 + storyPhotos.length) % storyPhotos.length;
-                updateStoryImage();
-                startStoryTimer(); // Restart timer for new slide
-            }
-
-            /**
-             * Resets and restarts the story sequence.
-             */
-            function replayStory() {
-                replayStoryOverlay.classList.remove('visible'); // Hide replay overlay
-                storyImage.style.opacity = '1'; // Ensure image is visible
-                currentStoryIndex = 0;
-                createProgressBars(); // Recreate bars to reset their state
-                updateStoryImage();
-                startStoryTimer(); // Start timer from beginning
-            }
-
-            // Event Listeners for Story Section
-            nextStoryButton.addEventListener('click', () => showNextStory(false)); // Manual click
-            prevStoryButton.addEventListener('click', showPrevStory);
-            replayStoryButton.addEventListener('click', replayStory);
-
-            // Initialize story on page load
-            if (storyPhotos.length > 0) {
-                createProgressBars();
-                updateStoryImage();
-                startStoryTimer();
-            } else {
-                console.warn("No story photos defined. The story section will remain empty.");
-                // Optionally hide story section if no photos
-                storyViewerSection.style.display = 'none';
-            }
-
-            // Keyboard navigation for stories
-            document.addEventListener('keydown', function(event) {
-                // Only respond to keyboard if story section is visible and not in replay state
-                if (storyViewerSection.offsetParent !== null && !replayStoryOverlay.classList.contains('visible')) {
-                    if (event.key === 'ArrowRight') {
-                        showNextStory(false); // Manual keyboard navigation
-                    } else if (event.key === 'ArrowLeft') {
-                        showPrevStory();
-                    }
-                } else if (event.key === 'Enter' && replayStoryOverlay.classList.contains('visible')) {
-                    replayStory(); // Replay on Enter key when in replay state
-                }
-            });
         });
     </script>
 </body>
