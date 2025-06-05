@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cycle i</title> <!-- Corrected title -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font family for Neue Haas Grotesk Display alternative */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom font family for Cedarville Cursive */
+        .font-cedarville {
+            font-family: 'Cedarville Cursive', cursive;
+        }
+
+        /* Slideshow specific styles (for the main banner slideshow) */
+        .banner-slideshow-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3; /* Strictly 4:3 aspect ratio */
+            overflow: hidden;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-slideshow-image {
+            position: absolute; /* Added for overlapping images */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0; /* Hidden by default for fade effect */
+            transition: opacity 1s ease-in-out; /* Smooth fade transition */
+        }
+
+        .banner-slideshow-image.active {
+            opacity: 1; /* Visible when active */
+        }
+
+        /* Gallery Lightbox Styles */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            /* Removed max-width/height here to let image control size */
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .lightbox-image {
+            max-width: 800px; /* Fixed maximum width for enlarged images */
+            max-height: 600px; /* Fixed maximum height for enlarged images */
+            width: auto; /* Allow image to scale down if smaller than max-width */
+            height: auto; /* Allow image to scale down if smaller than max-height */
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-nav-btn {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 2rem;
+            line-height: 1;
+            z-index: 1010;
+            transition: background-color 0.3s ease;
+            user-select: none; /* Prevent text selection */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
+        }
+
+        .lightbox-nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .lightbox-nav-btn.left {
+            left: -50px; /* Adjust position relative to image */
+        }
+
+        .lightbox-nav-btn.right {
+            right: -50px; /* Adjust position relative to image */
+        }
+
+        .lightbox-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+            z-index: 1010;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .lightbox-close-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Responsive adjustments for lightbox buttons */
+        @media (max-width: 768px) {
+            .lightbox-nav-btn.left {
+                left: 10px;
+            }
+            .lightbox-nav-btn.right {
+                right: 10px;
+            }
+            .lightbox-content {
+                max-width: 90%; /* Allow more space on smaller screens */
+                max-height: 90%;
+            }
+            .lightbox-image {
+                max-width: 100%; /* Ensure image fits within smaller modal */
+                max-height: 100%;
+            }
+        }
+
+        /* Text shadow for banner overlay text and card overlay text */
+        .banner-text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Subtle shadow: horizontal-offset vertical-offset blur-radius color */
+        }
+
+        /* Styling for the new row-based collection items */
+        .collection-item {
+            display: flex;
+            flex-direction: column; /* Stack vertically by default on small screens */
+            align-items: center;
+            background-color: #1a1a1a; /* Darker background for the card */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 1rem; /* Padding inside the card */
+            gap: 1rem; /* Space between image and text */
+            text-decoration: none; /* Remove underline from links */
+            color: inherit; /* Inherit text color */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .collection-item:hover {
+            background-color: #2a2a2a; /* Slightly lighter on hover */
+            transform: translateY(-2px); /* Subtle lift effect */
+        }
+
+        .collection-item-image-container {
+            flex-shrink: 0; /* Prevent image from shrinking */
+            width: 100%; /* Full width on small screens */
+            height: 200px; /* Fixed height for image container on small screens */
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .collection-item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .collection-item-text-content {
+            text-align: center; /* Center text on small screens */
+            flex-grow: 1; /* Allow text content to grow */
+        }
+
+        @media (min-width: 640px) { /* sm breakpoint */
+            .collection-item {
+                flex-direction: row; /* Layout horizontally on larger screens */
+                text-align: left; /* Align text to left on larger screens */
+            }
+            .collection-item-image-container {
+                width: 120px; /* Fixed width for image on larger screens */
+                height: 120px; /* Fixed height for image on larger screens */
+            }
+            .collection-item-text-content {
+                text-align: left; /* Align text to left on larger screens */
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-inter min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="max-w-4xl w-full flex flex-col items-center space-y-8">
+
+        <!-- Main Content Area -->
+        <main class="w-full flex flex-col items-center">
+            <!-- Container for content, now with max-width classes for consistency -->
+            <div class="w-full max-w-sm sm:max-w-xl lg:max-w-2xl flex flex-col items-start space-y-6">
+
+                <!-- Main Banner Slideshow -->
+                <div class="relative w-full pt-8 banner-slideshow-container" id="banner-slideshow">
+                    <!-- Banner Slideshow Images -->
+                    <img src="https://renj.neocities.org/hosting/Picsart_23-08-03_21-48-45-862.jpg"
+                         onerror="this.onerror=null; this.src='https://placehold.co/900x675/555555/FFFFFF?text=Cycle+I+Banner+1';"
+                         alt="Cycle I Banner 1"
+                         class="banner-slideshow-image active">
+                    <img src="https://renj.neocities.org/hosting/Picsart_23-10-31_22-00-55-229.webp"
+                         onerror="this.onerror=null; this.src='https://placehold.co/900x675/777777/FFFFFF?text=Image+Not+Found';"
+                         alt="Cycle I Banner 2"
+                         class="banner-slideshow-image">
+                    <img src="https://renj.neocities.org/hosting/IMG20230421180918.webp"
+                         onerror="this.onerror=null; this.src='https://placehold.co/900x675/999999/FFFFFF?text=Image+Not+Found';"
+                         alt="Cycle I Banner 3"
+                         class="banner-slideshow-image">
+                    <img src="https://renj.neocities.org/hosting/IMG20230421180918.webp"
+                         onerror="this.onerror=null; this.src='https://placehold.co/900x675/999999/FFFFFF?text=Image+Not+Found';"
+                         alt="Cycle I Banner 3"
+                         class="banner-slideshow-image">
+                    <img src="https://renj.neocities.org/hosting/20230118145457847.webp"
+                         onerror="this.onerror=null; this.src='https://placehold.co/900x675/999999/FFFFFF?text=Image+Not+Found';"
+                         alt="Cycle I Banner 3"
+                         class="banner-slideshow-image">
+
+                    <!-- Navigation bar directly on top of the picture - now horizontal -->
+                    <nav class="absolute top-8 left-0 right-0 p-4 flex justify-around items-center text-white text-xs md:text-sm">
+                        <a href="index.html" class="hover:underline">home</a>
+                        <a href="cyclei.html" class="hover:underline">cycle i</a>
+                        <a href="cycleii.html" class="hover:underline">cycle ii</a>
+                        <a href="cycleiii.html" class="hover:underline">cycle iii</a>
+                        <a href="manifesto.html" class="hover:underline">manifesto</a>
+                    </nav>
+
+                    <!-- "cycle i" text - overlaid on the photo, lower-left (no bold) -->
+                    <h1 class="font-cedarville text-4xl md:text-6xl absolute bottom-4 left-4 z-10 banner-text-shadow">
+                        cycle iI
+                    </h1>
+                </div>
+
+                <!-- Body text for Cycle I -->
+                <p class="text-justify text-sm md:text-base leading-relaxed mt-8">
+                    Cycle II collections are...
+                </p>
+
+                <!-- Cursive title for poetry collections -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    poetry collections
+                </h2>
+
+                <!-- Poetry Collections - Now using row-based layout -->
+                <div class="w-full flex flex-col space-y-4 mt-8">
+                    <!-- Card 1: Lines Unbent -->
+                    <a href="cwtgie.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="covers/mr13.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="conversations with the ghosts i exhumed"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">conversations with the ghosts i exhumed</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                
+                            </p>
+                        </div>
+                    </a>
+
+                   <a href="astralgia.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="covers/mr14.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="astralgia"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">Astralgia</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                
+                            </p>
+                        </div>
+                    </a>
+
+<a href="tttignore.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="covers/the time to ignore.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="the time to ignore"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">the time to ignore</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                
+                            </p>
+                        </div>
+                    </a>
+
+<a href="ibtwaves.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://renj.neocities.org/cyclei/In%20Between%20The%20Waves.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="in between the waves"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">IN BETWEEN THE WAVES</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                
+                            </p>
+                        </div>
+                    </a>
+<a href="ludicreverie.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="covers/The Things We Do - 1.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="ludic reverie"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">Ludic Reverie</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                
+                            </p>
+                        </div>
+                    </a>
+             <a href="midnight sun.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="covers/Midnight Sun.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="midnight sun"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">Midnight Sun</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                
+                            </p>
+                        </div>
+                    </a>
+
+                  <a href="thtdecode.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="covers/1.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="the hunt to decode"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">The Hunt to Decode</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Special Releases Section -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    special releases
+                </h2>
+
+                <!-- Special Releases - Now using row-based layout -->
+                <div class="w-full flex flex-col space-y-4 mt-8">
+                    <!-- Special Release Card 1: lines unbent (complete edition) -->
+                    <a href="mcmas.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="covers/coverrr.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/666666/FFFFFF?text=Image+Not+Found';"
+                                 alt="merry christmas not that i care"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">Merry Christmas, Not That You Care</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released </em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                Everything lines unbent and more.
+                            </p>
+                        </div>
+                    </a>
+
+                  
+                </div>
+
+                <!-- Gallery Section -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    gallery
+                </h2>
+
+                <!-- Gallery Grid -->
+                <div class="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8" id="gallery-grid">
+                    <img src="https://renj.neocities.org/hosting/AddText_06-02-08.03.06.webp" alt="Gallery Image 1" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="https://renj.neocities.org/hosting/AddText_10-08-04.26.29.webp" alt="Gallery Image 2" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="https://renj.neocities.org/hosting/AddText_11-01-10.16.55.webp" alt="Gallery Image 3" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="https://renj.neocities.org/hosting/AddText_06-18-09.12.02.webp" alt="Gallery Image 4" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="https://renj.neocities.org/hosting/AddText_08-03-04.22.34.webp" alt="Gallery Image 5" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="https://renj.neocities.org/hosting/AddText_04-07-07.44.09.webp" alt="Gallery Image 6" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="https://renj.neocities.org/hosting/AddText_08-19-09.17.44.webp" alt="Gallery Image 5" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                    <img src="https://renj.neocities.org/hosting/AddText_02-28-10.26.01.webp" alt="Gallery Image 6" class="w-full aspect-square object-cover rounded-lg shadow-lg cursor-pointer gallery-item">
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Lightbox Overlay (Hidden by default) -->
+        <div class="lightbox-overlay" id="lightbox-overlay">
+            <div class="lightbox-content">
+                <img src="" alt="Enlarged Gallery Image" class="lightbox-image" id="lightbox-image">
+                <button class="lightbox-nav-btn left" id="lightbox-prev">&lt;</button>
+                <button class="lightbox-nav-btn right" id="lightbox-next">&gt;</button>
+                <button class="lightbox-close-btn" id="lightbox-close">&times;</button>
+            </div>
+        </div>
+
+        <!-- Footer - aligns with the max-w-sm content block -->
+        <footer class="w-full flex justify-between items-end text-xs md:text-sm mt-8 max-w-sm">
+            <div class="flex space-x-4">
+                <a href="https://www.instagram.com/renjpoems_hq/" class="hover:underline">INSTAGRAM</a>
+                <a href="https://web.facebook.com/renjcreatives" class="hover:underline">FACEBOOK</a>
+            </div>
+            <div class="text-right flex items-center space-x-2">
+                <p>sibulan, <span id="current-time"></span></p>
+                <p>&copy; 2025</p>
+                <!-- Small logo in the footer -->
+                <img src="renjwhite.png"
+                     onerror="this.onerror=null; this.src='https://placehold.co/20x20/FFFFFF/000000?text=Logo';"
+                     alt="Renj Logo"
+                     class="h-5 w-auto">
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to update the time (from previous context)
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // --- Banner Slideshow Logic (Automatic, Looping with Fade) ---
+        const bannerSlideshowContainer = document.getElementById('banner-slideshow');
+        const bannerSlideshowImages = bannerSlideshowContainer.querySelectorAll('.banner-slideshow-image');
+
+        let currentBannerSlideIndex = 0;
+        let bannerSlideDuration = 5000; // 5 seconds per slide
+        let bannerTimeoutId; // Use setTimeout for simple auto-advance
+
+        function showBannerSlide(index) {
+            // Ensure index wraps around for continuous loop
+            currentBannerSlideIndex = (index + bannerSlideshowImages.length) % bannerSlideshowImages.length;
+
+            // Remove 'active' from all images to start fade-out
+            bannerSlideshowImages.forEach(img => img.classList.remove('active'));
+
+            // After a short delay (to allow current image to fade out), make the next image active
+            // This creates a cross-fade effect if the transition duration is longer than the delay
+            // For a simple fade-in, we just make the new image active immediately.
+            bannerSlideshowImages[currentBannerSlideIndex].classList.add('active');
+
+
+            // Clear any existing timeout and set a new one for the next slide
+            if (bannerTimeoutId) {
+                clearTimeout(bannerTimeoutId);
+            }
+            bannerTimeoutId = setTimeout(nextBannerSlideAuto, bannerSlideDuration);
+        }
+
+        // Function for automatic slide advance
+        function nextBannerSlideAuto() {
+            showBannerSlide(currentBannerSlideIndex + 1);
+        }
+
+        // Initialize banner slideshow
+        showBannerSlide(currentBannerSlideIndex);
+
+        // --- Gallery Lightbox Logic ---
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightboxOverlay = document.getElementById('lightbox-overlay');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxPrevBtn = document.getElementById('lightbox-prev');
+        const lightboxNextBtn = document.getElementById('lightbox-next');
+        const lightboxCloseBtn = document.getElementById('lightbox-close');
+
+        let currentGalleryIndex = 0;
+
+        function openLightbox(index) {
+            currentGalleryIndex = index;
+            lightboxImage.src = galleryItems[currentGalleryIndex].src;
+            lightboxImage.alt = galleryItems[currentGalleryIndex].alt;
+            lightboxOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+        }
+
+        function closeLightbox() {
+            lightboxOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        function showNextGalleryImage() {
+            currentGalleryIndex = (currentGalleryIndex + 1) % galleryItems.length;
+            lightboxImage.src = galleryItems[currentGalleryIndex].src;
+            lightboxImage.alt = galleryItems[currentGalleryIndex].alt;
+        }
+
+        function showPrevGalleryImage() {
+            currentGalleryIndex = (currentGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
+            lightboxImage.src = galleryItems[currentGalleryIndex].src;
+            lightboxImage.alt = galleryItems[currentGalleryIndex].alt;
+        }
+
+        // Event listeners for gallery items
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => openLightbox(index));
+        });
+
+        // Event listeners for lightbox controls
+        lightboxCloseBtn.addEventListener('click', closeLightbox);
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) { // Close only if clicking on the overlay itself, not the content
+                closeLightbox();
+            }
+        });
+        lightboxPrevBtn.addEventListener('click', showPrevGalleryImage);
+        lightboxNextBtn.addEventListener('click', showNextGalleryImage);
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (lightboxOverlay.classList.contains('active')) {
+                if (e.key === 'ArrowRight') {
+                    showNextGalleryImage();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevGalleryImage();
+                } else if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
