@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cycle i</title> <!-- Title remains 'cycle i' -->
+    <title>cycle i</title> <!-- Corrected title -->
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="renjfavicon.png">
     <!-- Tailwind CSS CDN -->
@@ -72,6 +72,7 @@
 
         .lightbox-content {
             position: relative;
+            /* Removed max-width/height here to let image control size */
             padding: 20px;
             background-color: #1a1a1a;
             border-radius: 12px;
@@ -168,7 +169,7 @@
 
         <!-- Main Content Area -->
         <main class="w-full flex flex-col items-center">
-            <!-- Container for content, with adjusted max-width for better mobile two-column display -->
+            <!-- Container for content, with adjusted max-width for better mobile layout -->
             <div class="w-full sm:max-w-xl lg:max-w-2xl flex flex-col items-start space-y-6">
 
                 <!-- Main Banner Slideshow -->
@@ -220,8 +221,8 @@
                     poetry collections
                 </h2>
 
-                <!-- Poetry Collections Grid - Adjusted for mobile with explicit breakpoints -->
-                <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                <!-- Poetry Collections Grid - Adjusted for larger cards on smaller screens -->
+                <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
                     <!-- Card 1 -->
                     <a href="linesunbent.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://i.postimg.cc/SNzhMf5C/mr1.jpg"
@@ -366,8 +367,8 @@
                     special releases
                 </h2>
 
-                <!-- Special Releases Grid - Adjusted for mobile with explicit breakpoints -->
-                <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                <!-- Special Releases Grid - Adjusted for larger cards on smaller screens -->
+                <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
                     <!-- Special Release Card 1 -->
                     <a href="linesunbent-dlx.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
                         <img src="https://i.postimg.cc/RF8N1554/mrf1.jpg"
