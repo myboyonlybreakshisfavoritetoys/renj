@@ -166,6 +166,59 @@
         .banner-text-shadow {
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Subtle shadow: horizontal-offset vertical-offset blur-radius color */
         }
+
+        /* Styling for the new row-based collection items */
+        .collection-item {
+            display: flex;
+            flex-direction: column; /* Stack vertically by default on small screens */
+            align-items: center;
+            background-color: #1a1a1a; /* Darker background for the card */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 1rem; /* Padding inside the card */
+            gap: 1rem; /* Space between image and text */
+            text-decoration: none; /* Remove underline from links */
+            color: inherit; /* Inherit text color */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .collection-item:hover {
+            background-color: #2a2a2a; /* Slightly lighter on hover */
+            transform: translateY(-2px); /* Subtle lift effect */
+        }
+
+        .collection-item-image-container {
+            flex-shrink: 0; /* Prevent image from shrinking */
+            width: 100%; /* Full width on small screens */
+            height: 200px; /* Fixed height for image container on small screens */
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .collection-item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .collection-item-text-content {
+            text-align: center; /* Center text on small screens */
+            flex-grow: 1; /* Allow text content to grow */
+        }
+
+        @media (min-width: 640px) { /* sm breakpoint */
+            .collection-item {
+                flex-direction: row; /* Layout horizontally on larger screens */
+                text-align: left; /* Align text to left on larger screens */
+            }
+            .collection-item-image-container {
+                width: 120px; /* Fixed width for image on larger screens */
+                height: 120px; /* Fixed height for image on larger screens */
+            }
+            .collection-item-text-content {
+                text-align: left; /* Align text to left on larger screens */
+            }
+        }
     </style>
 </head>
 <body class="bg-black text-white font-inter min-h-screen flex flex-col items-center justify-center p-4">
@@ -226,143 +279,209 @@
                     poetry collections
                 </h2>
 
-                <!-- Poetry Collections Grid - Adjusted for larger cards on smaller screens and consistent two-column display -->
-                <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-                    <!-- Card 1 -->
-                    <a href="linesunbent.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://i.postimg.cc/SNzhMf5C/mr1.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
-                             alt="lines unbent"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">lines unbent</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released June 2, 2023</em>
+                <!-- Poetry Collections - Now using row-based layout -->
+                <div class="w-full flex flex-col space-y-4 mt-8">
+                    <!-- Card 1: Lines Unbent -->
+                    <a href="linesunbent.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://i.postimg.cc/SNzhMf5C/mr1.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="lines unbent"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">lines unbent</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released June 2, 2023</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                My debut poetry collection, an eleven-poem exploration of resilience and self-discovery.
+                            </p>
                         </div>
                     </a>
 
-                    <!-- Card 2 -->
-                    <a href="afterthoughts.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr2.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
-                             alt="afterthoughts"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">afterthoughts</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released July 7, 2023</em>
+                    <!-- Card 2: Afterthoughts -->
+                    <a href="afterthoughts.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr2.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="afterthoughts"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">afterthoughts</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released July 7, 2023</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                A collection delving into reflections and perspectives gained after significant experiences.
+                            </p>
                         </div>
                     </a>
 
-                    <!-- Card 3 (Example for next line) -->
-                    <a href="hiddenchapters.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr3.png"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
-                             alt="Hidden Chapters"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">Hidden Chapters</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released August 11, 2023</em>
+                    <!-- Card 3: Hidden Chapters -->
+                    <a href="hiddenchapters.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr3.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="Hidden Chapters"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">Hidden Chapters</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released August 11, 2023</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                Unveiling unspoken stories and unseen narratives within the depths of emotion.
+                            </p>
                         </div>
                     </a>
 
-                    <!-- Card 4 (Example for next line) -->
-                    <a href="wufast.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://i.postimg.cc/NFZvnKyK/mr4.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
-                             alt="WAKING UP FROM A STRANGE DREAM"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">WAKING UP FROM A STRANGE DREAM</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released September 1, 2023</em>
+                    <!-- Card 4: WAKING UP FROM A STRANGE DREAM -->
+                    <a href="wufast.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://i.postimg.cc/NFZvnKyK/mr4.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="WAKING UP FROM A STRANGE DREAM"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">WAKING UP FROM A STRANGE DREAM</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released September 1, 2023</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                Poems exploring surreal experiences and the transition from dream to reality.
+                            </p>
                         </div>
                     </a>
 
-                    <a href="wositn.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr5.png"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
-                             alt="WHISPERS OF STARDUST IN THE NIGHT"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">WHISPERS OF STARDUST IN THE NIGHT</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released October 6, 2023</em>
+                    <!-- Card 5: WHISPERS OF STARDUST IN THE NIGHT -->
+                    <a href="wositn.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr5.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="WHISPERS OF STARDUST IN THE NIGHT"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">WHISPERS OF STARDUST IN THE NIGHT</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released October 6, 2023</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                A celestial journey through whispers of inspiration and cosmic wonder.
+                            </p>
                         </div>
                     </a>
 
-                    <a href="sstyou.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr6.png"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
-                             alt="seas, stars, thoughts, YOU"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">seas, stars, thoughts, YOU</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released November 3, 2023</em>
+                    <!-- Card 6: seas, stars, thoughts, YOU -->
+                    <a href="sstyou.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr6.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="seas, stars, thoughts, YOU"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">seas, stars, thoughts, YOU</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released November 3, 2023</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                An intimate reflection on nature, cosmos, introspection, and personal connection.
+                            </p>
                         </div>
                     </a>
 
-                    <a href="novalunosis.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr7.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
-                             alt="NOVALUNOSIS"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">NOVALUNOSIS</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released December 16, 2023</em>
+                    <!-- Card 7: NOVALUNOSIS -->
+                    <a href="novalunosis.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr7.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="NOVALUNOSIS"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">NOVALUNOSIS</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released December 16, 2023</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                Exploring themes of new moon, new beginnings, and profound emotional shifts.
+                            </p>
                         </div>
                     </a>
 
-                    <a href="jouska.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr8.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
-                             alt="jouska"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">jouska</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released January 5, 2024</em>
+                    <!-- Card 8: jouska -->
+                    <a href="jouska.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr8.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="jouska"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">jouska</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released January 5, 2024</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                A dive into the hypothetical conversations one compulsively holds in their head.
+                            </p>
                         </div>
                     </a>
 
-                    <a href="cwcolors.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr9.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/888888/FFFFFF?text=Image+Not+Found';"
-                             alt="cool warm colors"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">cool warm colors</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released February 2, 2024</em>
+                    <!-- Card 9: cool warm colors -->
+                    <a href="cwcolors.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr9.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="cool warm colors"
+                                 class="collection-item-image">
                         </div>
-                    </a>
-                    <!-- Card 2 -->
-                    <a href="starrise.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr10.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/AAAAAA/000000?text=Image+Not+Found';"
-                             alt="starrise"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">starrise</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released March 1, 2024</em>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">cool warm colors</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released February 2, 2024</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                Exploring emotions through the palette of cool and warm hues.
+                            </p>
                         </div>
                     </a>
 
-                    <!-- Card 3 (Example for next line) -->
-                    <a href="starcross.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr11.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/BBBBBB/FFFFFF?text=Image+Not+Found';"
-                             alt="starcross"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">starcross</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released April 5, 2024</em>
+                    <!-- Card 10: starrise -->
+                    <a href="starrise.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr10.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/AAAAAA/000000?text=Image+Not+Found';"
+                                 alt="starrise"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">starrise</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released March 1, 2024</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                The journey of aspirations emerging, like stars rising in the night sky.
+                            </p>
                         </div>
                     </a>
 
-                    <!-- Card 4 (Example for next line) -->
-                    <a href="starfall.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr12.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/CCCCCC/000000?text=Image+Not+Found';"
-                             alt="starfall"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">starfall</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released May 3, 2024</em>
+                    <!-- Card 11: starcross -->
+                    <a href="starcross.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr11.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/BBBBBB/FFFFFF?text=Image+Not+Found';"
+                                 alt="starcross"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">starcross</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released April 5, 2024</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                A poignant exploration of destined encounters and intertwined fates.
+                            </p>
+                        </div>
+                    </a>
+
+                    <!-- Card 12: starfall -->
+                    <a href="starfall.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://raw.githubusercontent.com/myboyonlybreakshisfavoritetoys/renj/refs/heads/main/covers/mr12.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/CCCCCC/000000?text=Image+Not+Found';"
+                                 alt="starfall"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">starfall</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released May 3, 2024</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                Meditations on decline, endings, and the beauty found in letting go.
+                            </p>
                         </div>
                     </a>
                 </div>
@@ -372,29 +491,39 @@
                     special releases
                 </h2>
 
-                <!-- Special Releases Grid - Adjusted for larger cards on smaller screens and consistent two-column display -->
-                <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-                    <!-- Special Release Card 1 -->
-                    <a href="linesunbent-dlx.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://i.postimg.cc/RF8N1554/mrf1.jpg"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/666666/FFFFFF?text=Image+Not+Found';"
-                             alt="lines unbent (complete edition)"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">lines unbent (complete edition)</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released June 2, 2024</em>
+                <!-- Special Releases - Now using row-based layout -->
+                <div class="w-full flex flex-col space-y-4 mt-8">
+                    <!-- Special Release Card 1: lines unbent (complete edition) -->
+                    <a href="linesunbent-dlx.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://i.postimg.cc/RF8N1554/mrf1.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/666666/FFFFFF?text=Image+Not+Found';"
+                                 alt="lines unbent (complete edition)"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">lines unbent (complete edition)</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released June 2, 2024</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                The expanded and definitive edition of my debut collection, featuring new poems.
+                            </p>
                         </div>
                     </a>
 
-                    <!-- Special Release Card 2 -->
-                    <a href="afterthoughts-dlx.html" class="relative w-full aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-800 block group">
-                        <img src="https://i.postimg.cc/gjZrNSmR/mrf2.png"
-                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/333333/FFFFFF?text=Image+Not+Found';"
-                             alt="afterthoughts (anniversary edition)"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="absolute bottom-2 left-2 text-white">
-                            <strong class="font-cedarville text-base md:text-lg banner-text-shadow">afterthoughts (anniversary edition)</strong>
-                            <em class="font-inter text-xs md:text-sm block banner-text-shadow">Released July 2, 2024</em>
+                    <!-- Special Release Card 2: afterthoughts (anniversary edition) -->
+                    <a href="afterthoughts-dlx.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://i.postimg.cc/gjZrNSmR/mrf2.png"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/192x192/333333/FFFFFF?text=Image+Not+Found';"
+                                 alt="afterthoughts (anniversary edition)"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">afterthoughts (anniversary edition)</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released July 2, 2024</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                A special edition marking the anniversary of the beloved 'afterthoughts' collection.
+                            </p>
                         </div>
                     </a>
                 </div>
