@@ -58,6 +58,7 @@
             text-decoration: none;
             color: inherit;
             transition: transform 0.2s ease; /* Keep hover effect for subtle interaction */
+            cursor: default; /* Indicate it's not clickable */
         }
 
         .collection-item:hover {
@@ -101,14 +102,6 @@
             padding-top: 2rem;
             padding-left: 2rem; /* Align with h1 text */
         }
-
-        /* Modal specific styling */
-        #image-modal .max-w-2xl { /* Targeting the modal content size */
-            max-width: 90vw; /* Occupy up to 90% of viewport width */
-        }
-        #image-modal .max-h-[80vh] { /* Targeting the modal content height */
-            max-height: 90vh; /* Occupy up to 90% of viewport height */
-        }
     </style>
 </head>
 <body class="bg-black text-white font-inter min-h-screen flex flex-col items-center p-4">
@@ -149,43 +142,51 @@
                     <h2 class="font-cedarville text-3xl text-white leading-tight mb-0">
                         orphans of the tongue announcement
                     </h2>
-                    <p class="font-inter text-sm italic text-gray-300 mt-1">
+                    <p class="font-inter text-sm italic text-gray-300 leading-none">
                         June 8, 2025
                     </p>
                 </div>
-                <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <a href="#" class="collection-item">
+                <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"> <!-- Changed lg:grid-cols-4 to lg:grid-cols-5 -->
+                    <div class="collection-item">
                         <div class="collection-item-image-container">
                             <img src="https://placehold.co/90x160/FF5733/FFFFFF?text=OT+Story+1"
                                  onerror="this.onerror=null; this.src='https://placehold.co/90x160/FF5733/FFFFFF?text=OT+Story+1';"
                                  alt="Orphans of the Tongue Story 1"
                                  class="collection-item-image">
                         </div>
-                    </a>
-                    <a href="#" class="collection-item">
+                    </div>
+                    <div class="collection-item">
                         <div class="collection-item-image-container">
                             <img src="https://placehold.co/90x160/33FF57/FFFFFF?text=OT+Story+2"
                                  onerror="this.onerror=null; this.src='https://placehold.co/90x160/33FF57/FFFFFF?text=OT+Story+2';"
                                  alt="Orphans of the Tongue Story 2"
                                  class="collection-item-image">
                         </div>
-                    </a>
-                    <a href="#" class="collection-item">
+                    </div>
+                    <div class="collection-item">
                         <div class="collection-item-image-container">
                             <img src="https://placehold.co/90x160/3357FF/FFFFFF?text=OT+Story+3"
                                  onerror="this.onerror=null; this.src='https://placehold.co/90x160/3357FF/FFFFFF?text=OT+Story+3';"
                                  alt="Orphans of the Tongue Story 3"
                                  class="collection-item-image">
                         </div>
-                    </a>
-                    <a href="#" class="collection-item">
+                    </div>
+                    <div class="collection-item">
                         <div class="collection-item-image-container">
                             <img src="https://placehold.co/90x160/FF33A1/FFFFFF?text=OT+Story+4"
                                  onerror="this.onerror=null; this.src='https://placehold.co/90x160/FF33A1/FFFFFF?text=OT+Story+4';"
                                  alt="Orphans of the Tongue Story 4"
                                  class="collection-item-image">
                         </div>
-                    </a>
+                    </div>
+                    <div class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://placehold.co/90x160/888888/FFFFFF?text=OT+Story+5"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/90x160/888888/FFFFFF?text=OT+Story+5';"
+                                 alt="Orphans of the Tongue Story 5"
+                                 class="collection-item-image">
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Section for March 2024 -->
@@ -193,63 +194,55 @@
                     <h2 class="font-cedarville text-3xl text-white leading-tight mb-0">
                         March Collection
                     </h2>
-                    <p class="font-inter text-sm italic text-gray-300 mt-1">
+                    <p class="font-inter text-sm italic text-gray-300 leading-none">
                         March 8, 2024
                     </p>
                 </div>
-                <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <a href="#" class="collection-item">
+                <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"> <!-- Changed lg:grid-cols-4 to lg:grid-cols-5 -->
+                    <div class="collection-item">
                         <div class="collection-item-image-container">
                             <img src="https://placehold.co/90x160/A1FF33/FFFFFF?text=March+Story+1"
                                  onerror="this.onerror=null; this.src='https://placehold.co/90x160/A1FF33/FFFFFF?text=March+Story+1';"
                                  alt="March Story 1"
                                  class="collection-item-image">
                         </div>
-                    </a>
-                    <a href="#" class="collection-item">
+                    </div>
+                    <div class="collection-item">
                         <div class="collection-item-image-container">
                             <img src="https://placehold.co/90x160/FF8800/FFFFFF?text=March+Story+2"
                                  onerror="this.onerror=null; this.src='https://placehold.co/90x160/FF8800/FFFFFF?text=March+Story+2';"
                                  alt="March Story 2"
                                  class="collection-item-image">
                         </div>
-                    </a>
-                    <a href="#" class="collection-item">
+                    </div>
+                    <div class="collection-item">
                         <div class="collection-item-image-container">
                             <img src="https://placehold.co/90x160/00FFFF/FFFFFF?text=March+Story+3"
                                  onerror="this.onerror=null; this.src='https://placehold.co/90x160/00FFFF/FFFFFF?text=March+Story+3';"
                                  alt="March Story 3"
                                  class="collection-item-image">
                         </div>
-                    </a>
-                     <a href="#" class="collection-item">
+                    </div>
+                     <div class="collection-item">
                         <div class="collection-item-image-container">
                             <img src="https://placehold.co/90x160/888888/FFFFFF?text=March+Story+4"
                                  onerror="this.onerror=null; this.src='https://placehold.co/90x160/888888/FFFFFF?text=March+Story+4';"
                                  alt="March Story 4"
                                  class="collection-item-image">
                         </div>
-                    </a>
+                    </div>
+                    <div class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://placehold.co/90x160/FF00FF/FFFFFF?text=March+Story+5"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/90x160/FF00FF/FFFFFF?text=March+Story+5';"
+                                 alt="March Story 5"
+                                 class="collection-item-image">
+                        </div>
+                    </div>
                 </div>
 
             </div>
         </main>
-
-        <!-- Image Enlargement Modal (Initially Hidden) -->
-        <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
-            <div class="relative max-w-3xl max-h-[90vh] rounded-lg overflow-hidden"> <!-- Adjusted max-w and max-h -->
-                <button id="close-modal" class="absolute top-2 right-2 text-white text-3xl font-bold bg-gray-800 bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center focus:outline-none hover:bg-opacity-75 z-20">
-                    &times;
-                </button>
-                <img id="enlarged-image" src="" alt="Enlarged Story" class="max-w-full max-h-[80vh] object-contain rounded-lg">
-                <button id="prev-enlarged" class="absolute left-2 top-1/2 -translate-y-1/2 text-white text-4xl bg-gray-800 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center focus:outline-none hover:bg-opacity-75 z-20">
-                    &lt;
-                </button>
-                <button id="next-enlarged" class="absolute right-2 top-1/2 -translate-y-1/2 text-white text-4xl bg-gray-800 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center focus:outline-none hover:bg-opacity-75 z-20">
-                    &gt;
-                </button>
-            </div>
-        </div>
 
         <!-- Footer - aligns with the main content block's max-width -->
         <footer class="w-full flex justify-between items-end text-xs md:text-sm mt-8 max-w-sm sm:max-w-xl lg:max-w-2xl">
@@ -285,81 +278,6 @@
         // Update time immediately and then every minute
         updateTime();
         setInterval(updateTime, 60000);
-
-        // --- Image Enlargement Modal Logic ---
-        const imageModal = document.getElementById('image-modal');
-        const enlargedImage = document.getElementById('enlarged-image');
-        const closeModalButton = document.getElementById('close-modal');
-        const prevEnlargedButton = document.getElementById('prev-enlarged');
-        const nextEnlargedButton = document.getElementById('next-enlarged');
-        const collectionItems = document.querySelectorAll('.collection-item');
-        let allImages = []; // Array to hold all image data for navigation
-        let currentEnlargedIndex = 0;
-
-        // Populate allImages array on page load
-        collectionItems.forEach(item => {
-            const imgElement = item.querySelector('.collection-item-image');
-            if (imgElement) {
-                allImages.push({
-                    src: imgElement.src,
-                    alt: imgElement.alt
-                });
-            }
-        });
-
-        // Open modal function
-        function openModal(index) {
-            currentEnlargedIndex = index;
-            enlargedImage.src = allImages[currentEnlargedIndex].src;
-            enlargedImage.alt = allImages[currentEnlargedIndex].alt;
-            imageModal.classList.remove('hidden');
-        }
-
-        // Close modal function
-        function closeModal() {
-            imageModal.classList.add('hidden');
-        }
-
-        // Navigate to previous image
-        function showPrevImage() {
-            currentEnlargedIndex = (currentEnlargedIndex - 1 + allImages.length) % allImages.length;
-            enlargedImage.src = allImages[currentEnlargedIndex].src;
-            enlargedImage.alt = allImages[currentEnlargedIndex].alt;
-        }
-
-        // Navigate to next image
-        function showNextImage() {
-            currentEnlargedIndex = (currentEnlargedIndex + 1) % allImages.length;
-            enlargedImage.src = allImages[currentEnlargedIndex].src;
-            enlargedImage.alt = allImages[currentEnlargedIndex].alt;
-        }
-
-        // Event listeners for opening modal
-        collectionItems.forEach((item, index) => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent default link behavior
-                openModal(index);
-            });
-        });
-
-        // Event listeners for modal navigation and close
-        closeModalButton.addEventListener('click', closeModal);
-        prevEnlargedButton.addEventListener('click', showPrevImage);
-        nextEnlargedButton.addEventListener('click', showNextImage);
-
-        // Close modal on escape key press
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
-                closeModal();
-            }
-        });
-
-        // Close modal on click outside image (on the overlay itself)
-        imageModal.addEventListener('click', (e) => {
-            if (e.target === imageModal) {
-                closeModal();
-            }
-        });
     </script>
 </body>
 </html>
