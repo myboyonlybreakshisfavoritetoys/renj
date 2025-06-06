@@ -1,160 +1,145 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found</title>
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="renjfavicon.png">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Fallback to sans-serif */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Align content to the top */
-            align-items: center; /* Center content horizontally */
-            min-height: 100vh; /* Ensure body takes full height */
-            width: 100%; /* Ensure body takes full width */
-            background-color: #1A325C; /* Solid dark blue background */
-            color: #D1DBD7; /* Default text color for elements directly on body */
+        /* Custom font family for Inter */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom font family for Cedarville Cursive */
+        .font-cedarville {
+            font-family: 'Cedarville Cursive', cursive;
         }
 
-        .font-bold-custom {
-            font-family: 'NeueHaasGroteskDisp Pro Blk', sans-serif; /* Fallback to sans-serif */
-            font-weight: 900; /* Ensure it's bold */
+        /* Text shadow for subtle depth */
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
 
-        .main-container {
+        /* Slideshow specific styles (reused from other pages) */
+        .slideshow-container {
+            position: absolute; /* Position absolutely to fill the background */
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 960px; /* Reduced max-width for a more minimalist feel */
-            margin-left: auto;
-            margin-right: auto;
-            padding: 1rem; /* Slightly reduced padding */
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center items within the main container */
+            height: 100%;
+            overflow: hidden;
+            background-color: #333;
+            z-index: -1; /* Place behind other content */
         }
 
-        .logo-img {
-            height: 3.5rem; /* Slightly reduced height for logo */
-            width: auto; /* Maintain aspect ratio */
-            margin-bottom: 0.75rem; /* Reduced space below logo */
+        .slideshow-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the entire container */
+            opacity: 0; /* Hidden by default for fade effect */
+            transition: opacity 1s ease-in-out; /* Smooth fade transition */
         }
 
-        .main-page-title {
-            color: #D1DBD7; /* Light grey for main title */
-            font-size: 2rem; /* Reduced font size */
+        .slideshow-image.active {
+            opacity: 1; /* Visible when active */
+        }
+
+        /* Styles for the content overlay */
+        .content-overlay {
+            position: relative; /* Needed for z-index and centering */
+            z-index: 1; /* Ensure it's above the slideshow */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            max-width: 90%; /* Responsive width */
+            margin: auto; /* Center the overlay */
             text-align: center;
-            margin-bottom: 1.5rem; /* Reduced space below title */
         }
 
-        .nav-bar {
-            background-color: #D1DBD7; /* Light grey background for the nav bar */
-            border-radius: 1rem; /* Slightly smaller rounded corners */
-            padding: 0.75rem 1.5rem; /* Reduced padding */
-            margin-bottom: 1rem; /* Reduced space below nav bar */
-            display: flex;
-            justify-content: center; /* Center nav links */
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Softer shadow */
-            width: fit-content; /* Shrink to fit content */
-            max-width: 100%; /* Ensure it doesn't overflow on small screens */
-        }
-
-        .nav-bar a {
-            color: #1A325C; /* Dark blue for nav links */
-            text-decoration: none;
-            padding: 0 0.8rem; /* Reduced padding between links */
-            font-size: 1rem; /* Slightly reduced font size */
-            white-space: nowrap; /* Prevent links from wrapping */
-        }
-
-        .nav-bar a:not(:last-child) {
-            border-right: 1px solid #1A325C; /* Separator between links */
-        }
-
-        .nav-bar a:hover {
-            text-decoration: underline;
-        }
-
-        .content-box {
-            background-color: transparent; /* Transparent background for content */
-            border-radius: 1.5rem; /* Rounded corners */
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: none; /* No shadow */
-            width: 100%; /* Take full width of main-container */
-            max-width: 500px; /* Reduced max width for readability */
-            text-align: center; /* Center text within the box */
-        }
-
-        .content-box h3 {
-            color: #D1DBD7; /* Heading color is light grey */
-            font-size: 1.5rem; /* Reduced font size for 404 message */
-            margin-bottom: 0.75rem; /* Reduced margin */
-        }
-
-        .content-box p {
-            color: #D1DBD7; /* Text color is light grey */
-            font-family: 'NeueHaasGroteskDisp Pro', sans-serif; /* Explicitly set to non-bold font */
-            font-weight: normal; /* Ensure normal font weight */
-            font-style: italic; /* Italicize the quote */
-            margin-bottom: 1rem; /* Reduced margin */
-            font-size: 0.95rem; /* Slightly smaller font for body text */
-            line-height: 1.5; /* Adjusted line height for readability */
-        }
-
-        /* Responsive adjustments */
-        @media (min-width: 640px) { /* sm breakpoint */
-            .main-container {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-        }
-        @media (min-width: 768px) { /* md breakpoint */
-            .main-container {
-                padding-left: 3rem;
-                padding-right: 3rem;
-            }
-        }
-        @media (min-width: 1024px) { /* lg breakpoint */
-            .main-container {
-                padding-left: 6rem;
-                padding-right: 6rem;
+        @media (min-width: 640px) {
+            .content-overlay {
+                max-width: 500px; /* Max width on larger screens */
             }
         }
     </style>
 </head>
-<body class="p-4 sm:p-8 h-full">
-    <div class="main-container w-full mx-auto">
-        <a href="index.html">
-            <img src="renjwhite.png" alt="Renj Logo" class="logo-img">
-        </a>
+<body class="bg-black text-white font-inter min-h-screen flex flex-col items-center justify-center p-4 relative">
 
-        <h1 class="main-page-title font-bold-custom">404 - Page Not Found</h1>
-
-        <nav class="nav-bar">
-            <a href="index.html" class="font-bold-custom">home</a>
-            <a href="cyclei.html" class="font-bold-custom">cycle i</a>
-            <a href="cycleii.html" class="font-bold-custom">cycle ii</a>
-            <a href="cycleiii.html" class="font-bold-custom">cycle iii</a>
-            <a href="manifesto.html" class="font-bold-custom">manifesto</a>
-        </nav>
-
-        <div class="content-box">
-            <h3>Lost in the Labyrinth of Words?</h3>
-            <p>
-                "Two roads diverged in a yellow wood, and sorry I could not travel both and be one traveler, long I stood..."
-                <br>— Robert Frost, "The Road Not Taken"
-            </p>
-            <p class="leading-relaxed">
-                It seems the page you're looking for has wandered off into another verse.
-                Please use the navigation above to find your way back to the poems.
-            </p>
-        </div>
-
+    <!-- Background Slideshow Container -->
+    <div class="slideshow-container" id="background-slideshow">
+        <img src="https://poems.renj.top/cycle%20ii/midnights/cover.png"
+             onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/555555/FFFFFF?text=Background+1';"
+             alt="Background Image 1"
+             class="slideshow-image active">
+        <img src="https://renj.neocities.org/hosting/AddText_02-28-10.26.01.webp"
+             onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/777777/FFFFFF?text=Background+2';"
+             alt="Background Image 2"
+             class="slideshow-image">
+        <img src="https://renj.neocities.org/hosting/IMG20230421180918.webp"
+             onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/999999/FFFFFF?text=Background+3';"
+             alt="Background Image 3"
+             class="slideshow-image">
+        <img src="https://poems.renj.top/cycle%20ii/ignore/dd.png"
+             onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/AAAAAA/FFFFFF?text=Background+4';"
+             alt="Background Image 4"
+             class="slideshow-image">
     </div>
+
+    <!-- 404 Content Overlay -->
+    <div class="content-overlay flex flex-col items-center justify-center space-y-6">
+        <h1 class="font-cedarville text-7xl md:text-8xl text-red-500 text-shadow">
+            404
+        </h1>
+        <p class="text-2xl md:text-3xl font-semibold text-shadow">
+            Page Not Found
+        </p>
+        <p class="text-sm md:text-base leading-relaxed text-gray-300 text-shadow">
+            It seems the page you were looking for doesn't exist or has been moved.
+            Please double-check the URL or go back to the home page.
+        </p>
+        <a href="index.html" class="inline-block bg-white text-black font-semibold py-2 px-6 rounded-lg hover:bg-gray-200 transition-colors duration-300 shadow-lg">
+            Go to Home Page
+        </a>
+    </div>
+
+    <script>
+        // --- Background Slideshow Logic ---
+        const slideshowContainer = document.getElementById('background-slideshow');
+        const slideshowImages = slideshowContainer.querySelectorAll('.slideshow-image');
+
+        let currentSlideIndex = 0;
+        let slideDuration = 5000; // 5 seconds per slide
+        let timeoutId;
+
+        function showSlide(index) {
+            currentSlideIndex = (index + slideshowImages.length) % slideshowImages.length;
+
+            slideshowImages.forEach(img => img.classList.remove('active'));
+            slideshowImages[currentSlideIndex].classList.add('active');
+
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+            timeoutId = setTimeout(nextSlideAuto, slideDuration);
+        }
+
+        function nextSlideAuto() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        // Initialize slideshow
+        showSlide(currentSlideIndex);
+    </script>
 </body>
 </html>
