@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>manifesto</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font family for Inter */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom font family for Cedarville Cursive */
+        .font-cedarville {
+            font-family: 'Cedarville Cursive', cursive;
+        }
+
+        /* Text shadow for subtle depth, consistent with other pages */
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Consistent sizing for banner container */
+        .banner-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3; /* Consistent aspect ratio */
+            overflow: hidden;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: flex; /* Use flex to align content within the banner */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;
+            justify-content: space-between; /* Space out nav and title */
+            padding-top: 2rem; /* Add padding for navigation */
+            padding-bottom: 1rem; /* Add padding for title */
+        }
+
+        /* Styles for the banner image with parallax effect */
+        .banner-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* Make height larger than container to allow parallax movement */
+            height: 150%; 
+            object-fit: cover;
+            filter: brightness(0.6); /* Slightly dim the background for text readability */
+            /* Ensure image is below text overlay but inside its container for parallax */
+            z-index: 0; 
+        }
+
+        /* Overlay for banner content to ensure text is always visible */
+        .banner-content-overlay {
+            position: absolute;
+            inset: 0; /* Cover the entire banner container */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1; /* Ensure this is above the image */
+            padding: 1rem; /* Adjust padding as needed */
+            padding-top: 2rem; /* Matches banner-container pt-8 */
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-inter min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="max-w-4xl w-full flex flex-col items-center space-y-8">
+
+        <!-- Main Content Area -->
+        <main class="w-full flex flex-col items-center">
+            <!-- Container for content, consistent with other pages -->
+            <div class="w-full max-w-sm sm:max-w-xl lg:max-w-2xl flex flex-col items-start space-y-6">
+
+                <!-- Main Banner with Parallax -->
+                <div class="relative w-full pt-8 banner-container" id="manifesto-banner">
+                    <!-- Parallax background image -->
+                    <img src="https://renj.neocities.org/hosting/Picsart_23-08-03_21-48-45-862.jpg"
+                         onerror="this.onerror=null; this.src='https://placehold.co/900x675/555555/FFFFFF?text=Manifesto+Banner';"
+                         alt="Manifesto Banner"
+                         class="banner-image">
+
+                    <div class="banner-content-overlay">
+                        <!-- Navigation bar directly on top of the picture -->
+                        <nav class="w-full flex justify-around items-center text-white text-xs md:text-sm">
+                            <a href="index.html" class="hover:underline">home</a>
+                            <a href="cyclei.html" class="hover:underline">cycle i</a>
+                            <a href="cycleii.html" class="hover:underline">cycle ii</a>
+                            <a href="cycleiii.html" class="hover:underline">cycle iii</a>
+                            <a href="manifesto.html" class="hover:underline">manifesto</a>
+                        </nav>
+
+                        <!-- "manifesto" text - overlaid on the photo, lower-left -->
+                        <h1 class="font-cedarville text-4xl md:text-6xl text-white text-shadow self-start ml-4">
+                            manifesto
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Running Numbers Section -->
+                <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 text-center mt-12">
+                    <div class="flex flex-col items-center">
+                        <span id="poems-published-count" class="font-cedarville text-5xl md:text-6xl text-white text-shadow">0</span>
+                        <p class="font-inter text-lg md:text-xl text-gray-300">poems published</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span id="years-writing-count" class="font-cedarville text-5xl md:text-6xl text-white text-shadow">0</span>
+                        <p class="font-inter text-lg md:text-xl text-gray-300">years writing</p>
+                    </div>
+                </div>
+
+
+                <!-- Why I Write Poetry Section -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    why i write poetry
+                </h2>
+                <p class="text-justify text-sm md:text-base leading-relaxed text-gray-300">
+                    For me, poetry has always been more than just words on a page; it's a lifeline. When the world around me shifts and crumbles, when plans fall apart, and when I feel lost in the chaos, my pen has been the one constant. It's the silent confidant, the unwavering presence that never gives up on me. Through every turn and every storm, writing becomes the space where I can process, reflect, and find a semblance of order in the disorder. It's the grounding force, the unshakeable foundation that allows me to navigate life's complexities, one verse at a time.
+                </p>
+
+                <!-- To the Readers Section -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    to the readers
+                </h2>
+                <p class="text-justify text-sm md:text-base leading-relaxed text-gray-300">
+                    To all of you who have supported me and taken the time to connect with my poems, thank you. There was a time when I worked on collections like "Project One: Unfocused" and "keio," but never dared to release them. I always thought my poetry was just my own business, something you wouldn't truly like or understand. But look where we are now. All that anxiousness, all those doubts, have become history. I truly wouldn't have made it here if it weren't for your invaluable support and appreciation. Every read, every connection, means the world to me.
+                </p>
+
+                <!-- Blog and Acknowledgments Section -->
+                <h2 class="font-cedarville text-4xl mt-8">
+                    a little more
+                </h2>
+                <p class="text-justify text-sm md:text-base leading-relaxed text-gray-300">
+                    Beyond these collections, I'm also actively working on a blog where I share deeper insights into my creative process, personal reflections, and perhaps a few surprises along the way. Stay tuned for that!
+                </p>
+                <p class="text-justify text-sm md:text-base leading-relaxed text-gray-300">
+                    Lastly, I want to extend my sincere gratitude to GitHub for providing an invaluable platform for hosting my projects and making this creative journey possible. And a special shout-out to Joker.com for their incredibly affordable domains, which have made establishing my online presence so much easier. Thank you for being a part of this artistic endeavor.
+                </p>
+
+                <!-- Sincerely section - Adjusted spacing -->
+                <div class="flex flex-col items-start mt-8">
+                    <p class="text-sm md:text-base text-gray-300 leading-none">
+                        Sincerely,
+                    </p>
+                    <p class="font-cedarville text-3xl md:text-4xl text-white leading-none">
+                        renj
+                    </p>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer - aligns with the max-w-sm content block -->
+        <footer class="w-full flex justify-between items-end text-xs md:text-sm mt-8 max-w-sm">
+            <div class="flex space-x-4">
+                <a href="https://www.instagram.com/renjpoems_hq/" class="hover:underline">INSTAGRAM</a>
+                <a href="https://web.facebook.com/renjcreatives" class="hover:underline">FACEBOOK</a>
+            </div>
+            <div class="text-right flex items-center space-x-2">
+                <p>sibulan, <span id="current-time"></span></p>
+                <p>&copy; 2025</p>
+                <!-- Small logo in the footer -->
+                <img src="renjwhite.png"
+                     onerror="this.onerror=null; this.src='https://placehold.co/20x20/FFFFFF/000000?text=Logo';"
+                     alt="Renj Logo"
+                     class="h-5 w-auto">
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to update the time (reused from other pages)
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+
+        // --- Parallax Banner Logic ---
+        const manifestoBanner = document.getElementById('manifesto-banner');
+        const bannerImage = manifestoBanner.querySelector('.banner-image');
+
+        window.addEventListener('scroll', function() {
+            // Calculate how much the user has scrolled relative to the banner's position
+            const scrollY = window.scrollY;
+            // Adjust the multiplier for the parallax intensity (0.4 means it moves at 40% of scroll speed)
+            // We subtract the banner's offsetTop to make the parallax relative to its position on the page
+            // This ensures it doesn't jump when the page loads if the banner isn't at the very top.
+            const offset = manifestoBanner.offsetTop;
+            bannerImage.style.transform = `translateY(${(-scrollY + offset) * 0.4}px)`;
+        });
+
+
+        // --- Running Numbers Logic ---
+        function animateNumber(elementId, targetValue, duration) {
+            const obj = document.getElementById(elementId);
+            if (!obj) return;
+
+            let startTimestamp = null;
+            const startValue = 0; // Always start from 0
+
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (targetValue - startValue) + startValue);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Call on page load (or when elements are visible)
+        document.addEventListener('DOMContentLoaded', () => {
+            animateNumber('poems-published-count', 100, 2000); // 100 poems over 2 seconds
+            animateNumber('years-writing-count', 5, 2000); // Assuming 5 years of writing over 2 seconds
+        });
+    </script>
+</body>
+</html>
