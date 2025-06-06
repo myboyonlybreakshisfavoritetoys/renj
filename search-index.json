@@ -1,48 +1,130 @@
 [
   {
     "title": "renj's poems",
-    "url": "index.html",
-    "keywords": ["home", "homepage", "main page", "poetry blog"]
+    "url": "index.html"
   },
   {
     "title": "cycle i",
-    "url": "cyclei.html",
-    "keywords": ["first cycle", "early works"]
+    "url": "cyclei.html"
   },
   {
     "title": "lines unbent",
-    "url": "linesunbent.html",
-    "keywords": [
-      "the first line",
-      "a whispered verse",
-      "midnight musings",
-      "sunrise reflections",
-      "unbent collection"
-    ]
+    "url": "linesunbent.html"
+  },
+  {
+    "title": "lines unbent (complete edition)",
+    "url": "linesunbent-dlx.html"
+  },
+  {
+    "title": "afterthoughts",
+    "url": "afterthoughts.html"
+  },
+  {
+    "title": "afterthoughts (anniversary edition)",
+    "url": "afterthoughts-dlx.html"
+  },
+  {
+    "title": "Hidden Chapters",
+    "url": "hiddenchapters.html"
+  },
+  {
+    "title": "Waking Up From A Strange Dream",
+    "url": "wufast.html"
+  },
+  {
+    "title": "Whispers Of Stardust In The Night",
+    "url": "wositn.html"
+  },
+  {
+    "title": "seas, stars, thoughts, YOU",
+    "url": "sstyou.html"
+  },
+  {
+    "title": "NOVALUNOSIS",
+    "url": "novalunosis.html"
+  },
+  {
+    "title": "jouska",
+    "url": "jouska.html"
+  },
+  {
+    "title": "cool warm colors",
+    "url": "cwcolors.html"
+  },
+  {
+    "title": "starrise",
+    "url": "starrise.html"
+  },
+  {
+    "title": "starcross",
+    "url": "starcross.html"
+  },
+  {
+    "title": "starfalll",
+    "url": "starfall.html"
   },
   {
     "title": "cycle ii",
-    "url": "cycleii.html",
-    "keywords": ["second cycle", "middle period"]
+    "url": "cycleii.html"
+  },
+  {
+    "title": "conversations with the ghosts i exhumed",
+    "url": "cwtgie.html"
+  },
+  {
+    "title": "Astralgia",
+    "url": "astralgia.html"
+  },
+  {
+    "title": "the time to ignore",
+    "url": "tttignore.html"
+  },
+  {
+    "title": "IN BETWEEN THE WAVES",
+    "url": "ibtwaves.html"
+  },
+  {
+    "title": "Ludic Reverie",
+    "url": "ludicreverie.html"
+  },
+  {
+    "title": "Midnight Sun",
+    "url": "midnightsun.html"
+  },
+  {
+    "title": "THE HUNT TO DECODE",
+    "url": "thtdecode.html"
+  },
+  {
+    "title": "Merry Christmas, Not That You Care",
+    "url": "mcmas.html"
   },
   {
     "title": "cycle iii",
-    "url": "cycleiii.html",
-    "keywords": ["third cycle", "later works", "new poems"]
+    "url": "cycleiii.html"
+  },
+  {
+    "title": "CHRYSOBERYL",
+    "url": "chrysoberyl.html"
+  },
+  {
+    "title": "atrimere",
+    "url": "atrimere.html"
+  },
+  {
+    "title": "rivers running backwards",
+    "url": "rivers.html"
+  },
+  {
+    "title": "the spaces where my voice once lived",
+    "url": "spaces.html"
   },
   {
     "title": "manifesto",
-    "url": "manifesto.html",
-    "keywords": ["poetic statement", "about renj", "philosophy"]
+    "url": "manifesto.html"
   },
   {
     "title": "stories archive",
-    "url": "storyarchive.html",
-    "keywords": ["archive", "old stories", "past works", "gallery", "collection"]
-  },
-  {
-    "title": "search",
-    "url": "search.html",
-    "keywords": ["find", "search engine", "lookup"]
+    "url": "storyarchive.html"
   }
 ]
