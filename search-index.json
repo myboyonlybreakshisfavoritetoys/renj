@@ -1,0 +1,48 @@
+[
+  {
+    "title": "renj's poems",
+    "url": "index.html",
+    "keywords": ["home", "homepage", "main page", "poetry blog"]
+  },
+  {
+    "title": "cycle i",
+    "url": "cyclei.html",
+    "keywords": ["first cycle", "early works"]
+  },
+  {
+    "title": "lines unbent",
+    "url": "linesunbent.html",
+    "keywords": [
+      "the first line",
+      "a whispered verse",
+      "midnight musings",
+      "sunrise reflections",
+      "unbent collection"
+    ]
+  },
+  {
+    "title": "cycle ii",
+    "url": "cycleii.html",
+    "keywords": ["second cycle", "middle period"]
+  },
+  {
+    "title": "cycle iii",
+    "url": "cycleiii.html",
+    "keywords": ["third cycle", "later works", "new poems"]
+  },
+  {
+    "title": "manifesto",
+    "url": "manifesto.html",
+    "keywords": ["poetic statement", "about renj", "philosophy"]
+  },
+  {
+    "title": "stories archive",
+    "url": "storyarchive.html",
+    "keywords": ["archive", "old stories", "past works", "gallery", "collection"]
+  },
+  {
+    "title": "search",
+    "url": "search.html",
+    "keywords": ["find", "search engine", "lookup"]
+  }
+]
