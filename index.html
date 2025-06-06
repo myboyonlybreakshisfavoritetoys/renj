@@ -217,7 +217,7 @@
 
                 <!-- Image with Navigation bar and "renj's poems" overlaid -->
                 <div class="relative w-full pt-8 animate-fade-in">
-                    <img src="https://renj.neocities.org/cyclei/490963882_4516944741866516_7134079400566212448_n.jpg"
+                    <img src="https://renj.neocities.org/cyclei/490963882_45169444741866516_7134079400566212448_n.jpg"
                          onerror="this.onerror=null; this.src='https://placehold.co/900x675/000000/FFFFFF?text=Image+Not+Found';"
                          alt="Renj's baby picture"
                          class="w-full h-auto object-cover rounded-lg shadow-lg"
@@ -228,7 +228,7 @@
 
                     <!-- Navigation bar directly on top of the picture - now horizontal -->
                     <nav class="absolute top-8 left-0 right-0 p-4 flex justify-around items-center text-white text-xs md:text-sm">
-                        <a href="index.html" class="hover:underline">home</a> <!-- Added home link -->
+                        <a href="index.html" class="hover:underline">home</a>
                         <a href="cyclei.html" class="hover:underline">cycle i</a>
                         <a href="cycleii.html" class="hover:underline">cycle ii</a>
                         <a href="cycleiii.html" class="hover:underline">cycle iii</a>
@@ -268,15 +268,16 @@
                     </a>
                 </div>
 
-                <!-- Latest Updates Section -->
-                <div class="w-full mt-8">
+                <!-- Latest Updates Section and Search Site link -->
+                <div class="w-full flex justify-between items-center mt-8">
                     <h2 class="font-cedarville text-3xl mb-2 animate-fade-in-up delay-300">
                         latest updates
                     </h2>
-                    <p class="font-inter text-sm md:text-base leading-relaxed animate-fade-in-up delay-400">
-                        Stay tuned for new collections and insights into the creative process. Recent works explore themes of nature's resilience and the quiet strength found in everyday moments. More to come soon!
-                    </p>
+                    <a href="search.html" class="font-inter text-sm md:text-base text-gray-300 hover:underline animate-fade-in-up delay-300">search site</a>
                 </div>
+                <p class="font-inter text-sm md:text-base leading-relaxed animate-fade-in-up delay-400">
+                    Stay tuned for new collections and insights into the creative process. Recent works explore themes of nature's resilience and the quiet strength found in everyday moments. More to come soon!
+                </p>
 
                 <!-- Slideshow Section -->
                 <div id="slideshow" class="slideshow-container mx-auto animate-fade-in delay-400">
@@ -321,7 +322,7 @@
                 <a href="#" class="hover:underline">INSTAGRAM</a>
                 <a href="#" class="hover:underline">FACEBOOK</a>
             </div>
-            <div class="text-right flex items-center space-x-2"> <!-- Added flex and items-center for logo alignment -->
+            <div class="text-right flex items-center space-x-2">
                 <p>sibulan, <span id="current-time"></span></p>
                 <p>&copy; 2025</p>
                 <!-- Small logo in the footer -->
@@ -349,7 +350,7 @@
 
         // Update time immediately and then every minute
         updateTime();
-        setInterval(updateTime, 60000);
+        setInterval(updateTime, 60000); // Update every 60 seconds (1 minute)
 
 
         // Slideshow Logic
