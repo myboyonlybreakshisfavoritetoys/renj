@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Renj's Poems</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font family for Inter */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom font family for Cedarville Cursive */
+        .font-cedarville {
+            font-family: 'Cedarville Cursive', cursive;
+        }
+
+        /* Text shadow for subtle depth */
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Search specific styles */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Adjust max-width for search container */
+            margin-bottom: 2rem;
+            margin-top: 2rem; /* Add some top margin */
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            background-color: #1a1a1a;
+            color: white;
+            border: 1px solid #333;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #6366f1; /* Indigo-500 from Tailwind */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Focus ring effect */
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%; /* Position below the input */
+            left: 0;
+            right: 0;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            max-height: 300px; /* Limit height of results */
+            overflow-y: auto; /* Scroll for many results */
+            z-index: 10; /* Ensure results appear above other content */
+            border: 1px solid #333;
+            padding: 0.5rem 0;
+        }
+
+        .search-results a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-results a:hover {
+            background-color: #2a2a2a;
+        }
+
+        .search-results p {
+            padding: 0.5rem 1rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-inter min-h-screen flex flex-col items-center p-4">
+
+    <div class="max-w-4xl w-full flex flex-col items-center space-y-8">
+
+        <!-- Main Content Area -->
+        <main class="w-full flex flex-col items-center">
+            <!-- Container for content, consistent with other pages -->
+            <div class="w-full max-w-sm sm:max-w-xl lg:max-w-2xl flex flex-col items-start space-y-6 pt-8">
+
+                <!-- "search" title and "home" link -->
+                <div class="w-full flex justify-between items-center mb-8">
+                    <h1 class="font-cedarville text-5xl md:text-6xl text-white">
+                        search
+                    </h1>
+                    <a href="index.html" class="font-inter text-lg md:text-xl text-gray-300 hover:underline">home</a>
+                </div>
+
+                <!-- Reminders before search -->
+                <div class="w-full text-left mb-4">
+                    <p class="font-inter text-sm md:text-base leading-relaxed text-gray-300">
+                        A few tips for best results:
+                    </p>
+                    <ul class="list-disc list-inside text-sm md:text-base text-gray-400 pl-4">
+                        <li>Start typing at least two characters to see suggestions.</li>
+                        <li>Results are based on page titles.</li>
+                        <li>Try broad terms first, then narrow down.</li>
+                    </ul>
+                </div>
+
+                <!-- Search Engine UI -->
+                <div class="search-container mx-auto">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search poems and pages...">
+                    <div id="search-results" class="search-results hidden">
+                        <!-- Search results will be dynamically inserted here -->
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer - aligns with the main content block's max-width -->
+        <footer class="w-full flex justify-between items-end text-xs md:text-sm mt-8 max-w-sm sm:max-w-xl lg:max-w-2xl">
+            <div class="flex space-x-4">
+                <a href="https://www.instagram.com/renjpoems_hq/" class="hover:underline">INSTAGRAM</a>
+                <a href="https://web.facebook.com/renjcreatives" class="hover:underline">FACEBOOK</a>
+            </div>
+            <div class="text-right flex items-center space-x-2">
+                <p>sibulan, <span id="current-time"></span></p>
+                <p>&copy; 2025</p>
+                <!-- Small logo in the footer -->
+                <img src="renjwhite.png"
+                     onerror="this.onerror=null; this.src='https://placehold.co/20x20/FFFFFF/000000?text=Logo';"
+                     alt="Renj Logo"
+                     class="h-5 w-auto">
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to update the time
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+
+        // Update time immediately and then every minute
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // --- Search Engine Logic ---
+        let pageIndex = []; // This will hold your parsed search-index.json data
+
+        // Function to load the index
+        async function loadIndex() {
+            try {
+                // Ensure the path to search-index.json is correct relative to your HTML file
+                const response = await fetch('search-index.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                pageIndex = await response.json();
+            } catch (error) {
+                console.error('Error loading search index:', error);
+                // Optionally display a user-friendly message about search not being available
+            }
+        }
+
+        // Function to perform search and display results
+        function performSearch() {
+            const searchInput = document.getElementById('search-input');
+            const searchResultsDiv = document.getElementById('search-results');
+            const query = searchInput.value.toLowerCase().trim(); // Trim whitespace
+
+            searchResultsDiv.innerHTML = ''; // Clear previous results
+
+            if (query.length > 1 && pageIndex.length > 0) { // Only search if query is at least 2 characters and index is loaded
+                const filteredResults = pageIndex.filter(page =>
+                    page.title.toLowerCase().includes(query)
+                );
+
+                if (filteredResults.length > 0) {
+                    searchResultsDiv.classList.remove('hidden'); // Show results container
+                    filteredResults.forEach(result => {
+                        const link = document.createElement('a');
+                        link.href = result.url;
+                        link.textContent = result.title;
+                        link.classList.add('block', 'p-2', 'hover:bg-gray-700', 'rounded-md'); // Tailwind classes for styling
+                        searchResultsDiv.appendChild(link);
+                    });
+                } else {
+                    searchResultsDiv.classList.remove('hidden');
+                    searchResultsDiv.innerHTML = '<p class="p-2 text-gray-400">No results found.</p>';
+                }
+            } else {
+                searchResultsDiv.classList.add('hidden'); // Hide results if query is too short or empty
+            }
+        }
+
+        // Load index and set up search listener when the page is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            loadIndex();
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', performSearch); // Use 'input' for real-time results
+            }
+        });
+
+        // Hide search results if clicking outside the search container
+        document.addEventListener('click', (event) => {
+            const searchContainer = document.querySelector('.search-container');
+            const searchResultsDiv = document.getElementById('search-results');
+            if (searchContainer && !searchContainer.contains(event.target)) {
+                searchResultsDiv.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
