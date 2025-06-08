@@ -1,32 +1,28 @@
 // cdn-loader.js
+// A whisper in the code, guiding assets through the digital skies.
 
 (function() {
-    // --- PART 1: Existing CDN Loader Logic for Images ---
-    // This part of the code finds all <img> tags and updates their src attribute
-    // to point to the jsDelivr CDN.
-    // It specifically targets images hosted in your GitHub repository.
+    // --- Part 1: The Swift Flight of Images ---
+    // This verse orchestrates images, directing their journey
+    // from the repository's quiet halls to the global embrace of the CDN.
+    // Each pixel finds its swiftest path through jsDelivr's embrace.
 
     const githubUser = "myboyonlybreakshisfavoritetoys";
     const githubRepo = "renj";
-    // Base URL for jsDelivr CDN for GitHub raw files
+    // The celestial path for images, a faster current from GitHub's stream.
     const cdnBaseUrl = `https://cdn.jsdelivr.net/gh/${githubUser}/${githubRepo}`;
 
-    // Function to update the src attribute of an image
+    // A function to imbue an image's source with CDN magic.
     function updateImageSrc(imgElement) {
-        // Get the current relative path from the src attribute
         const currentSrc = imgElement.getAttribute('src');
-
-        // Check if the src is a relative path and not already a full CDN URL
-        // We assume relative paths for assets within the GitHub Pages structure.
+        // If a relative whisper, transform it into a global declaration.
         if (currentSrc && !currentSrc.startsWith('http')) {
-            const newSrc = `${cdnBaseUrl}/${currentSrc}`;
-            imgElement.setAttribute('src', newSrc);
-            // console.log(`CDN updated for: ${currentSrc} -> ${newSrc}`); // For debugging
+            imgElement.setAttribute('src', `${cdnBaseUrl}/${currentSrc}`);
         }
     }
 
-    // Use a MutationObserver to watch for new <img> elements added to the DOM
-    // This handles images that might be added dynamically after initial page load.
+    // A sentinel watching the DOM's growing tree,
+    // ensuring new images find their CDN wings.
     const observer = new MutationObserver(mutationsList => {
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
@@ -34,7 +30,6 @@
                     if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'IMG') {
                         updateImageSrc(node);
                     }
-                    // Also check for <img> tags within newly added elements
                     if (node.nodeType === Node.ELEMENT_NODE) {
                         node.querySelectorAll('img').forEach(updateImageSrc);
                     }
@@ -43,23 +38,20 @@
         }
     });
 
-    // Start observing the entire document body for added nodes
+    // Begin the watch over the document's unfolding narrative.
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // Initial scan for <img> tags already present in the DOM when the script runs
+    // A first sweep of the visual landscape, gathering all images already present.
     document.querySelectorAll('img').forEach(updateImageSrc);
 
-    // --- PART 2: New Logic for Dynamic Touch Icon and Favicon Injection ---
-    // This part creates and appends <link> tags for various touch icons and favicons
-    // directly into the <head> section of the document.
+    // --- Part 2: Beacons for the Browser's Journey (Touch Icons & Favicon) ---
+    // Here, we forge luminous links, guiding the browser's gaze
+    // to radiant icons for every touch and glance, a visual promise.
 
-    // Define the base image path for your icons (renjwhite.png is in the root)
-    // Now that Cloudflare is active, pointing to the root of your repo is fine,
-    // as Cloudflare will cache it.
-    // If you plan to move renjwhite.png to a subfolder, update this path accordingly.
-    const iconBasePath = `https://poems.renj.top/renjwhite.png`; // Using full Cloudflare-enabled URL for consistency
+    // The heart of our icons, a bright beacon from the domain's root.
+    const iconBasePath = `https://poems.renj.top/renjwhite.png`;
 
-    // Function to create and append a link element to the head
+    // A craftsman's touch, creating and weaving link elements into the document's head.
     function addLinkTag(rel, href, sizes = null, type = null) {
         const link = document.createElement('link');
         link.rel = rel;
@@ -70,31 +62,44 @@
         if (type) {
             link.type = type;
         }
-        // Prevent adding duplicate tags if the script runs multiple times (though it shouldn't)
+        // Ensuring no echo, only unique beacons shine.
         if (!document.head.querySelector(`link[rel="${rel}"][href="${href}"]`)) {
             document.head.appendChild(link);
-            // console.log(`Added icon link: ${rel}, ${href}`); // For debugging
         }
     }
 
-    // Add standard favicon (works in most browsers)
-    addLinkTag('icon', iconBasePath, null, 'image/png'); // Can also use 'image/x-icon' if it's .ico
+    // The timeless emblem in browser tabs, a subtle mark.
+    addLinkTag('icon', iconBasePath, null, 'image/png');
 
-    // Add Apple Touch Icon (for iOS devices)
-    // iOS devices look for specific sizes when a user adds your site to their home screen.
-    // Common size: 180x180 for modern iPhones.
+    // For the gentle touch of iOS, a guiding star on the home screen.
     addLinkTag('apple-touch-icon', iconBasePath, '180x180');
 
-    // Add generic touch icon for Android/Chrome "Add to Home Screen"
-    // Though modern Android often prefers manifest.json, this is a good fallback.
+    // A vibrant standard for Android, welcoming every new journey.
     addLinkTag('icon', iconBasePath, '192x192', 'image/png');
 
-    // You can add more sizes/types if needed, e.g.:
-    // addLinkTag('icon', iconBasePath, '32x32', 'image/png');
-    // addLinkTag('icon', iconBasePath, '512x512', 'image/png');
 
-    // Note: For a truly comprehensive icon setup for all devices (including Android PWA manifest,
-    // Microsoft tiles, etc.), a dedicated tool or manifest.json file would be more robust.
-    // However, these few lines cover the primary "touch icon" warning.
+    // --- Part 3: The Page's Quiet Introduction (Meta Description) ---
+    // A concise narrative, whispered to search engines,
+    // reflecting the site's essence for every seeker.
+
+    const pageDescription = "renj's poems: a place where thoughts unfold, touching on life's wild beauty – its light, its dark, the endless sky, the deep sea. poetry, always here, always with us.";
+
+    // Function to add the meta description tag
+    function addMetaDescription(description) {
+        // Check if a meta description already exists
+        let metaDescriptionTag = document.head.querySelector('meta[name="description"]');
+
+        if (!metaDescriptionTag) {
+            // If no meta description exists, create a new one
+            metaDescriptionTag = document.createElement('meta');
+            metaDescriptionTag.name = "description";
+            document.head.appendChild(metaDescriptionTag);
+        }
+        // Always update its content to ensure it's the desired description
+        metaDescriptionTag.content = description;
+    }
+
+    // Call the function to add the meta description
+    addMetaDescription(pageDescription);
 
 })();
