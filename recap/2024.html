@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 recap</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="renjfavicon.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font family for Inter */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom font family for Cedarville Cursive */
+        .font-cedarville {
+            font-family: 'Cedarville Cursive', cursive;
+        }
+        /* Responsive video container for 1:1 aspect ratio */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* 1:1 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            background-color: #000; /* Fallback background for video area */
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-inter min-h-screen flex flex-col items-center p-4">
+
+    <div class="max-w-4xl w-full flex flex-col items-center space-y-8">
+
+        <!-- Main Content Area -->
+        <main class="w-full flex flex-col items-center">
+            <div class="w-full max-w-sm sm:max-w-xl lg:max-w-2xl flex flex-col items-start space-y-6 pt-8">
+
+                <!-- Navigation Bar at the very top -->
+                <nav class="w-full flex justify-around items-center text-white text-xs md:text-sm mb-4">
+                    <a href="index.html" class="hover:underline">home</a>
+                    <a href="cyclei.html" class="hover:underline">cycle i</a>
+                    <a href="cycleii.html" class="hover:underline">cycle ii</a>
+                    <a href="cycleiii.html" class="hover:underline">cycle iii</a>
+                    <a href="manifesto.html" class="hover:underline">manifesto</a>
+                </nav>
+
+                <!-- Page Title on the next line, flushed left -->
+                <h1 class="font-cedarville text-5xl md:text-6xl text-white w-full text-left mb-8">
+                    2024 recap
+                </h1>
+
+                <!-- Embedded Video -->
+                <div class="w-full video-container">
+                    <iframe src="https://www.youtube.com/embed/wDcRSGqWQKo?autoplay=1&loop=1&playlist=wDcRSGqWQKo"
+                            allow="autoplay; fullscreen"
+                            allowfullscreen></iframe>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer - aligns with the main content block's max-width -->
+        <footer class="w-full flex justify-between items-end text-xs md:text-sm mt-8 max-w-sm sm:max-w-xl lg:max-w-2xl">
+            <div class="flex space-x-4">
+                <a href="https://www.instagram.com/renjpoems_hq/" class="hover:underline">INSTAGRAM</a>
+                <a href="https://web.facebook.com/renjcreatives" class="hover:underline">FACEBOOK</a>
+            </div>
+            <div class="text-right flex items-center space-x-2">
+                <p>sibulan, <span id="current-time"></span></p>
+                <p>&copy; 2025</p>
+                <!-- Small logo in the footer -->
+                <img src="renjwhite.png"
+                     onerror="this.onerror=null; this.src='https://placehold.co/20x20/FFFFFF/000000?text=Logo';"
+                     alt="Renj Logo"
+                     class="h-5 w-auto">
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to update the time
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
+            document.getElementById('current-time').textContent = timeString;
+        }
+
+        // Update time immediately and then every minute
+        updateTime();
+        setInterval(updateTime, 60000);
+    </script>
+</body>
+</html>
