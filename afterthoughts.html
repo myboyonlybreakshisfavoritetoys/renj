@@ -227,6 +227,65 @@
         .release-button:hover {
             background-color: rgba(51, 51, 51, 0.9);
         }
+
+        /* Styling for the new row-based collection items (copied from cycle-i-page) */
+        .collection-item {
+            display: flex;
+            flex-direction: column; /* Stack vertically by default on small screens */
+            align-items: center;
+            background-color: #1a1a1a; /* Darker background for the card */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 1rem; /* Padding inside the card */
+            gap: 1rem; /* Space between image and text */
+            text-decoration: none; /* Remove underline from links */
+            color: inherit; /* Inherit text color */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .collection-item:hover {
+            background-color: #2a2a2a; /* Slightly lighter on hover */
+            transform: translateY(-2px); /* Subtle lift effect */
+        }
+
+        .collection-item-image-container {
+            flex-shrink: 0; /* Prevent image from shrinking */
+            width: 100%; /* Full width on small screens */
+            aspect-ratio: 1 / 1; /* Set aspect ratio to 1:1 (square) */
+            position: relative; /* Needed for absolute positioning of image inside */
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .collection-item-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .collection-item-text-content {
+            text-align: center; /* Center text on small screens */
+            flex-grow: 1; /* Allow text content to grow */
+        }
+
+        @media (min-width: 640px) { /* sm breakpoint */
+            .collection-item {
+                flex-direction: row; /* Layout horizontally on larger screens */
+                text-align: left; /* Align text to left on larger screens */
+            }
+            .collection-item-image-container {
+                width: 120px; /* Fixed width for image on larger screens for square 1:1 */
+                height: 120px; /* Fixed height for image on larger screens for square 1:1 */
+                padding-bottom: 0; /* Remove padding-bottom for fixed height */
+            }
+            .collection-item-text-content {
+                text-align: left; /* Align text to left on larger screens */
+            }
+        }
+        
     </style>
 </head>
 <body class="bg-black text-white font-inter min-h-screen flex flex-col items-center justify-center p-4">
@@ -285,6 +344,28 @@ We offered a glimpse of afterthoughts with three poems released ahead of time: "
                     <a href="hiddenchapters.html" class="release-button">next release</a>
                 </div>
 
+<h2 class="font-cedarville text-4xl mt-8">
+                    afterthoughts (anniversary edition)
+                </h2>
+                
+                <div class="w-full mt-2">
+                    <a href="afterthoughts-dlx.html" class="collection-item">
+                        <div class="collection-item-image-container">
+                            <img src="https://poems.renj.top/cycle%20ii/1a.jpg"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/120x120/888888/FFFFFF?text=Image+Not+Found';"
+                                 alt="afterthoughts (anniversary edition)"
+                                 class="collection-item-image">
+                        </div>
+                        <div class="collection-item-text-content">
+                            <strong class="font-cedarville text-lg md:text-xl block banner-text-shadow">afterthoughts (anniversary edition)</strong>
+                            <em class="font-inter text-xs md:text-sm block text-gray-400 banner-text-shadow">Released July 7 2024</em>
+                            <p class="font-inter text-sm md:text-base mt-1 text-gray-300 banner-text-shadow">
+                                A special edition marking the anniversary of the beloved 'afterthoughts' collection.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                
                 <!-- Gallery Section -->
                 <h2 class="font-cedarville text-4xl mt-8">
                     gallery
