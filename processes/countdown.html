@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rehearsed Oracle - Poems Arrive October 3</title>
+    
+    <!-- Load Tailwind CSS for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter and Cedarville Cursive -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        // Mapped custom fonts for easy use with Tailwind classes
+                        'inter': ['Inter', 'sans-serif'], 
+                        'cedarville': ['Cedarville Cursive', 'cursive'],
+                    },
+                    colors: {
+                        'primary': '#E5E7EB', // Light gray for text
+                        'secondary': '#9CA3AF', // Gray for subtext
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles to enhance the aesthetic */
+        .countdown-segment {
+            transition: all 0.2s ease-in-out;
+            min-width: 60px;
+        }
+        .text-shadow-custom {
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-black text-primary font-inter min-h-screen flex items-start justify-center py-8 px-4">
+
+    <!-- Main Content Container: max-w-md enforces the narrow layout -->
+    <main class="w-full max-w-md mx-auto space-y-8">
+
+        <!-- Banner Image -->
+        <div class="rounded-lg overflow-hidden shadow-2xl shadow-gray-900">
+            <img 
+                src="https://poems.renj.top/after/rehearsed/1.png" 
+                onerror="this.onerror=null; this.src='https://placehold.co/400x150/000000/FFFFFF?text=The+Rehearsed+Oracle';" 
+                alt="Banner image for The Rehearsed Oracle" 
+                class="w-full h-auto object-cover"
+            />
+        </div>
+
+        <!-- Countdown Timer Section -->
+        <div class="text-center">
+            <!-- Updated H1: Cedarville font, small letters, light color -->
+            <h1 class="text-2xl font-cedarville lowercase mb-4 text-primary">
+                launching in
+            </h1>
+            <div id="countdown" class="flex justify-center items-center text-5xl md:text-6xl font-extralight space-x-3 md:space-x-4 text-white text-shadow-custom">
+                <!-- Countdown components will be inserted here by JavaScript -->
+                <p>Loading...</p>
+            </div>
+        </div>
+
+        <!-- Main Text Content -->
+        <div class="text-center space-y-6 pt-4">
+            <h2 class="text-xl font-medium tracking-wide border-b border-gray-700 pb-4">
+                These eleven poems arrive together on October 3.
+            </h2>
+            <p class="text-base text-secondary leading-relaxed text-left">
+                They are the product of the longest silence I have kept between collections, a silence that was necessary and restless all at once. Some of these words were carried from nights that still ache; others were written to lay those very nights to rest.
+            </p>
+            <p class="text-base text-secondary leading-relaxed text-left">
+                <span class="text-primary font-light italic">The Rehearsed Oracle</span> is not a confession, but a performance that learned, finally, to admit its own exhaustion. I wrote them in fragments, in repetitions, in rehearsals that blurred into prophecy. And now, gathered here, they feel like the record of what remains after the curtain falls.
+            </p>
+        </div>
+
+    </main>
+
+    <script>
+        const countdownElement = document.getElementById('countdown');
+        // Set the target date to October 3rd of the current year (2025) at midnight (00:00:00)
+        // Note: The Date object handles time zone offset based on the user's browser, 
+        // but for a static announcement, specifying the date is usually sufficient. 
+        // If strict GMT+8 is required, the user should be aware their local time may differ.
+        // For simplicity and to avoid complex timezone math in a static file, we use a simple date string.
+        const targetDate = new Date('October 3, 2025 00:00:00').getTime(); 
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Stop the countdown if the target date is reached
+            if (distance < 0) {
+                countdownElement.innerHTML = '<span class="text-2xl font-bold text-primary">THE POEMS HAVE ARRIVED.</span>';
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Helper function to create the display segments
+            const createSegment = (value, label) => `
+                <div class="countdown-segment flex flex-col items-center">
+                    <span>${String(value).padStart(2, '0')}</span>
+                    <span class="text-xs font-normal uppercase text-secondary mt-1">${label}</span>
+                </div>
+            `;
+
+            // Update the HTML
+            countdownElement.innerHTML = `
+                ${createSegment(days, 'Days')}
+                <span class="text-secondary">:</span>
+                ${createSegment(hours, 'Hours')}
+                <span class="text-secondary">:</span>
+                ${createSegment(minutes, 'Mins')}
+                <span class="text-secondary">:</span>
+                ${createSegment(seconds, 'Secs')}
+            `;
+        }
+
+        // Run the countdown immediately and then update every 1 second
+        updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
