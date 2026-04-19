@@ -39,38 +39,6 @@
             background-attachment: fixed; /* This creates the parallax effect */
         }
 
-        /* Banner navigation arrows - REMOVED, keeping the style block empty for now */
-        /*
-        .banner-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            border: none;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            line-height: 1;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-        }
-
-        .banner-arrow:hover {
-            opacity: 1;
-        }
-
-        .banner-arrow.left {
-            left: 10px;
-        }
-
-        .banner-arrow.right {
-            right: 10px;
-        }
-        */
-
         /* Lightbox styles for image enlargement */
         .lightbox-overlay {
             position: fixed;
@@ -186,14 +154,20 @@
             }
         }
 
-        /* Responsive iframe for the flipbook */
+        /* Responsive iframe for the flipbook - Optimized for Two-Page Spread on Desktop */
         .responsive-iframe-container {
             position: relative;
             width: 100%;
-            padding-bottom: 75%; /* 4:3 Aspect Ratio (3 / 4 * 100) */
+            padding-bottom: 140%; /* Tall ratio for Mobile (shows single page) */
             height: 0;
             overflow: hidden;
             border-radius: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .responsive-iframe-container {
+                padding-bottom: 60%; /* Wide ratio for Desktop (forces two-page spread) */
+            }
         }
 
         .responsive-iframe-container iframe {
@@ -271,25 +245,25 @@
                  in tears, fears, and flames
                 </h2>
 
-<p class="text-justify text-sm md:text-base leading-relaxed">
-To have this collection is to witness an emulsification—the deliberate, agonizing process of taking the raw elements of a human soul and refining them until they form a stable, glittering, and ultimately artificial persona.
-</p>
+                <p class="text-justify text-sm md:text-base leading-relaxed">
+                To have this collection is to witness an emulsification—the deliberate, agonizing process of taking the raw elements of a human soul and refining them until they form a stable, glittering, and ultimately artificial persona.
+                </p>
 
-<p class="text-justify text-sm md:text-base leading-relaxed">
-Cinderia documents the arc of a man who traded his natural flow for the static, heavy gold of fame. He chose the sequins, the electric silvers, and the "cookbook essential" life, believing that to be "well-bred" was the same as being well-lived. He played the game of mutual deception so perfectly that he eventually became the swindled.
-</p>
+                <p class="text-justify text-sm md:text-base leading-relaxed">
+                Cinderia documents the arc of a man who traded his natural flow for the static, heavy gold of fame. He chose the sequins, the electric silvers, and the "cookbook essential" life, believing that to be "well-bred" was the same as being well-lived. He played the game of mutual deception so perfectly that he eventually became the swindled.
+                </p>
 
-<p class="text-justify text-sm md:text-base leading-relaxed">
-But every performance requires a closing act.
-</p>
+                <p class="text-justify text-sm md:text-base leading-relaxed">
+                But every performance requires a closing act.
+                </p>
 
-<p class="text-justify text-sm md:text-base leading-relaxed">
-This collection archives the residual inventory of a life where the Star finally realizes that the prize of public adoration was not worth the cost of his own existence. He is the man who looked out of his "red window" and finally decided to let the sand pass through his hands.
-</p>
+                <p class="text-justify text-sm md:text-base leading-relaxed">
+                This collection archives the residual inventory of a life where the Star finally realizes that the prize of public adoration was not worth the cost of his own existence. He is the man who looked out of his "red window" and finally decided to let the sand pass through his hands.
+                </p>
 
-<p class="text-justify text-sm md:text-base leading-relaxed">
-As you read, remember the only truth that remains when the performance fades: <b>"what has happened has happened to me."</b> You are about to turn the pages of a mysterious collection. Decide what to take from it—for like the Star, you are finally free to walk away.
-</p>
+                <p class="text-justify text-sm md:text-base leading-relaxed">
+                As you read, remember the only truth that remains when the performance fades: <b>"what has happened has happened to me."</b> You are about to turn the pages of a mysterious collection. Decide what to take from it—for like the Star, you are finally free to walk away.
+                </p>
               
               
               <!-- Previous/Next Release Buttons -->
