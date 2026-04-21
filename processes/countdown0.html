@@ -23,6 +23,17 @@
             }
         }
     </script>
+    <style>
+        /* Modal hidden by default */
+        #poemModal {
+            display: none; 
+            backdrop-filter: blur(4px);
+        }
+        /* Show only when active class is applied */
+        #poemModal.active {
+            display: flex !important;
+        }
+    </style>
 </head>
 <body class="bg-[#efefe7] text-[#5e3131] h-screen w-screen flex flex-col items-center overflow-hidden m-0 p-0">
 
@@ -42,6 +53,11 @@
         </div>
         
         <p class="text-2xl font-cedarville mt-1">what has happened has happened to me</p>
+        
+        <!-- Requested Link -->
+        <p class="font-inter text-sm mt-3 opacity-80">
+            read '<button onclick="togglePoem(true)" class="border-b border-dotted border-[#5e3131] hover:opacity-60 transition-opacity">junction</button>'
+        </p>
     </main>
 
     <div class="w-full max-w-md flex-1 overflow-hidden">
@@ -50,6 +66,55 @@
             alt="...has happened to me" 
             class="w-full h-full object-cover"
         />
+    </div>
+
+    <!-- Poem Modal -->
+    <div id="poemModal" class="fixed inset-0 z-50 items-center justify-center p-6 bg-black/20">
+        <div class="bg-[#efefe7] w-full max-w-sm max-h-[80vh] overflow-y-auto p-8 shadow-2xl border border-[#5e3131]/10 rounded-sm relative" onclick="event.stopPropagation()">
+            
+            <h3 class="text-3xl font-cedarville mb-6 text-center">junction</h3>
+            
+            <div class="font-inter text-sm leading-relaxed space-y-4">
+                <p>
+                    Lines of white cover the junctions of wonder,<br>
+                    Those who cross paths once with the others,<br>
+                    Gazes that only exist less than a minute,<br>
+                    Limited by the rests of the vehicles beside it.
+                </p>
+
+                <p>
+                    But some gazes wonder more than others,<br>
+                    A red dress brushing my brown leather,<br>
+                    Identifying the dues of the time between rests,<br>
+                    A wonder most of humanity come to obsess.
+                </p>
+
+                <p>
+                    Vulnerable eyes cross the astute windows,<br>
+                    That show how I’ve wept like widows.<br>
+                    Lands beyond the concrete of the road,<br>
+                    Idealized by thoughts I overload.
+                </p>
+
+                <p>
+                    Tomorrow, I’ll be down this street again,<br>
+                    With the pollute of the mind, dirtiest of chagrin,<br>
+                    I’d stare by the countdown to start the pause,<br>
+                    To try and fill the blank after my “because.”
+                </p>
+
+                <p>
+                    For a mere thirty seconds, a soul is removed,<br>
+                    A cotton hem when the pause is on the move.<br>
+                    What could it be? A fleet of sighs, perhaps?<br>
+                    Or a happenstance I want to be a routine afast?
+                </p>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <button onclick="togglePoem(false)" class="text-xs font-inter border border-[#5e3131] px-4 py-2 hover:bg-[#5e3131] hover:text-[#efefe7] transition-all">CLOSE</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -73,6 +138,20 @@
 
             countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
+
+        function togglePoem(show) {
+            const modal = document.getElementById('poemModal');
+            if (show) {
+                modal.classList.add('active');
+            } else {
+                modal.classList.remove('active');
+            }
+        }
+
+        // Close modal if clicking background overlay
+        document.getElementById('poemModal').addEventListener('click', function() {
+            togglePoem(false);
+        });
 
         updateCountdown();
         const countdownInterval = setInterval(updateCountdown, 1000);
