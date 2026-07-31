@@ -32,7 +32,6 @@
         }
     </script>
     
-    <!-- Custom Style Definitions & Font-Face Declarations -->
     <style>
         @font-face {
             font-family: 'MissFajardose';
@@ -339,7 +338,6 @@
         updateCountdown();
         const countdownInterval = setInterval(updateCountdown, 1000);
 
-        /* Audio Deck Controller Engine */
         const bgMusic = document.getElementById('bgMusic');
         const audioToggleBtn = document.getElementById('audioToggleBtn');
         const playIcon = document.getElementById('playIcon');
@@ -350,6 +348,26 @@
         const muteIcon = document.getElementById('muteIcon');
 
         bgMusic.volume = 0.5;
+
+        /* Auto-start audio playback on first interaction anywhere on screen */
+        function autoPlayOnFirstClick() {
+            if (bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                    soundBars.classList.add('playing');
+                    soundBars.classList.remove('opacity-50');
+                    document.removeEventListener('click', autoPlayOnFirstClick);
+                }).catch(err => {
+                    console.log("Audio playback waiting for interaction.", err);
+                });
+            } else {
+                document.removeEventListener('click', autoPlayOnFirstClick);
+            }
+        }
+
+        // Listen for any click or tap on the page
+        document.addEventListener('click', autoPlayOnFirstClick);
 
         function togglePlayState() {
             if (bgMusic.paused) {
@@ -391,7 +409,6 @@
             }
         }
 
-        /* Lightbox Inspector Engine */
         const lightbox = document.getElementById('inspectorLightbox');
         const lightboxImage = document.getElementById('lightboxImage');
         const lightboxTitle = document.getElementById('lightboxTitle');
