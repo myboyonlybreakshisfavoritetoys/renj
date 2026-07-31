@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where the Tides Will Take Us — Renj</title>
+    
+    <!-- External Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Goudy+Bookletter+1911&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS Engine -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'title': ['MissFajardose', 'cursive', 'serif'],
+                        'goudy': ['Goudy Bookletter 1911', 'serif'],
+                        'cursive': ['Cedarville Cursive', 'cursive'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'tide-bg': '#322a1f',
+                        'tide-text': '#fbfaf6',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Style Definitions & Font-Face Declarations -->
+    <style>
+        @font-face {
+            font-family: 'MissFajardose';
+            src: url('https://book.renj.top/archive/fonts/MissFajardose%20Pro%20Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            background-color: #322a1f;
+            color: #fbfaf6;
+            font-family: 'Goudy Bookletter 1911', serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Subtle organic texture grain overlay */
+        .tide-grain {
+            background-image: radial-gradient(rgba(251, 250, 246, 0.03) 1px, transparent 0);
+            background-size: 12px 12px;
+        }
+
+        /* Custom image dragging prevention */
+        img {
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+
+        /* Custom volume slider styling */
+        .volume-range {
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(251, 250, 246, 0.2);
+            height: 3px;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fbfaf6;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .volume-range::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+        }
+
+        .volume-range::-moz-range-thumb {
+            width: 10px;
+            height: 10px;
+            border: none;
+            border-radius: 50%;
+            background: #fbfaf6;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        /* Equalizer bar animation */
+        @keyframes soundWave {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
+        }
+
+        .playing .bar-1 { animation: soundWave 0.8s ease-in-out infinite; }
+        .playing .bar-2 { animation: soundWave 0.6s ease-in-out 0.2s infinite; }
+        .playing .bar-3 { animation: soundWave 0.9s ease-in-out 0.1s infinite; }
+        .playing .bar-4 { animation: soundWave 0.7s ease-in-out 0.3s infinite; }
+    </style>
+</head>
+<body class="tide-grain min-h-screen w-full flex flex-col items-center justify-between py-8 px-4 select-none relative">
+
+    <!-- Background Looping Audio -->
+    <audio id="bgMusic" src="https://book.renj.top/music/bends.mp3" loop></audio>
+
+    <!-- Header Banner Navigation -->
+    <header class="w-full max-w-lg flex justify-between items-center pb-4 border-b border-[#fbfaf6]/15">
+        <span class="font-goudy italic text-sm tracking-widest text-[#fbfaf6]/80">Renj</span>
+        <span class="font-inter text-[10px] uppercase tracking-[0.3em] text-[#fbfaf6]/60">Cycle III Collection</span>
+        <span class="font-inter text-[10px] tracking-widest text-[#fbfaf6]/50">PST (UTC+8)</span>
+    </header>
+
+    <!-- Main Content Vertical Column -->
+    <main class="w-full max-w-md flex flex-col items-center gap-8 my-auto py-6">
+
+        <!-- Cover Art Presentation Card -->
+        <div class="w-full flex flex-col items-center">
+            <div 
+                class="w-full relative group cursor-pointer bg-[#322a1f] p-3 rounded border border-[#fbfaf6]/15 shadow-2xl transition-all duration-500 hover:border-[#fbfaf6]/40"
+                onclick="openLightbox('https://book.renj.top/cycle%203/photos/tides/1.JPEG', 'Where the Tides Will Take Us — Cover Art')"
+            >
+                <div class="relative overflow-hidden rounded-sm">
+                    <img 
+                        src="https://book.renj.top/cycle%203/photos/tides/1.JPEG" 
+                        alt="Where the Tides Will Take Us - Collection Cover" 
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x600/322a1f/fbfaf6?text=Where+the+Tides+Will+Take+Us';"
+                    />
+                    <!-- Overlay hint on hover -->
+                    <div class="absolute inset-0 bg-[#322a1f]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span class="font-inter text-[10px] uppercase tracking-[0.25em] bg-[#322a1f]/90 text-[#fbfaf6] px-3 py-1.5 rounded border border-[#fbfaf6]/20">Inspect Cover Art</span>
+                    </div>
+                </div>
+            </div>
+            <p class="font-inter text-[10px] text-[#fbfaf6]/40 mt-2 italic tracking-wider">tap image to examine artwork</p>
+        </div>
+
+        <!-- Dynamic Collection Title Header -->
+        <div class="text-center space-y-2 px-2">
+            <h1 class="font-title text-4xl sm:text-5xl md:text-6xl text-[#fbfaf6] leading-tight drop-shadow-sm font-normal">
+                Where the Tides Will Take Us
+            </h1>
+            <p class="font-cursive text-lg sm:text-xl text-[#fbfaf6]/70 italic pt-1">
+                poems arrive at midnight
+            </p>
+        </div>
+
+        <!-- Countdown Banner Section -->
+        <div class="w-full py-6 my-1 border-y border-[#fbfaf6]/15 flex flex-col items-center justify-center">
+            <p class="font-inter text-[10px] uppercase tracking-[0.3em] text-[#fbfaf6]/50 mb-4 text-center">
+                the tides roll in
+            </p>
+            
+            <div id="countdown" class="flex items-center justify-center gap-3 sm:gap-5">
+                <!-- Days Unit -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="days" class="font-goudy text-4xl sm:text-5xl font-light tracking-tight text-[#fbfaf6]">00</span>
+                    <span class="font-inter text-[9px] uppercase tracking-widest text-[#fbfaf6]/50 mt-1">days</span>
+                </div>
+                <span class="font-goudy text-2xl text-[#fbfaf6]/30 -mt-4">:</span>
+
+                <!-- Hours Unit -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="hours" class="font-goudy text-4xl sm:text-5xl font-light tracking-tight text-[#fbfaf6]">00</span>
+                    <span class="font-inter text-[9px] uppercase tracking-widest text-[#fbfaf6]/50 mt-1">hours</span>
+                </div>
+                <span class="font-goudy text-2xl text-[#fbfaf6]/30 -mt-4">:</span>
+
+                <!-- Minutes Unit -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="minutes" class="font-goudy text-4xl sm:text-5xl font-light tracking-tight text-[#fbfaf6]">00</span>
+                    <span class="font-inter text-[9px] uppercase tracking-widest text-[#fbfaf6]/50 mt-1">mins</span>
+                </div>
+                <span class="font-goudy text-2xl text-[#fbfaf6]/30 -mt-4">:</span>
+
+                <!-- Seconds Unit -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="seconds" class="font-goudy text-4xl sm:text-5xl font-light tracking-tight text-[#fbfaf6] animate-pulse">00</span>
+                    <span class="font-inter text-[9px] uppercase tracking-widest text-[#fbfaf6]/50 mt-1">secs</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Santan Floral Visual Postcard Link -->
+        <div class="w-full flex flex-col items-center pt-2">
+            <div 
+                class="w-full bg-[#fbfaf6]/5 hover:bg-[#fbfaf6]/10 border border-[#fbfaf6]/15 hover:border-[#fbfaf6]/30 p-3 rounded-sm transition-all duration-300 flex items-center gap-4 cursor-pointer group"
+                onclick="openLightbox('https://book.renj.top/cycle%203/photos/tides/9327FD8E-FA10-4C3A-9A09-AABDA956271F.jpeg', 'Santan — Visual Fragment')"
+            >
+                <div class="w-16 h-16 shrink-0 overflow-hidden rounded border border-[#fbfaf6]/20">
+                    <img 
+                        src="https://book.renj.top/cycle%203/photos/tides/9327FD8E-FA10-4C3A-9A09-AABDA956271F.jpeg" 
+                        alt="Santan flower detail" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        onerror="this.onerror=null; this.src='https://placehold.co/150x150/322a1f/fbfaf6?text=Santan';"
+                    />
+                </div>
+                <div class="flex-1 text-left">
+                    <span class="font-inter text-[9px] uppercase tracking-[0.25em] text-[#fbfaf6]/50 block">visual fragment</span>
+                    <p class="font-goudy italic text-base text-[#fbfaf6] group-hover:text-white transition-colors">"we have changed now, done afar"</p>
+                    <span class="font-inter text-[10px] text-[#fbfaf6]/60 underline underline-offset-2">inspect santan photo &rarr;</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Floating Minimal Audio Controller Deck -->
+    <div id="audioDeck" class="fixed bottom-6 right-6 z-40 bg-[#322a1f]/90 backdrop-blur-md border border-[#fbfaf6]/20 rounded-full py-2 px-4 shadow-2xl flex items-center gap-3 transition-all duration-300 hover:border-[#fbfaf6]/40">
+        <!-- Play / Pause Button -->
+        <button id="audioToggleBtn" onclick="togglePlayState()" class="w-7 h-7 flex items-center justify-center rounded-full bg-[#fbfaf6]/10 text-[#fbfaf6] hover:bg-[#fbfaf6]/20 transition-all focus:outline-none" title="Play Ambient Soundtrack">
+            <!-- Play Icon -->
+            <svg id="playIcon" class="w-3.5 h-3.5 text-[#fbfaf6] ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <!-- Pause Icon -->
+            <svg id="pauseIcon" class="w-3.5 h-3.5 text-[#fbfaf6] hidden" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+        </button>
+
+        <!-- Equalizer Sound Indicator -->
+        <div id="soundBars" class="flex items-end gap-1 h-4 w-5 opacity-50 transition-opacity">
+            <span class="w-0.5 bg-[#fbfaf6] rounded-full h-1 bar-1"></span>
+            <span class="w-0.5 bg-[#fbfaf6] rounded-full h-1 bar-2"></span>
+            <span class="w-0.5 bg-[#fbfaf6] rounded-full h-1 bar-3"></span>
+            <span class="w-0.5 bg-[#fbfaf6] rounded-full h-1 bar-4"></span>
+        </div>
+
+        <!-- Volume Control Slider -->
+        <div class="flex items-center gap-2 border-l border-[#fbfaf6]/20 pl-2">
+            <button id="muteToggleBtn" onclick="toggleMute()" class="text-[#fbfaf6]/70 hover:text-[#fbfaf6] focus:outline-none" title="Toggle Mute">
+                <svg id="volumeIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <svg id="muteIcon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                </svg>
+            </button>
+            <input type="range" id="volumeControl" class="volume-range w-14 sm:w-16" min="0" max="1" step="0.05" value="0.5" oninput="changeVolume(this.value)" title="Volume">
+        </div>
+    </div>
+
+    <!-- Image Inspector Lightbox Modal -->
+    <div id="inspectorLightbox" class="fixed inset-0 z-50 bg-[#1e1a13]/95 hidden flex-col items-center justify-center p-4 transition-all duration-300" onclick="closeLightbox()">
+        <!-- Header Controls -->
+        <div class="absolute top-4 right-4 flex items-center space-x-4 z-50">
+            <span class="text-[10px] font-inter text-[#fbfaf6]/50 tracking-wider hidden sm:inline">Click image to toggle zoom</span>
+            <button onclick="closeLightbox()" class="text-[10px] font-inter text-[#fbfaf6] border border-[#fbfaf6]/20 hover:bg-[#fbfaf6]/10 px-4 py-2 rounded tracking-widest transition-all">
+                CLOSE
+            </button>
+        </div>
+
+        <p id="lightboxTitle" class="absolute top-4 left-6 text-sm font-goudy italic text-[#fbfaf6]/80 z-40"></p>
+
+        <!-- Main Lightbox Image Canvas -->
+        <div class="w-full max-w-3xl max-h-[85vh] flex items-center justify-center overflow-hidden p-2" onclick="event.stopPropagation()">
+            <img 
+                id="lightboxImage" 
+                src="" 
+                alt="Enlarged view" 
+                class="max-w-full max-h-[80vh] object-contain rounded shadow-2xl border border-[#fbfaf6]/15 cursor-zoom-in transition-transform duration-300"
+                style="transform: scale(1);"
+                onclick="toggleZoom(this)"
+            />
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-lg text-center pt-6 pb-2 border-t border-[#fbfaf6]/15">
+        <p class="font-cursive text-xl text-[#fbfaf6]/80">"blame your bitterness for making me sweet"</p>
+        <p class="font-inter text-[9px] uppercase tracking-[0.25em] text-[#fbfaf6]/40 mt-2">
+            © 2026 Renj. Release scheduled for August 7, 2026 at 12:00 AM PST.
+        </p>
+    </footer>
+
+    <!-- Interactive Logic & Timer Engine -->
+    <script>
+        // Target Date: Midnight (00:00:00) Philippine Standard Time (UTC+8) on August 7, 2026
+        const targetLaunchTime = new Date('2026-08-07T00:00:00+08:00').getTime();
+
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const countdownContainer = document.getElementById('countdown');
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetLaunchTime - now;
+
+            if (distance < 0) {
+                countdownContainer.innerHTML = `
+                    <div class="text-center py-2">
+                        <span class="font-title text-4xl sm:text-5xl text-[#fbfaf6]">The tides have arrived.</span>
+                    </div>
+                `;
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            daysEl.textContent = String(days).padStart(2, '0');
+            hoursEl.textContent = String(hours).padStart(2, '0');
+            minutesEl.textContent = String(minutes).padStart(2, '0');
+            secondsEl.textContent = String(seconds).padStart(2, '0');
+        }
+
+        updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        /* Audio Deck Controller Engine */
+        const bgMusic = document.getElementById('bgMusic');
+        const audioToggleBtn = document.getElementById('audioToggleBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const soundBars = document.getElementById('soundBars');
+        const volumeControl = document.getElementById('volumeControl');
+        const volumeIcon = document.getElementById('volumeIcon');
+        const muteIcon = document.getElementById('muteIcon');
+
+        bgMusic.volume = 0.5;
+
+        function togglePlayState() {
+            if (bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                    soundBars.classList.add('playing');
+                    soundBars.classList.remove('opacity-50');
+                }).catch(err => {
+                    console.log("Audio playback delayed or blocked by browser user interaction policy.", err);
+                });
+            } else {
+                bgMusic.pause();
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                soundBars.classList.remove('playing');
+                soundBars.classList.add('opacity-50');
+            }
+        }
+
+        function changeVolume(val) {
+            bgMusic.volume = val;
+            bgMusic.muted = false;
+            updateMuteIcons();
+        }
+
+        function toggleMute() {
+            bgMusic.muted = !bgMusic.muted;
+            updateMuteIcons();
+        }
+
+        function updateMuteIcons() {
+            if (bgMusic.muted || bgMusic.volume === 0) {
+                volumeIcon.classList.add('hidden');
+                muteIcon.classList.remove('hidden');
+            } else {
+                volumeIcon.classList.remove('hidden');
+                muteIcon.classList.add('hidden');
+            }
+        }
+
+        /* Lightbox Inspector Engine */
+        const lightbox = document.getElementById('inspectorLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+
+        function openLightbox(src, title) {
+            lightboxImage.src = src;
+            lightboxImage.style.transform = 'scale(1)';
+            lightboxTitle.textContent = title || '';
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            lightboxImage.src = '';
+        }
+
+        function toggleZoom(imgEl) {
+            if (imgEl.style.transform === 'scale(1.5)') {
+                imgEl.style.transform = 'scale(1)';
+                imgEl.classList.remove('cursor-zoom-out');
+                imgEl.classList.add('cursor-zoom-in');
+            } else {
+                imgEl.style.transform = 'scale(1.5)';
+                imgEl.classList.remove('cursor-zoom-in');
+                imgEl.classList.add('cursor-zoom-out');
+            }
+        }
+
+        // Close lightbox on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
