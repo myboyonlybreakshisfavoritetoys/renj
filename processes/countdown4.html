@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renj — Preoccupied</title>
+    <title>Preoccupied — Renj</title>
     
     <!-- Google Fonts: Instrument Serif & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script>
@@ -47,36 +47,40 @@
             font-style: italic;
         }
 
-        /* Banner Background with dark vignette overlay */
-        .bg-banner-overlay {
-            background-image: 
-                linear-gradient(to bottom, rgba(10, 10, 10, 0.75), rgba(10, 10, 10, 0.92)),
-                url('https://book.renj.top/archive/preoccupied/banner%20image.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+        /* Clean dark background with full fit banner */
+        .tide-bg {
+            background-color: #0a0a0a;
         }
 
-        /* Image interaction styling */
+        .ambient-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            background-image: url('https://book.renj.top/archive/preoccupied/banner%20image.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            pointer-events: none;
+        }
+
+        /* Custom image interaction prevention */
         img {
             -webkit-user-drag: none;
             user-select: none;
         }
 
-        .text-glow {
-            text-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
+        /* Equalizer bar animation */
+        @keyframes soundWave {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
         }
-
-        /* Ambient subtle pulsing effect for seconds */
-        @keyframes subtlePulse {
-            0%, 100% { opacity: 0.75; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.03); }
-        }
-
-        .pulse-subtle {
-            animation: subtlePulse 3s ease-in-out infinite;
-        }
+        .playing .bar-1 { animation: soundWave 0.8s ease-in-out infinite; }
+        .playing .bar-2 { animation: soundWave 0.6s ease-in-out 0.2s infinite; }
+        .playing .bar-3 { animation: soundWave 0.9s ease-in-out 0.1s infinite; }
+        .playing .bar-4 { animation: soundWave 0.7s ease-in-out 0.3s infinite; }
 
         /* Scrollbar aesthetics */
         ::-webkit-scrollbar {
@@ -91,287 +95,223 @@
         }
     </style>
 </head>
-<body class="bg-banner-overlay text-text-primary min-h-screen w-full flex flex-col items-center justify-start py-8 px-4 font-inter antialiased select-none">
+<body class="tide-bg text-text-primary min-h-screen w-full flex flex-col items-center justify-between py-8 px-4 font-inter antialiased select-none relative overflow-x-hidden">
 
-    <!-- Editorial Navigation Header -->
-    <header class="w-full max-w-md flex justify-between items-center mb-8 border-b border-border-subtle pb-3 text-xs text-text-muted font-inter uppercase tracking-[0.2em]">
-        <span class="instrument-serif-italic text-lg text-text-primary tracking-normal font-normal">renj</span>
-        <span class="opacity-30">•</span>
-        <span class="text-[10px] tracking-[0.25em] text-text-primary/80">preoccupied</span>
-        <span class="opacity-30">•</span>
-        <span class="text-[9px] opacity-70">september 4</span>
+    <!-- Ambient Cover Banner Layer in Background -->
+    <div class="ambient-banner"></div>
+
+    <!-- Background Looping Audio Track -->
+    <audio id="bgMusic" src="https://book.renj.top/archive/milkteeth.mp3" loop></audio>
+
+    <header class="w-full max-w-md flex justify-between items-center pb-4 border-b border-border-subtle text-xs text-text-muted uppercase tracking-[0.2em] relative z-10">
+        <span class="instrument-serif-italic text-lg text-text-primary tracking-normal font-normal">Renj</span>
+        <span class="text-[10px] tracking-[0.25em] text-text-primary/80">Preoccupied</span>
+        <span class="text-[9px] opacity-70">PST (UTC+8)</span>
     </header>
 
-    <!-- Main Container -->
-    <main class="w-full max-w-md flex flex-col items-center gap-8">
+    <main class="w-full max-w-md flex flex-col items-center gap-8 my-auto py-6 relative z-10">
 
-        <!-- Countdown Timer Section -->
-        <section class="w-full text-center py-6 bg-paper-card rounded-2xl border border-border-subtle backdrop-blur-md px-4 shadow-2xl">
-            <!-- Title using Instrument Serif Italic instead of script font -->
-            <h1 class="instrument-serif-italic text-3xl md:text-4xl text-text-primary mb-4 tracking-wide">
-                arriving in
-            </h1>
-
-            <div id="countdown" class="flex justify-center items-center gap-3 md:gap-5 py-2">
-                <!-- Days Block -->
-                <div class="flex flex-col items-center min-w-[56px]">
-                    <span id="days" class="instrument-serif-regular text-4xl md:text-5xl text-text-primary text-glow">00</span>
-                    <span class="text-[9px] font-inter uppercase tracking-widest text-text-muted mt-1">days</span>
-                </div>
-                
-                <span class="text-text-muted/40 font-serif text-2xl -mt-4">:</span>
-
-                <!-- Hours Block -->
-                <div class="flex flex-col items-center min-w-[56px]">
-                    <span id="hours" class="instrument-serif-regular text-4xl md:text-5xl text-text-primary text-glow">00</span>
-                    <span class="text-[9px] font-inter uppercase tracking-widest text-text-muted mt-1">hours</span>
-                </div>
-
-                <span class="text-text-muted/40 font-serif text-2xl -mt-4">:</span>
-
-                <!-- Minutes Block -->
-                <div class="flex flex-col items-center min-w-[56px]">
-                    <span id="minutes" class="instrument-serif-regular text-4xl md:text-5xl text-text-primary text-glow">00</span>
-                    <span class="text-[9px] font-inter uppercase tracking-widest text-text-muted mt-1">mins</span>
-                </div>
-
-                <span class="text-text-muted/40 font-serif text-2xl -mt-4">:</span>
-
-                <!-- Seconds Block -->
-                <div class="flex flex-col items-center min-w-[56px]">
-                    <span id="seconds" class="instrument-serif-regular text-4xl md:text-5xl text-text-primary pulse-subtle">00</span>
-                    <span class="text-[9px] font-inter uppercase tracking-widest text-text-muted mt-1">secs</span>
+        <!-- Cover Art Presentation Card (Clicking reveals poem list / back cover) -->
+        <div class="w-full flex flex-col items-center">
+            <div 
+                class="w-full relative group cursor-pointer bg-paper-card p-3 rounded-xl border border-border-subtle shadow-2xl transition-all duration-500 hover:border-white/40"
+                onclick="openLightbox('https://book.renj.top/archive/preoccupied/20.jpg')"
+            >
+                <div class="relative overflow-hidden rounded-lg">
+                    <img 
+                        src="https://book.renj.top/archive/preoccupied/1.jpg" 
+                        alt="Preoccupied Collection Cover" 
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x800/18181b/ffffff?text=Preoccupied+Cover';"
+                    />
+                    <!-- Overlay hint on hover -->
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span class="font-inter text-[10px] uppercase tracking-[0.25em] bg-black/80 text-text-primary px-3.5 py-2 rounded-lg border border-border-subtle shadow-lg">
+                            Inspect Poem List
+                        </span>
+                    </div>
                 </div>
             </div>
+            <p class="font-inter text-[10px] text-text-muted/60 mt-2.5 italic tracking-wider">tap image to reveal list of poems</p>
+        </div>
 
-            <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] mt-4 opacity-70">
+        <!-- Dynamic Collection Title Header -->
+        <div class="text-center space-y-2 px-2">
+            <h1 class="instrument-serif-italic text-4xl sm:text-5xl text-text-primary leading-tight font-normal">
+                Preoccupied
+            </h1>
+            <p class="instrument-serif-italic text-lg sm:text-xl text-text-muted italic">
+                poems arrive at midnight
+            </p>
+        </div>
+
+        <div class="w-full py-6 my-1 border-y border-border-subtle flex flex-col items-center justify-center bg-paper-card/40 rounded-xl">
+            <p class="font-inter text-[10px] uppercase tracking-[0.3em] text-text-muted/70 mb-4 text-center">
+                arriving in
+            </p>
+            
+            <div id="countdown" class="flex items-center justify-center gap-3 sm:gap-5">
+                <!-- Days Unit -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="days" class="instrument-serif-regular text-4xl sm:text-5xl font-light text-text-primary">00</span>
+                    <span class="font-inter text-[9px] uppercase tracking-widest text-text-muted mt-1">days</span>
+                </div>
+                <span class="instrument-serif-regular text-2xl text-text-muted/40 -mt-4">:</span>
+
+                <!-- Hours Unit -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="hours" class="instrument-serif-regular text-4xl sm:text-5xl font-light text-text-primary">00</span>
+                    <span class="font-inter text-[9px] uppercase tracking-widest text-text-muted mt-1">hours</span>
+                </div>
+                <span class="instrument-serif-regular text-2xl text-text-muted/40 -mt-4">:</span>
+
+                <!-- Minutes Unit -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="minutes" class="instrument-serif-regular text-4xl sm:text-5xl font-light text-text-primary">00</span>
+                    <span class="font-inter text-[9px] uppercase tracking-widest text-text-muted mt-1">mins</span>
+                </div>
+                <span class="instrument-serif-regular text-2xl text-text-muted/40 -mt-4">:</span>
+
+                <!-- Seconds Unit -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="seconds" class="instrument-serif-regular text-4xl sm:text-5xl font-light text-text-primary animate-pulse">00</span>
+                    <span class="font-inter text-[9px] uppercase tracking-widest text-text-muted mt-1">secs</span>
+                </div>
+            </div>
+            
+            <p class="text-[9px] text-text-muted uppercase tracking-[0.2em] mt-4 opacity-60">
                 12:00 AM MN • Philippine Standard Time (UTC+8)
             </p>
-        </section>
+        </div>
 
-        <!-- Book Editions & Covers Section -->
-        <section class="w-full space-y-5">
-            <div class="flex items-center justify-between border-b border-border-subtle pb-2">
-                <h3 class="instrument-serif-italic text-lg text-text-primary">Collection Covers</h3>
-                <span class="text-[10px] font-inter text-text-muted uppercase tracking-widest">Tap to inspect</span>
-            </div>
-
-            <!-- Cover Grid (Front & Back Covers) -->
-            <div class="grid grid-cols-2 gap-4">
-                <!-- Front Cover -->
-                <div class="flex flex-col items-center space-y-2 group cursor-pointer" onclick="openLightbox('https://book.renj.top/archive/preoccupied/1.jpg', 'Preoccupied - Front Cover')">
-                    <div class="w-full bg-paper-card p-1.5 rounded-xl border border-border-subtle shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:border-white/40 group-hover:scale-[1.02]">
-                        <img 
-                            src="https://book.renj.top/archive/preoccupied/1.jpg" 
-                            onerror="this.onerror=null; this.src='https://placehold.co/400x600/18181b/ffffff?text=Front+Cover';" 
-                            alt="Preoccupied Front Cover" 
-                            class="w-full h-auto object-cover rounded-lg"
-                        />
-                    </div>
-                    <span class="instrument-serif-italic text-xs text-text-muted group-hover:text-text-primary transition-colors">Front Cover</span>
+        <div class="w-full flex flex-col items-center pt-2">
+            <div 
+                class="w-full bg-paper-card hover:bg-zinc-900/90 border border-border-subtle hover:border-white/30 p-3 rounded-xl transition-all duration-300 flex items-center gap-4 cursor-pointer group shadow-lg"
+                onclick="openLightbox('https://book.renj.top/archive/preoccupied/2533B037-9195-4EE1-AF52-6232FBF3991B.jpeg')"
+            >
+                <div class="w-16 h-16 shrink-0 overflow-hidden rounded-lg border border-border-subtle">
+                    <img 
+                        src="https://book.renj.top/archive/preoccupied/E99860FB-4DC9-45EB-854D-7F28782EEA2A.jpeg" 
+                        alt="First snapshots of preoccupied" 
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        onerror="this.onerror=null; this.src='https://placehold.co/150x150/18181b/ffffff?text=A+Wonderful+Lifetime';"
+                    />
                 </div>
-
-                <!-- Back Cover -->
-                <div class="flex flex-col items-center space-y-2 group cursor-pointer" onclick="openLightbox('https://book.renj.top/archive/preoccupied/20.jpg', 'Preoccupied - Back Cover')">
-                    <div class="w-full bg-paper-card p-1.5 rounded-xl border border-border-subtle shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:border-white/40 group-hover:scale-[1.02]">
-                        <img 
-                            src="https://book.renj.top/archive/preoccupied/20.jpg" 
-                            onerror="this.onerror=null; this.src='https://placehold.co/400x600/18181b/ffffff?text=Back+Cover';" 
-                            alt="Preoccupied Back Cover" 
-                            class="w-full h-auto object-cover rounded-lg"
-                        />
-                    </div>
-                    <span class="instrument-serif-italic text-xs text-text-muted group-hover:text-text-primary transition-colors">Back Cover</span>
+                <div class="flex-1 text-left">
+                    <span class="font-inter text-[9px] uppercase tracking-[0.2em] text-text-muted/70 block leading-tight">First snapshots of Preoccupied
+                    </span>
+                    <p class="instrument-serif-italic text-base text-text-primary group-hover:text-white transition-colors mt-0.5">
+                        Read "A Wonderful Lifetime" ahead of Preoccupied's release.
+                    </p>
+                    <span class="font-inter text-[10px] text-text-muted underline underline-offset-2 mt-0.5 block">
+                        inspect poem photo &rarr;
+                    </span>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Main Text Content / Statement -->
-        <section class="w-full space-y-5 text-center pt-2">
-            <h2 class="instrument-serif-regular text-2xl text-text-primary leading-snug border-t border-b border-border-subtle py-5">
-                "What remains when the room grows quiet and thought becomes permanent."
-            </h2>
-
-            <div class="space-y-4 text-sm text-text-muted leading-relaxed text-left font-inter font-light bg-paper-card p-5 rounded-xl border border-border-subtle backdrop-blur-md">
+        <div class="w-full pt-6 border-t border-border-subtle flex flex-col items-center text-center space-y-3">
+            <span class="font-inter text-[9px] uppercase tracking-[0.3em] text-text-muted/60">author's note</span>
+            <div class="font-inter text-xs sm:text-sm leading-relaxed text-text-muted space-y-3 text-justify sm:text-center px-2 bg-paper-card p-5 rounded-xl border border-border-subtle">
                 <p>
                     <span class="instrument-serif-italic text-base text-text-primary">Preoccupied</span> gathers lines written in the margins of lingering hours. It is an exploration of thoughts that stay behind long after the event has dissolved—a dialogue between memory, patience, and silent devotion.
                 </p>
-                <p>
+                <p class="italic text-text-primary/90 pt-1">
                     Arriving sharp at midnight on September 4, 2026, this volume closes a cycle of quiet observation and opens a window into what we carry when we believe nobody is watching.
                 </p>
             </div>
-        </section>
+        </div>
 
     </main>
 
-    <!-- Custom Lightbox Overlay -->
+    <div id="audioDeck" class="fixed bottom-6 right-6 z-40 bg-paper-card/90 backdrop-blur-md border border-border-subtle rounded-full py-2 px-4 shadow-2xl flex items-center gap-3 transition-all duration-300 hover:border-white/40">
+        <!-- Play / Pause Button -->
+        <button id="audioToggleBtn" onclick="togglePlayState()" class="w-7 h-7 flex items-center justify-center rounded-full bg-white/10 text-text-primary hover:bg-white/20 transition-all focus:outline-none" title="Play Ambient Soundtrack">
+            <!-- Play Icon -->
+            <svg id="playIcon" class="w-3.5 h-3.5 text-text-primary ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <!-- Pause Icon -->
+            <svg id="pauseIcon" class="w-3.5 h-3.5 text-text-primary hidden" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+        </button>
+
+        <!-- Equalizer Sound Indicator -->
+        <div id="soundBars" class="flex items-end gap-1 h-4 w-5 opacity-50 transition-opacity">
+            <span class="w-0.5 bg-text-primary rounded-full h-1 bar-1"></span>
+            <span class="w-0.5 bg-text-primary rounded-full h-1 bar-2"></span>
+            <span class="w-0.5 bg-text-primary rounded-full h-1 bar-3"></span>
+            <span class="w-0.5 bg-text-primary rounded-full h-1 bar-4"></span>
+        </div>
+
+        <!-- Volume Control Slider -->
+        <div class="flex items-center gap-2 border-l border-border-subtle pl-2">
+            <button id="muteToggleBtn" onclick="toggleMute()" class="text-text-muted hover:text-text-primary focus:outline-none" title="Toggle Mute">
+                <svg id="volumeIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <svg id="muteIcon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                </svg>
+            </button>
+            <input type="range" id="volumeControl" class="accent-white cursor-pointer h-1 w-14 sm:w-16 bg-zinc-700 rounded-lg appearance-none" min="0" max="1" step="0.05" value="0.5" oninput="changeVolume(this.value)" title="Volume">
+        </div>
+    </div>
+
     <div id="inspectorLightbox" class="fixed inset-0 z-50 bg-black/95 hidden flex-col items-center justify-center p-4 backdrop-blur-md transition-all duration-300" onclick="closeLightbox()">
-        <!-- Close Button -->
-        <div class="absolute top-5 right-5 flex items-center space-x-4 z-50">
-            <button onclick="closeLightbox()" class="text-xs font-inter text-text-primary border border-border-subtle hover:bg-zinc-800 px-4 py-2 rounded-lg tracking-widest uppercase transition-all">
-                Close
+        <!-- Header Controls -->
+        <div class="absolute top-4 right-4 flex items-center space-x-4 z-50">
+            <span class="text-[10px] font-inter text-text-muted tracking-wider hidden sm:inline">Click image to toggle zoom</span>
+            <button onclick="closeLightbox()" class="text-[10px] font-inter text-text-primary border border-border-subtle hover:bg-zinc-800 px-4 py-2 rounded-lg tracking-widest transition-all uppercase">
+                CLOSE
             </button>
         </div>
 
-        <!-- Lightbox Title Header -->
-        <p id="lightboxTitle" class="absolute top-5 left-6 text-base instrument-serif-italic text-text-primary z-40"></p>
-
-        <!-- Lightbox Image Stage -->
-        <div class="w-full max-w-2xl max-h-[85vh] flex items-center justify-center overflow-hidden p-2" onclick="event.stopPropagation()">
+        <!-- Main Lightbox Image Canvas -->
+        <div class="w-full max-w-3xl max-h-[85vh] flex items-center justify-center overflow-hidden p-2" onclick="event.stopPropagation()">
             <img 
                 id="lightboxImage" 
                 src="" 
-                alt="Detail View" 
+                alt="Enlarged view" 
                 class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl border border-border-subtle cursor-zoom-in transition-transform duration-300"
                 style="transform: scale(1);"
                 onclick="toggleZoom(this)"
             />
         </div>
-        
-        <p class="text-[10px] font-inter text-text-muted mt-3 uppercase tracking-widest">Tap or click image to toggle magnification</p>
     </div>
 
-    <!-- Audio Player Container & Hidden Audio Element -->
-    <audio id="bgAudio" src="https://book.renj.top/archive/milkteeth.mp3" loop preload="auto"></audio>
-
-    <aside id="audioControls" class="fixed bottom-4 right-4 z-40 bg-paper-card/90 backdrop-blur-md border border-border-subtle px-3 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs font-inter text-text-primary transition-all duration-300">
-        <!-- Play / Pause Toggle Button -->
-        <button id="playPauseBtn" onclick="togglePlayPause()" class="hover:text-white transition-colors p-1" title="Play / Pause">
-            <svg id="playIcon" class="w-4 h-4 hidden fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg id="pauseIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-        </button>
-
-        <!-- Stop Button -->
-        <button onclick="stopAudio()" class="hover:text-white transition-colors p-1" title="Stop">
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
-        </button>
-
-        <!-- Mute / Unmute Button -->
-        <button id="muteBtn" onclick="toggleMute()" class="hover:text-white transition-colors p-1" title="Mute / Unmute">
-            <svg id="volumeHighIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-            <svg id="volumeMuteIcon" class="w-4 h-4 hidden fill-current" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-        </button>
-
-        <!-- Volume Slider -->
-        <input 
-            type="range" 
-            id="volumeSlider" 
-            min="0" 
-            max="1" 
-            step="0.01" 
-            value="0.5" 
-            oninput="changeVolume(this.value)"
-            class="w-16 accent-white cursor-pointer h-1 bg-zinc-700 rounded-lg appearance-none"
-            title="Volume"
-        />
-    </aside>
-
-    <!-- Editorial Footer -->
-    <footer class="w-full max-w-md text-center mt-12 pt-6 border-t border-border-subtle space-y-2">
-        <p class="instrument-serif-italic text-2xl text-text-primary">preoccupied</p>
-        <p class="text-[9px] font-inter text-text-muted uppercase tracking-[0.25em]">
-            © 2026 RENJ. ALL RIGHTS RESERVED.
+    <!-- Footer -->
+    <footer class="w-full max-w-md text-center pt-6 pb-2 border-t border-border-subtle relative z-10">
+        <p class="instrument-serif-italic text-xl text-text-primary/90">"You grieve for my numbness, I grieve your presence"</p>
+        <p class="font-inter text-[9px] uppercase tracking-[0.25em] text-text-muted/60 mt-2">
+            © 2026 RENJ. RELEASE SCHEDULED FOR SEPTEMBER 4, 2026 AT 12:00 AM PST.
         </p>
     </footer>
 
-    <!-- JavaScript State & Countdown Logic -->
     <script>
-        const bgAudio = document.getElementById('bgAudio');
-        const playIcon = document.getElementById('playIcon');
-        const pauseIcon = document.getElementById('pauseIcon');
-        const volumeHighIcon = document.getElementById('volumeHighIcon');
-        const volumeMuteIcon = document.getElementById('volumeMuteIcon');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const audioStatusIndicator = document.getElementById('audioStatusIndicator');
-        let hasStartedAudio = false;
-
-        // Set default volume level
-        bgAudio.volume = 0.5;
-
-        // Auto-play music on initial click anywhere on screen
-        function handleFirstInteraction() {
-            if (!hasStartedAudio) {
-                hasStartedAudio = true;
-                bgAudio.play().then(() => {
-                    updateAudioUI(true);
-                }).catch(() => {
-                    hasStartedAudio = false;
-                });
-            }
-        }
-
-        window.addEventListener('click', handleFirstInteraction, { once: true });
-        window.addEventListener('touchstart', handleFirstInteraction, { once: true });
-
-        function togglePlayPause() {
-            hasStartedAudio = true;
-            if (bgAudio.paused) {
-                bgAudio.play();
-                updateAudioUI(true);
-            } else {
-                bgAudio.pause();
-                updateAudioUI(false);
-            }
-        }
-
-        function stopAudio() {
-            bgAudio.pause();
-            bgAudio.currentTime = 0;
-            updateAudioUI(false);
-        }
-
-        function toggleMute() {
-            bgAudio.muted = !bgAudio.muted;
-            if (bgAudio.muted) {
-                volumeHighIcon.classList.add('hidden');
-                volumeMuteIcon.classList.remove('hidden');
-            } else {
-                volumeHighIcon.classList.remove('hidden');
-                volumeMuteIcon.classList.add('hidden');
-            }
-        }
-
-        function changeVolume(val) {
-            bgAudio.volume = parseFloat(val);
-            if (parseFloat(val) === 0) {
-                bgAudio.muted = true;
-                volumeHighIcon.classList.add('hidden');
-                volumeMuteIcon.classList.remove('hidden');
-            } else {
-                bgAudio.muted = false;
-                volumeHighIcon.classList.remove('hidden');
-                volumeMuteIcon.classList.add('hidden');
-            }
-        }
-
-        function updateAudioUI(isPlaying) {
-            if (isPlaying) {
-                playIcon.classList.add('hidden');
-                pauseIcon.classList.remove('hidden');
-            } else {
-                playIcon.classList.remove('hidden');
-                pauseIcon.classList.add('hidden');
-            }
-        }
-
-        // Target Release Date: Midnight Philippine Standard Time (UTC+8) on September 4, 2026
+        // Target Launch Date: Midnight (00:00:00) Philippine Standard Time (UTC+8) on September 4, 2026
         const targetLaunchTime = new Date('2026-09-04T00:00:00+08:00').getTime();
+
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const countdownContainer = document.getElementById('countdown');
 
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetLaunchTime - now;
 
-            const daysElement = document.getElementById('days');
-            const hoursElement = document.getElementById('hours');
-            const minutesElement = document.getElementById('minutes');
-            const secondsElement = document.getElementById('seconds');
-
             if (distance <= 0) {
-                document.getElementById('countdown').innerHTML = `
-                    <div class="instrument-serif-italic text-2xl tracking-wide text-center text-text-primary py-3">
-                        "The work is here. Preoccupied has arrived."
-                    </div>
-                `;
+                if (countdownContainer) {
+                    countdownContainer.innerHTML = `
+                        <div class="text-center py-2">
+                            <span class="instrument-serif-italic text-3xl sm:text-4xl text-text-primary">Preoccupied has arrived.</span>
+                        </div>
+                    `;
+                }
+                clearInterval(countdownInterval);
                 return;
             }
 
@@ -380,49 +320,125 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Format numbers with leading zeros
-            daysElement.innerText = String(days).padStart(2, '0');
-            hoursElement.innerText = String(hours).padStart(2, '0');
-            minutesElement.innerText = String(minutes).padStart(2, '0');
-            secondsElement.innerText = String(seconds).padStart(2, '0');
+            if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+            if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+            if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+            if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
         }
 
-        // Initialize countdown immediately and set loop interval
         updateCountdown();
         const countdownInterval = setInterval(updateCountdown, 1000);
 
-        // Lightbox Functions
-        function openLightbox(imageUrl, title) {
-            const lightbox = document.getElementById('inspectorLightbox');
-            const img = document.getElementById('lightboxImage');
-            const titleEl = document.getElementById('lightboxTitle');
+        const bgMusic = document.getElementById('bgMusic');
+        const audioToggleBtn = document.getElementById('audioToggleBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const soundBars = document.getElementById('soundBars');
+        const volumeControl = document.getElementById('volumeControl');
+        const volumeIcon = document.getElementById('volumeIcon');
+        const muteIcon = document.getElementById('muteIcon');
 
-            img.src = imageUrl;
-            img.style.transform = 'scale(1)';
-            titleEl.innerText = title;
+        if (bgMusic) {
+            bgMusic.volume = 0.5;
+        }
 
+        // Auto-play ambient audio on first user gesture
+        function autoPlayOnFirstClick() {
+            if (bgMusic && bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    if (playIcon) playIcon.classList.add('hidden');
+                    if (pauseIcon) pauseIcon.classList.remove('hidden');
+                    if (soundBars) {
+                        soundBars.classList.add('playing');
+                        soundBars.classList.remove('opacity-50');
+                    }
+                    document.removeEventListener('click', autoPlayOnFirstClick);
+                }).catch(err => {
+                    console.log("Audio playback waiting for user interaction.", err);
+                });
+            } else {
+                document.removeEventListener('click', autoPlayOnFirstClick);
+            }
+        }
+
+        document.addEventListener('click', autoPlayOnFirstClick);
+
+        function togglePlayState() {
+            if (!bgMusic) return;
+            if (bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    if (playIcon) playIcon.classList.add('hidden');
+                    if (pauseIcon) pauseIcon.classList.remove('hidden');
+                    if (soundBars) {
+                        soundBars.classList.add('playing');
+                        soundBars.classList.remove('opacity-50');
+                    }
+                }).catch(err => console.log("Audio play error:", err));
+            } else {
+                bgMusic.pause();
+                if (playIcon) playIcon.classList.remove('hidden');
+                if (pauseIcon) pauseIcon.classList.add('hidden');
+                if (soundBars) {
+                    soundBars.classList.remove('playing');
+                    soundBars.classList.add('opacity-50');
+                }
+            }
+        }
+
+        function changeVolume(val) {
+            if (!bgMusic) return;
+            bgMusic.volume = val;
+            bgMusic.muted = false;
+            updateMuteIcons();
+        }
+
+        function toggleMute() {
+            if (!bgMusic) return;
+            bgMusic.muted = !bgMusic.muted;
+            updateMuteIcons();
+        }
+
+        function updateMuteIcons() {
+            if (!bgMusic) return;
+            if (bgMusic.muted || bgMusic.volume === 0) {
+                if (volumeIcon) volumeIcon.classList.add('hidden');
+                if (muteIcon) muteIcon.classList.remove('hidden');
+            } else {
+                if (volumeIcon) volumeIcon.classList.remove('hidden');
+                if (muteIcon) muteIcon.classList.add('hidden');
+            }
+        }
+
+        const lightbox = document.getElementById('inspectorLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+
+        function openLightbox(src) {
+            lightboxImage.src = src;
+            lightboxImage.style.transform = 'scale(1)';
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
         }
 
         function closeLightbox() {
-            const lightbox = document.getElementById('inspectorLightbox');
             lightbox.classList.add('hidden');
             lightbox.classList.remove('flex');
+            lightboxImage.src = '';
         }
 
-        function toggleZoom(imgElement) {
-            if (imgElement.style.transform === 'scale(1.5)') {
-                imgElement.style.transform = 'scale(1)';
-                imgElement.classList.replace('cursor-zoom-out', 'cursor-zoom-in');
+        function toggleZoom(imgEl) {
+            if (imgEl.style.transform === 'scale(1.5)') {
+                imgEl.style.transform = 'scale(1)';
+                imgEl.classList.remove('cursor-zoom-out');
+                imgEl.classList.add('cursor-zoom-in');
             } else {
-                imgElement.style.transform = 'scale(1.5)';
-                imgElement.classList.replace('cursor-zoom-in', 'cursor-zoom-out');
+                imgEl.style.transform = 'scale(1.5)';
+                imgEl.classList.remove('cursor-zoom-in');
+                imgEl.classList.add('cursor-zoom-out');
             }
         }
 
-        // Close Lightbox on Escape key press
-        window.addEventListener('keydown', function(e) {
+        // Close lightbox on Escape key
+        document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeLightbox();
             }
