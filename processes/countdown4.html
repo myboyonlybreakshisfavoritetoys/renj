@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renj — Preoccupied / Now</title>
+    
+    <!-- Google Fonts: Instrument Serif & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['"Instrument Serif"', 'serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'paper-dark': '#0a0a0a',
+                        'paper-card': 'rgba(18, 18, 20, 0.75)',
+                        'accent-white': '#ffffff',
+                        'text-primary': '#f4f4f5',
+                        'text-muted': '#a1a1aa',
+                        'border-subtle': 'rgba(255, 255, 255, 0.12)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .instrument-serif-regular {
+            font-family: "Instrument Serif", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .instrument-serif-italic {
+            font-family: "Instrument Serif", serif;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* Banner Background with dark vignette overlay */
+        .bg-banner-overlay {
+            background-image: 
+                linear-gradient(to bottom, rgba(10, 10, 10, 0.75), rgba(10, 10, 10, 0.92)),
+                url('https://book.renj.top/archive/preoccupied/banner%20image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Image interaction styling */
+        img {
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Ambient subtle pulsing effect for seconds */
+        @keyframes subtlePulse {
+            0%, 100% { opacity: 0.75; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.03); }
+        }
+
+        .pulse-subtle {
+            animation: subtlePulse 3s ease-in-out infinite;
+        }
+
+        /* Scrollbar aesthetics */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-banner-overlay text-text-primary min-h-screen w-full flex flex-col items-center justify-start py-8 px-4 font-inter antialiased select-none">
+
+    <!-- Editorial Navigation Header -->
+    <header class="w-full max-w-md flex justify-between items-center mb-8 border-b border-border-subtle pb-3 text-xs text-text-muted font-inter uppercase tracking-[0.2em]">
+        <span class="instrument-serif-italic text-lg text-text-primary tracking-normal font-normal">renj</span>
+        <span class="opacity-30">•</span>
+        <span class="text-[10px] tracking-[0.25em] text-text-primary/80">preoccupied</span>
+        <span class="opacity-30">•</span>
+        <span class="text-[9px] opacity-70">september 4</span>
+    </header>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-md flex flex-col items-center gap-8">
+
+        <!-- Countdown Timer Section -->
+        <section class="w-full text-center py-6 bg-paper-card rounded-2xl border border-border-subtle backdrop-blur-md px-4 shadow-2xl">
+            <!-- Title using Instrument Serif Italic instead of script font -->
+            <h1 class="instrument-serif-italic text-3xl md:text-4xl text-text-primary mb-4 tracking-wide">
+                arriving in
+            </h1>
+
+            <div id="countdown" class="flex justify-center items-center gap-3 md:gap-5 py-2">
+                <!-- Days Block -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="days" class="instrument-serif-regular text-4xl md:text-5xl text-text-primary text-glow">00</span>
+                    <span class="text-[9px] font-inter uppercase tracking-widest text-text-muted mt-1">days</span>
+                </div>
+                
+                <span class="text-text-muted/40 font-serif text-2xl -mt-4">:</span>
+
+                <!-- Hours Block -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="hours" class="instrument-serif-regular text-4xl md:text-5xl text-text-primary text-glow">00</span>
+                    <span class="text-[9px] font-inter uppercase tracking-widest text-text-muted mt-1">hours</span>
+                </div>
+
+                <span class="text-text-muted/40 font-serif text-2xl -mt-4">:</span>
+
+                <!-- Minutes Block -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="minutes" class="instrument-serif-regular text-4xl md:text-5xl text-text-primary text-glow">00</span>
+                    <span class="text-[9px] font-inter uppercase tracking-widest text-text-muted mt-1">mins</span>
+                </div>
+
+                <span class="text-text-muted/40 font-serif text-2xl -mt-4">:</span>
+
+                <!-- Seconds Block -->
+                <div class="flex flex-col items-center min-w-[56px]">
+                    <span id="seconds" class="instrument-serif-regular text-4xl md:text-5xl text-text-primary pulse-subtle">00</span>
+                    <span class="text-[9px] font-inter uppercase tracking-widest text-text-muted mt-1">secs</span>
+                </div>
+            </div>
+
+            <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] mt-4 opacity-70">
+                12:00 AM MN • Philippine Standard Time (UTC+8)
+            </p>
+        </section>
+
+        <!-- Book Editions & Covers Section -->
+        <section class="w-full space-y-5">
+            <div class="flex items-center justify-between border-b border-border-subtle pb-2">
+                <h3 class="instrument-serif-italic text-lg text-text-primary">Collection Covers</h3>
+                <span class="text-[10px] font-inter text-text-muted uppercase tracking-widest">Tap to inspect</span>
+            </div>
+
+            <!-- Cover Grid (Front & Back Covers) -->
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Front Cover -->
+                <div class="flex flex-col items-center space-y-2 group cursor-pointer" onclick="openLightbox('https://book.renj.top/archive/preoccupied/1.jpg', 'Preoccupied - Front Cover')">
+                    <div class="w-full bg-paper-card p-1.5 rounded-xl border border-border-subtle shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:border-white/40 group-hover:scale-[1.02]">
+                        <img 
+                            src="https://book.renj.top/archive/preoccupied/1.jpg" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/400x600/18181b/ffffff?text=Front+Cover';" 
+                            alt="Preoccupied Front Cover" 
+                            class="w-full h-auto object-cover rounded-lg"
+                        />
+                    </div>
+                    <span class="instrument-serif-italic text-xs text-text-muted group-hover:text-text-primary transition-colors">Front Cover</span>
+                </div>
+
+                <!-- Back Cover -->
+                <div class="flex flex-col items-center space-y-2 group cursor-pointer" onclick="openLightbox('https://book.renj.top/archive/preoccupied/20.jpg', 'Preoccupied - Back Cover')">
+                    <div class="w-full bg-paper-card p-1.5 rounded-xl border border-border-subtle shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:border-white/40 group-hover:scale-[1.02]">
+                        <img 
+                            src="https://book.renj.top/archive/preoccupied/20.jpg" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/400x600/18181b/ffffff?text=Back+Cover';" 
+                            alt="Preoccupied Back Cover" 
+                            class="w-full h-auto object-cover rounded-lg"
+                        />
+                    </div>
+                    <span class="instrument-serif-italic text-xs text-text-muted group-hover:text-text-primary transition-colors">Back Cover</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Text Content / Statement -->
+        <section class="w-full space-y-5 text-center pt-2">
+            <h2 class="instrument-serif-regular text-2xl text-text-primary leading-snug border-t border-b border-border-subtle py-5">
+                "What remains when the room grows quiet and thought becomes permanent."
+            </h2>
+
+            <div class="space-y-4 text-sm text-text-muted leading-relaxed text-left font-inter font-light bg-paper-card p-5 rounded-xl border border-border-subtle backdrop-blur-md">
+                <p>
+                    <span class="instrument-serif-italic text-base text-text-primary">Preoccupied</span> gathers lines written in the margins of lingering hours. It is an exploration of thoughts that stay behind long after the event has dissolved—a dialogue between memory, patience, and silent devotion.
+                </p>
+                <p>
+                    Arriving sharp at midnight on September 4, 2026, this volume closes a cycle of quiet observation and opens a window into what we carry when we believe nobody is watching.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Custom Lightbox Overlay -->
+    <div id="inspectorLightbox" class="fixed inset-0 z-50 bg-black/95 hidden flex-col items-center justify-center p-4 backdrop-blur-md transition-all duration-300" onclick="closeLightbox()">
+        <!-- Close Button -->
+        <div class="absolute top-5 right-5 flex items-center space-x-4 z-50">
+            <button onclick="closeLightbox()" class="text-xs font-inter text-text-primary border border-border-subtle hover:bg-zinc-800 px-4 py-2 rounded-lg tracking-widest uppercase transition-all">
+                Close
+            </button>
+        </div>
+
+        <!-- Lightbox Title Header -->
+        <p id="lightboxTitle" class="absolute top-5 left-6 text-base instrument-serif-italic text-text-primary z-40"></p>
+
+        <!-- Lightbox Image Stage -->
+        <div class="w-full max-w-2xl max-h-[85vh] flex items-center justify-center overflow-hidden p-2" onclick="event.stopPropagation()">
+            <img 
+                id="lightboxImage" 
+                src="" 
+                alt="Detail View" 
+                class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl border border-border-subtle cursor-zoom-in transition-transform duration-300"
+                style="transform: scale(1);"
+                onclick="toggleZoom(this)"
+            />
+        </div>
+        
+        <p class="text-[10px] font-inter text-text-muted mt-3 uppercase tracking-widest">Tap or click image to toggle magnification</p>
+    </div>
+
+    <!-- Editorial Footer -->
+    <footer class="w-full max-w-md text-center mt-12 pt-6 border-t border-border-subtle space-y-2">
+        <p class="instrument-serif-italic text-2xl text-text-primary">preoccupied</p>
+        <p class="text-[9px] font-inter text-text-muted uppercase tracking-[0.25em]">
+            © 2026 RENJ. ALL RIGHTS RESERVED.
+        </p>
+    </footer>
+
+    <!-- JavaScript State & Countdown Logic -->
+    <script>
+        // Target Release Date: Midnight Philippine Standard Time (UTC+8) on September 4, 2026
+        const targetLaunchTime = new Date('2026-09-04T00:00:00+08:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetLaunchTime - now;
+
+            const daysElement = document.getElementById('days');
+            const hoursElement = document.getElementById('hours');
+            const minutesElement = document.getElementById('minutes');
+            const secondsElement = document.getElementById('seconds');
+
+            if (distance <= 0) {
+                document.getElementById('countdown').innerHTML = `
+                    <div class="instrument-serif-italic text-2xl tracking-wide text-center text-text-primary py-3">
+                        "The work is here. Preoccupied has arrived."
+                    </div>
+                `;
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Format numbers with leading zeros
+            daysElement.innerText = String(days).padStart(2, '0');
+            hoursElement.innerText = String(hours).padStart(2, '0');
+            minutesElement.innerText = String(minutes).padStart(2, '0');
+            secondsElement.innerText = String(seconds).padStart(2, '0');
+        }
+
+        // Initialize countdown immediately and set loop interval
+        updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Lightbox Functions
+        function openLightbox(imageUrl, title) {
+            const lightbox = document.getElementById('inspectorLightbox');
+            const img = document.getElementById('lightboxImage');
+            const titleEl = document.getElementById('lightboxTitle');
+
+            img.src = imageUrl;
+            img.style.transform = 'scale(1)';
+            titleEl.innerText = title;
+
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('inspectorLightbox');
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+        }
+
+        function toggleZoom(imgElement) {
+            if (imgElement.style.transform === 'scale(1.5)') {
+                imgElement.style.transform = 'scale(1)';
+                imgElement.classList.replace('cursor-zoom-out', 'cursor-zoom-in');
+            } else {
+                imgElement.style.transform = 'scale(1.5)';
+                imgElement.classList.replace('cursor-zoom-in', 'cursor-zoom-out');
+            }
+        }
+
+        // Close Lightbox on Escape key press
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
