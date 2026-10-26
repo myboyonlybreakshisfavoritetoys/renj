@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>all faith that there is — Renj</title>
+  
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Estonia & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Estonia&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'estonia': ['Estonia', 'cursive'],
+            'inter': ['Inter', 'sans-serif'],
+          },
+          colors: {
+            'faith-dark': '#1a050d',
+            'faith-card': 'rgba(45, 10, 24, 0.75)',
+            'faith-border': 'rgba(209, 123, 157, 0.25)',
+            'faith-text': '#f2e6e6',
+            'faith-muted': '#c4a3b0',
+            'faith-accent': '#e098b5',
+            'faith-glow': '#d17b9d'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #1a050d;
+      color: #f2e6e6;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Subtle halftoned/grain texture based on the cover art vibe */
+    .faith-grain {
+      background-image: 
+        radial-gradient(rgba(209, 123, 157, 0.08) 1px, transparent 0),
+        radial-gradient(rgba(0, 0, 0, 0.4) 1px, transparent 0);
+      background-size: 10px 10px;
+      background-position: 0 0, 5px 5px;
+    }
+
+    /* Ambient background image blur effect */
+    .ambient-cover {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      background-image: url('https://book.renj.top/archive/allfaith/allfaithnocover.jpeg');
+      background-size: cover;
+      background-position: center center;
+      filter: blur(40px) brightness(0.35);
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+
+    /* Prevent image dragging */
+    img {
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+
+    /* Soundwave bars animation */
+    @keyframes soundWave {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+    .playing .bar-1 { animation: soundWave 0.8s ease-in-out infinite; }
+    .playing .bar-2 { animation: soundWave 0.6s ease-in-out 0.2s infinite; }
+    .playing .bar-3 { animation: soundWave 0.9s ease-in-out 0.1s infinite; }
+    .playing .bar-4 { animation: soundWave 0.7s ease-in-out 0.3s infinite; }
+
+    /* Custom volume slider */
+    .volume-range {
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(242, 230, 230, 0.2);
+      height: 3px;
+      border-radius: 2px;
+      outline: none;
+    }
+    .volume-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #f2e6e6;
+      cursor: pointer;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1a050d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4a1028;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body class="faith-grain min-h-screen w-full flex flex-col items-center justify-between py-8 px-4 font-inter antialiased select-none relative overflow-x-hidden cursor-default">
+
+  <!-- Background Ambient Glow Stage -->
+  <div class="ambient-cover"></div>
+
+  <!-- Background Looping Audio Track -->
+  <audio id="bgMusic" src="https://book.renj.top/archive/allfaith/inpurefaith.mp3" loop></audio>
+
+  <!-- Editorial Header Banner -->
+  <header class="w-full max-w-md flex justify-between items-center pb-4 border-b border-faith-border text-xs text-faith-muted uppercase tracking-[0.2em] relative z-10">
+    <span class="font-estonia text-2xl text-faith-text tracking-normal font-normal lowercase">renj</span>
+    <div class="flex items-center gap-2">
+      <span class="text-[10px] tracking-[0.2em] text-faith-text/80 lowercase">all faith that there is</span>
+      <span class="text-[10px] text-faith-muted/40">•</span>
+      <a href="https://poems.renj.top" class="text-[10px] tracking-[0.2em] text-faith-accent hover:text-faith-text transition-colors lowercase underline underline-offset-4 decoration-faith-border">home</a>
+    </div>
+    <span class="text-[9px] opacity-70">PST (UTC+8)</span>
+  </header>
+
+  <!-- Main Content Stack (Enforces narrow max-w-md layout) -->
+  <main class="w-full max-w-md flex flex-col items-center gap-7 my-auto py-6 relative z-10">
+
+    <!-- Cover Art Card (Clicking opens Lightbox Inspector) -->
+    <div class="w-full flex flex-col items-center">
+      <div 
+        class="w-full relative group cursor-pointer bg-faith-card p-3 rounded-xl border border-faith-border shadow-2xl transition-all duration-500 hover:border-faith-glow/50"
+        onclick="event.stopPropagation(); openLightbox('https://book.renj.top/archive/allfaith/24.jpeg', 'all faith that there is — Back Cover & Poem List');"
+      >
+        <div class="relative overflow-hidden rounded-lg">
+          <img 
+            src="https://book.renj.top/archive/allfaith/cover.jpeg" 
+            alt="all faith that there is — Front Cover" 
+            class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            onerror="this.onerror=null; this.src='https://book.renj.top/archive/allfaith/allfaithnocover.jpeg';"
+          />
+          <!-- Hover overlay tag -->
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="font-inter text-[10px] uppercase tracking-[0.25em] bg-[#2d0a18]/90 text-faith-text px-3.5 py-2 rounded-lg border border-faith-border shadow-lg">
+              Inspect Back Cover & Entries
+            </span>
+          </div>
+        </div>
+      </div>
+      <p class="font-inter text-[10px] text-faith-muted/70 mt-2.5 italic tracking-wider">tap image to reveal back cover & entries</p>
+    </div>
+
+    <!-- Title & Subtitle Section -->
+    <div class="text-center space-y-1 px-2">
+      <h1 class="font-estonia text-5xl sm:text-6xl text-faith-text leading-tight font-normal lowercase tracking-wide drop-shadow">
+        all faith that there is
+      </h1>
+      <p class="font-estonia text-2xl text-faith-muted italic">
+        poems arrive at midnight
+      </p>
+    </div>
+
+    <!-- Countdown Timer Banner -->
+    <div class="w-full py-6 my-1 border-y border-faith-border flex flex-col items-center justify-center bg-faith-card/50 rounded-xl shadow-inner backdrop-blur-sm">
+      <p class="font-inter text-[10px] uppercase tracking-[0.3em] text-faith-muted/80 mb-4 text-center">
+        arriving in
+      </p>
+      
+      <div id="countdown" class="flex items-center justify-center gap-3 sm:gap-5">
+        <!-- Days -->
+        <div class="flex flex-col items-center min-w-[56px]">
+          <span id="days" class="font-estonia text-5xl sm:text-6xl font-normal text-faith-text leading-none">00</span>
+          <span class="font-inter text-[9px] uppercase tracking-widest text-faith-muted mt-1">days</span>
+        </div>
+        <span class="font-estonia text-3xl text-faith-muted/40 -mt-3">:</span>
+
+        <!-- Hours -->
+        <div class="flex flex-col items-center min-w-[56px]">
+          <span id="hours" class="font-estonia text-5xl sm:text-6xl font-normal text-faith-text leading-none">00</span>
+          <span class="font-inter text-[9px] uppercase tracking-widest text-faith-muted mt-1">hours</span>
+        </div>
+        <span class="font-estonia text-3xl text-faith-muted/40 -mt-3">:</span>
+
+        <!-- Minutes -->
+        <div class="flex flex-col items-center min-w-[56px]">
+          <span id="minutes" class="font-estonia text-5xl sm:text-6xl font-normal text-faith-text leading-none">00</span>
+          <span class="font-inter text-[9px] uppercase tracking-widest text-faith-muted mt-1">mins</span>
+        </div>
+        <span class="font-estonia text-3xl text-faith-muted/40 -mt-3">:</span>
+
+        <!-- Seconds -->
+        <div class="flex flex-col items-center min-w-[56px]">
+          <span id="seconds" class="font-estonia text-5xl sm:text-6xl font-normal text-faith-accent animate-pulse leading-none">00</span>
+          <span class="font-inter text-[9px] uppercase tracking-widest text-faith-muted mt-1">secs</span>
+        </div>
+      </div>
+
+      <p class="text-[9px] text-faith-muted uppercase tracking-[0.2em] mt-4 opacity-70">
+        October 30, 2026 — 12:00 AM PST (UTC+8)
+      </p>
+    </div>
+
+    <!-- Author's Reflection / Note Container -->
+    <div class="w-full pt-4 border-t border-faith-border flex flex-col items-center text-center space-y-3">
+      <span class="font-inter text-[9px] uppercase tracking-[0.3em] text-faith-muted/80">on faith</span>
+      
+      <div class="font-inter text-xs leading-relaxed text-faith-muted space-y-3 text-justify sm:text-center px-5 py-5 bg-faith-card rounded-xl border border-faith-border shadow-md">
+        <p>
+          there is a specific kind of exhaustion that comes from holding things together with nothing but repetition. these are the entries written when the machinery stopped humming, left out in the open where the weather could get to them.
+        </p>
+        <p>
+          nothing here is sacred on purpose. it’s just what remained when the rooms emptied out and the light changed color, forcing us to look at the convents we built our grief inside of.
+        </p>
+        <p class="italic text-faith-text/95 pt-1 border-t border-faith-border/40">
+          If there is any grace to be found here, it's accidental—wrenched out of exhaustion rather than hope. Take what you need from the rooms we left behind.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Floating Audio Player Deck -->
+  <div 
+    id="audioDeck" 
+    class="fixed bottom-6 right-6 z-40 bg-[#2d0a18]/90 backdrop-blur-md border border-faith-border rounded-full py-2 px-4 shadow-2xl flex items-center gap-3 transition-all duration-300 hover:border-faith-glow/50"
+    onclick="event.stopPropagation();"
+  >
+    <!-- Play / Pause Button -->
+    <button id="audioToggleBtn" onclick="togglePlayState()" class="w-7 h-7 flex items-center justify-center rounded-full bg-faith-text/10 text-faith-text hover:bg-faith-text/20 transition-all focus:outline-none" title="Play Ambient Instrumental">
+      <!-- Play Icon -->
+      <svg id="playIcon" class="w-3.5 h-3.5 text-faith-text ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      <!-- Pause Icon -->
+      <svg id="pauseIcon" class="w-3.5 h-3.5 text-faith-text hidden" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+      </svg>
+    </button>
+
+    <!-- Equalizer Sound Indicator -->
+    <div id="soundBars" class="flex items-end gap-1 h-4 w-5 opacity-50 transition-opacity">
+      <span class="w-0.5 bg-faith-text rounded-full h-1 bar-1"></span>
+      <span class="w-0.5 bg-faith-text rounded-full h-1 bar-2"></span>
+      <span class="w-0.5 bg-faith-text rounded-full h-1 bar-3"></span>
+      <span class="w-0.5 bg-faith-text rounded-full h-1 bar-4"></span>
+    </div>
+
+    <!-- Volume Control Slider -->
+    <div class="flex items-center gap-2 border-l border-faith-border pl-2">
+      <button id="muteToggleBtn" onclick="toggleMute()" class="text-faith-muted hover:text-faith-text focus:outline-none" title="Toggle Mute">
+        <svg id="volumeIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <svg id="muteIcon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </svg>
+      </button>
+      <input 
+        type="range" 
+        id="volumeControl" 
+        class="volume-range cursor-pointer w-14 sm:w-16" 
+        min="0" 
+        max="1" 
+        step="0.05" 
+        value="0.5" 
+        oninput="changeVolume(this.value)" 
+        title="Volume"
+      >
+    </div>
+  </div>
+
+  <!-- Image Inspector Lightbox Modal -->
+  <div 
+    id="inspectorLightbox" 
+    class="fixed inset-0 z-50 bg-black/95 hidden flex-col items-center justify-center p-4 backdrop-blur-md transition-all duration-300"
+    onclick="event.stopPropagation(); closeLightbox();"
+  >
+    <!-- Header Controls -->
+    <div class="absolute top-4 right-4 flex items-center space-x-4 z-50">
+      <span class="text-[10px] font-inter text-faith-muted tracking-wider hidden sm:inline">Click image to toggle zoom</span>
+      <button onclick="closeLightbox()" class="text-[10px] font-inter text-faith-text border border-faith-border hover:bg-faith-card px-4 py-2 rounded-lg tracking-widest transition-all uppercase">
+        CLOSE
+      </button>
+    </div>
+    
+    <p id="lightboxTitle" class="absolute top-4 left-6 text-sm font-estonia text-faith-text/80 z-40"></p>
+
+    <!-- Lightbox Image Stage -->
+    <div class="w-full max-w-3xl max-h-[85vh] flex items-center justify-center overflow-hidden p-2" onclick="event.stopPropagation();">
+      <img 
+        id="lightboxImage" 
+        src="" 
+        alt="Enlarged view" 
+        class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl border border-faith-border cursor-zoom-in transition-transform duration-300"
+        style="transform: scale(1);"
+        onclick="toggleZoom(this)"
+      />
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full max-w-md text-center pt-6 pb-2 border-t border-faith-border relative z-10">
+    <p class="font-estonia text-3xl text-faith-text/90 lowercase">"take whatever pieces still have life"</p>
+    <p class="font-inter text-[9px] uppercase tracking-[0.25em] text-faith-muted/70 mt-2">
+      © 2026 RENJ. CC BY-NC-ND 4.0. RELEASE SCHEDULED FOR OCTOBER 30, 2026 AT 12:00 AM PST.
+    </p>
+  </footer>
+
+  <script>
+    // Target Launch Date: Midnight (00:00:00) Philippine Standard Time (UTC+8) on October 30, 2026
+    const targetLaunchTime = new Date('2026-10-30T00:00:00+08:00').getTime();
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const countdownContainer = document.getElementById('countdown');
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetLaunchTime - now;
+
+      if (distance <= 0) {
+        if (countdownContainer) {
+          countdownContainer.innerHTML = `
+            <div class="text-center py-2">
+              <span class="font-estonia text-4xl sm:text-5xl text-faith-text lowercase">all faith that there is has arrived.</span>
+            </div>
+          `;
+        }
+        clearInterval(countdownInterval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+      if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+      if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    // Audio Engine
+    const bgMusic = document.getElementById('bgMusic');
+    const audioToggleBtn = document.getElementById('audioToggleBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const soundBars = document.getElementById('soundBars');
+    const volumeControl = document.getElementById('volumeControl');
+    const volumeIcon = document.getElementById('volumeIcon');
+    const muteIcon = document.getElementById('muteIcon');
+
+    if (bgMusic) {
+      bgMusic.volume = 0.5;
+    }
+
+    // Auto-play music on first user gesture
+    let hasAttemptedAutoplay = false;
+    function autoPlayOnFirstInteraction() {
+      if (!hasAttemptedAutoplay && bgMusic && bgMusic.paused) {
+        hasAttemptedAutoplay = true;
+        bgMusic.play().then(() => {
+          if (playIcon) playIcon.classList.add('hidden');
+          if (pauseIcon) pauseIcon.classList.remove('hidden');
+          if (soundBars) {
+            soundBars.classList.add('playing');
+            soundBars.classList.remove('opacity-50');
+          }
+        }).catch(err => {
+          console.log("Audio waiting for explicit interaction:", err);
+        });
+      }
+    }
+
+    document.addEventListener('click', autoPlayOnFirstInteraction, { once: true });
+
+    function togglePlayState() {
+      if (!bgMusic) return;
+      if (bgMusic.paused) {
+        bgMusic.play().then(() => {
+          if (playIcon) playIcon.classList.add('hidden');
+          if (pauseIcon) pauseIcon.classList.remove('hidden');
+          if (soundBars) {
+            soundBars.classList.add('playing');
+            soundBars.classList.remove('opacity-50');
+          }
+        }).catch(err => console.log("Audio play error:", err));
+      } else {
+        bgMusic.pause();
+        if (playIcon) playIcon.classList.remove('hidden');
+        if (pauseIcon) pauseIcon.classList.add('hidden');
+        if (soundBars) {
+          soundBars.classList.remove('playing');
+          soundBars.classList.add('opacity-50');
+        }
+      }
+    }
+
+    function changeVolume(val) {
+      if (!bgMusic) return;
+      bgMusic.volume = val;
+      bgMusic.muted = false;
+      updateMuteIcons();
+    }
+
+    function toggleMute() {
+      if (!bgMusic) return;
+      bgMusic.muted = !bgMusic.muted;
+      updateMuteIcons();
+    }
+
+    function updateMuteIcons() {
+      if (!bgMusic) return;
+      if (bgMusic.muted || bgMusic.volume === 0) {
+        if (volumeIcon) volumeIcon.classList.add('hidden');
+        if (muteIcon) muteIcon.classList.remove('hidden');
+      } else {
+        if (volumeIcon) volumeIcon.classList.remove('hidden');
+        if (muteIcon) muteIcon.classList.add('hidden');
+      }
+    }
+
+    // Lightbox Controls
+    const lightbox = document.getElementById('inspectorLightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+
+    function openLightbox(src, title) {
+      if (lightboxImage) {
+        lightboxImage.src = src;
+        lightboxImage.style.transform = 'scale(1)';
+      }
+      if (lightboxTitle) {
+        lightboxTitle.textContent = title || '';
+      }
+      if (lightbox) {
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+      }
+    }
+
+    function closeLightbox() {
+      if (lightbox) {
+        lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
+      }
+      if (lightboxImage) {
+        lightboxImage.src = '';
+      }
+    }
+
+    function toggleZoom(imgEl) {
+      if (imgEl.style.transform === 'scale(1.5)') {
+        imgEl.style.transform = 'scale(1)';
+        imgEl.classList.remove('cursor-zoom-out');
+        imgEl.classList.add('cursor-zoom-in');
+      } else {
+        imgEl.style.transform = 'scale(1.5)';
+        imgEl.classList.remove('cursor-zoom-in');
+        imgEl.classList.add('cursor-zoom-out');
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>
